@@ -1,4 +1,4 @@
-º<?php include("barramenu.php");?>
+<?php include("barramenu.php");?>
 
   
     <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(images/hero_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
@@ -10,8 +10,8 @@
             
             <div class="row justify-content-center mt-5">
               <div class="col-md-8 text-center">
-                <h1>Sign Up</h1>
-                <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+                <h1>Registrate ahora</h1>
+                <p class="mb-0">Queremos que seas parte de nuestra comunidad de usuarios.</p>
               </div>
             </div>
 
@@ -27,12 +27,29 @@
         <div class="row justify-content-center">
           <div class="col-md-7 mb-5"  data-aos="fade">
 
-            <h2 class="mb-5 text-black">Register</h2>
+            <h2 class="mb-5 text-black">Registro</h2>
 
             <form action="signup.php" method="post" class="p-5 bg-white">
              
               <div class="row form-group">
-                
+                <div class="col-12">
+                  <label class="text-black" for="nombre">Nombre</label> 
+                  <input type="text" name="nombre" id="nombre" class="form-control">
+                </div>
+              </div>
+              
+              <div class="row form-group">
+                <div class="col-12 col-md-6">
+                  <label class="text-black" for="apellidoP">Apellido Paterno</label> 
+                  <input type="text" name="apellidoP" id="apellidoP" class="form-control">
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="text-black" for="apellidoM">Apellido Materno</label> 
+                  <input type="text" name="apellidoM" id="apellidoM" class="form-control">
+                </div>
+              </div>
+            
+              <div class="row form-group">  
                 <div class="col-md-12">
                   <label class="text-black" for="email">Email</label> 
                   <input type="email" name="correo" id="email" class="form-control">
@@ -40,28 +57,35 @@
               </div>
 
               <div class="row form-group">
-                <div class="col-md-12">
-                  <label class="text-black" for="subject">Password</label> 
-                  <input type="password" id="subject" class="form-control">
+                <div class="col-12 col-md-6">
+                  <label class="text-black" for="contra1">Password</label> 
+                  <input type="password" name="contraseña" id="contra1" class="form-control">
                 </div>
-              </div>
-
-              <div class="row form-group">
-                <div class="col-md-12">
-                  <label class="text-black" for="subject">Re-type Password</label> 
-                  <input type="password" id="subject" class="form-control">
+                <div class="col-12 col-md-6">
+                  <label class="text-black" for="contra2">Re-type Password</label> 
+                  <input type="password" name="contraseñaC" id="contra2" class="form-control">
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-12">
-                  <p>Have an account? <a href="login.html">Log In</a></p>
+                  <select class="form-control" name="ciudad" id="ciudad">
+                    <option value="cd1">Chihuahua</option>
+                    <option value="cd2">Ciudad 2</option>
+                    <option value="cd3">Ciudad 3</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-12">
+                  <p>¿Ya estas registrado? <a href="login.html">Iniciar sesión</a></p>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" name="registrar" value="Sign In" class="btn btn-primary py-2 px-4 text-white">
+                  <input type="submit" name="registrar" value="Registrarme" class="btn btn-primary py-2 px-4 text-white">
                 </div>
               </div>
 
