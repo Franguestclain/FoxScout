@@ -63,7 +63,7 @@
                 
                 <li class="mr-1"><a href="contact.php">Contacto</a></li>
 
-                <li class="ml-xl-3 login"><a href="login.php"><span class="border-left pl-xl-4"></span>Iniciar sesion</a></li>
+                <li class="ml-xl-3 login"><a href="inicio.php"><span class="border-left pl-xl-4"></span>Iniciar sesion</a></li>
 
                 <li><a href="register.php" class="cta"><span class="bg-primary text-white rounded">Registro</span></a></li>
               </ul>

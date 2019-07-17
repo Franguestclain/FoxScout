@@ -96,7 +96,7 @@
                 // Intentamos ejecutar la consulta
                 if($stmt->execute()){
                     // Mandamos a la pagina login
-                    header("location: login.php");
+                    header("location: inicio.php");
                     // echo json_encode(["status" => "1", "mensaje" => "Se registro exitosamente"]);
                     // DEVOLVER JSON al ajax
                 } else{
@@ -110,11 +110,12 @@
         }else{
             //FIXME:
             // Evaluar si hay algun o todos los errores para mostrar, porque puede que muestre cadena vacia
-            // echo json_encode(["status" => "0", "mensaje" => "<li>{$username_err}</li><li>{$correo_err}</li><li>{$password_err}</li><li>{$confirm_password_err}</li>"]);
-            echo "Existen varios errores".$con->error;
-            echo "Error correo: ".$correo_err;
-            echo "Error contraseña: ".$contraseña_err;
-            echo "Error contraseña2: ".$contraseña_confirmada_err;
+            echo json_encode(["status" => "0", "mensaje" => "<li>{$correo_err}</li><li>{$contraseña_err}</li><li>{$contraseña_confirmada_err}</li><li>{$con->error}</li>"]);
+            
+            // echo "Existen varios errores".$con->error;
+            // echo "Error correo: ".$correo_err;
+            // echo "Error contraseña: ".$contraseña_err;
+            // echo "Error contraseña2: ".$contraseña_confirmada_err;
         }
         
         // Close conection
