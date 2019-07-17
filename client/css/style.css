@@ -1873,3 +1873,7 @@ figure figcaption {
         .comment-list li .comment-body .reply:hover {
           color: #000;
           background: #e3e3e3; }
+.username{
+  font-weight: 600;
+  /* font-size: 1.3rem !important; */
+}

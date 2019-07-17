@@ -29,8 +29,7 @@
     <link rel="stylesheet" href="css/style.css">
     
 </head>
-<body>
-  
+<body>  
   <div class="site-wrap">
 
     <div class="site-mobile-menu">
@@ -41,7 +40,6 @@
       </div>
       <div class="site-mobile-menu-body"></div>
     </div>
-    
     <header class="site-navbar container py-0 " role="banner">
 
       <!-- <div class="container"> -->
@@ -56,16 +54,34 @@
               <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li class="active"><a href="index.php">Inicio</a></li>
                 <li><a href="listings.php">Tiendas</a></li>
-                <li class=" ">
+                <li class="">
                   <a href="about.php">Comparativa</a>
                   
                 </li>
                 
-                <li class="mr-1"><a href="contact.php">Contacto</a></li>
+                <li class="mr-5"><a href="contact.php">Contacto</a></li>
+                <?php
+                  if(isset($_SESSION['log'])){
 
-                <li class="ml-xl-3 login"><a href="inicio.php"><span class="border-left pl-xl-4"></span>Iniciar sesion</a></li>
-
-                <li><a href="register.php" class="cta"><span class="bg-primary text-white rounded">Registro</span></a></li>
+                ?>
+                <!-- <li><a class="username" href="#"></a></!-->
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?php echo $_SESSION['nombre']; ?>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Mi cuenta</a>
+                    <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                </li>
+                <?php
+                    
+                  }else{
+                    ?>
+                    <li class="ml-xl-3 login"><a href="inicio.php"><span class="border-left pl-xl-4"></span>Iniciar sesion</a></li>
+                    <li><a href="register.php" class="cta"><span class="bg-primary text-white rounded">Registro</span></a></li>
+                <?php
+                  }
+                ?>
               </ul>
             </nav>
           </div>
