@@ -101,6 +101,7 @@ h1, h2, h3, h4, h5,
     box-shadow: none !important; }
 
 .site-section {
+  position: relative;
   padding: 2.5em 0; }
   @media (min-width: 768px) {
     .site-section {
@@ -1876,4 +1877,18 @@ figure figcaption {
 .username{
   font-weight: 600;
   /* font-size: 1.3rem !important; */
+}
+
+.container_alert{
+  padding: 2rem;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .container_alert {
+    position: sticky;
+    left: 100%;
+    width: 25%;
+  }
 }

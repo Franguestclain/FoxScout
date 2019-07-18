@@ -1,4 +1,14 @@
-<?php include("barramenu.php");?>
+<?php 
+  session_start();
+
+  if( isset($_SESSION['log']) && $_SESSION['log'] === true ){
+      header("location: index.php");
+      exit;
+  }
+
+include("barramenu.php");
+
+?>
 
   
     <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(images/hero_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
@@ -29,7 +39,7 @@
 
             <h2 class="mb-5 text-black">Log In</h2>
 
-            <form action="login.php" method="POST" class="p-5 bg-white">
+            <form id="formLogin" action="login.php" method="POST" class="p-5 bg-white">
              
               <div class="row form-group">
                 
@@ -66,11 +76,44 @@
           
         </div>
       </div>
+      <div id="container_alert" class="container_alert">
+        <div id="alertExito" class="alert alert-success my-4 fade"></div>
+        <div id="alertError" class="alert alert-danger my-4 fade"></div>
+      </div>
     </div>
 
 
     
     <?php include("footer.php"); ?>
-    
+
+
+    <script>
+      $("#formLogin").submit(function(e){
+        e.preventDefault();
+        console.log("Entramos al submit cancelado");
+        let info = $(this).serialize();
+        $.ajax({
+          url: "login.php",
+          method: "POST",
+          data: info,
+          dataType: "json",
+          success: function(data, status, jqXHR){
+            if(data.status == 1){
+              window.location.href = "index.php";
+            }else{
+              $("#alertError").toggleClass("fade").append(data.mensaje);
+              setTimeout(function(){
+                $("#alertError").toggleClass("fade").empty();
+              }, 4000);
+            }
+          },
+          error: function(data,status, error){
+            if(data.status == 0){
+              $("#alertError").toggleClass("fade").append(data.mensaje);
+            }
+          }
+        });
+      });
+    </script>
   </body>
 </html>

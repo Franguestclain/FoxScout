@@ -1,10 +1,4 @@
 <?php 
-    session_start();
-
-    if( isset($_SESSION['log']) && $_SESSION['log'] === true ){
-        header("location: index.php");
-        exit;
-    }
 
     include("conexion.php");
 
@@ -65,30 +59,33 @@
                                 $_SESSION["correo"] = $correo;
                                 $_SESSION["nombre"] = $nombre;
 
-                                header("location: index.php");
+                                // header("location: index.php");
+                                echo json_encode(["status" => "1"]);
 
                             }else{
                                 $contraseña_err = "La contraseña es incorrecta";
+                                echo json_encode(["status" => "0", "mensaje" => $contraseña_err]);
                             }
                         }
                     }else{
-                        $username_err = "No existe este usuario";
+                        $correo_err = "No existe este correo";
+                        echo json_encode(["status" => "0", "mensaje" => $correo_err]);                            
                     }
 
                 }
-
-                $stmt->close();
-            }else{
-                echo "Errorsillo: ".$con->error;
-                echo "Error contraseña: ".$contraseña_err;
-                echo "Error correo: ".$correo_err;
             }
+            $stmt->close();
 
 
         }else{
-            echo "Hay muchos errores ".$con->error;
-            echo "Error correo: ".$correo_err;
-            echo "Error contraseña: ".$contraseña_err; 
+            $cadenaReturn = "";
+            $errores = [$correo_err,$contraseña_err];
+            foreach($errores as $error){
+                if(!empty($error)){
+                    $cadenaReturn = $cadenaReturn."<li>{$error}</li>";
+                }
+            }
+            echo json_encode(["status" => "0", "mensaje" => $cadenaReturn]); 
         }
 
         $con->close();

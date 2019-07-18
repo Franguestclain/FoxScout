@@ -95,13 +95,10 @@
                 
                 // Intentamos ejecutar la consulta
                 if($stmt->execute()){
-                    // Mandamos a la pagina login
-                    header("location: inicio.php");
-                    // echo json_encode(["status" => "1", "mensaje" => "Se registro exitosamente"]);
-                    // DEVOLVER JSON al ajax
+                    // Mandamos un JSON
+                    echo json_encode(["status" => "1", "mensaje" => "Se registro exitosamente"]);
                 } else{
-                    // echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro"]);
-                    echo "Hubo un error".$con->error;
+                    echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro"]);
                 }
             }
              
@@ -110,12 +107,14 @@
         }else{
             //FIXME:
             // Evaluar si hay algun o todos los errores para mostrar, porque puede que muestre cadena vacia
-            echo json_encode(["status" => "0", "mensaje" => "<li>{$correo_err}</li><li>{$contraseña_err}</li><li>{$contraseña_confirmada_err}</li><li>{$con->error}</li>"]);
-            
-            // echo "Existen varios errores".$con->error;
-            // echo "Error correo: ".$correo_err;
-            // echo "Error contraseña: ".$contraseña_err;
-            // echo "Error contraseña2: ".$contraseña_confirmada_err;
+            $cadenaReturn = "";
+            $errores = [$correo_err,$contraseña_err,$contraseña_confirmada_err];
+            foreach($errores as $error){
+                if(!empty($error)){
+                    $cadenaReturn = $cadenaReturn."<li>{$error}</li>";
+                }
+            }
+            echo json_encode(["status" => "0", "mensaje" => $cadenaReturn]);
         }
         
         // Close conection

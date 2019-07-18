@@ -91,15 +91,16 @@
 
   
             </form>
-            <div id="alertExito" class="alert alert-success my-4 fade"></div>
-            <div id="alertError" class="alert alert-danger my-4 fade"></div>
           </div>
           
         </div>
       </div>
+      <div id="container_alert" class="container_alert">
+        <div id="alertExito" class="alert alert-success my-4 fade"></div>
+        <div id="alertError" class="alert alert-danger my-4 fade"></div>
+      </div>
     </div>
 
-    
     <?php include("footer.php"); ?>
 
   <script>
@@ -112,9 +113,10 @@
           method: "POST",
           data: info,
           dataType: "json",
-          success: function(data){
+          success: function(data, status, jqXHR){
             if(data.status == 1){
               $("#alertExito").toggleClass("fade").append(data.mensaje);
+              window.location.href = "inicio.php";
             }else{
               // FIXME:
               // Mostrar solo un dot si solo hay un error
