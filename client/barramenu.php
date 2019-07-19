@@ -48,43 +48,73 @@
           <div class="col-6 col-xl-2">
             <h1 class="mb-0 site-logo"><a href="index.php" class="text-white mb-0">FoxScout</a></h1>
           </div>
-          <div class="col-12 col-md-10 d-none d-xl-block">
-            <nav class="site-navigation position-relative text-right" role="navigation">
+          <?php
+            if(isset($_SESSION['admin']) && $_SESSION['admin'] === true){
+          ?>
+            <div class="col-12 col-md-10 d-none d-xl-block">
+              <nav class="site-navigation position-relative text-right" role="navigation">
 
-              <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li class="active"><a href="index.php">Inicio</a></li>
-                <li><a href="listings.php">Tiendas</a></li>
-                <li class="">
-                  <a href="about.php">Comparativa</a>
-                  
-                </li>
-                
-                <li class="mr-5"><a href="contact.php">Contacto</a></li>
-                <?php
-                  if(isset($_SESSION['log'])){
-
-                ?>
-                <!-- <li><a class="username" href="#"></a></!-->
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?php echo $_SESSION['nombre']; ?>
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Mi cuenta</a>
-                    <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
-                </li>
-                <?php
+                <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                  <li class="active"><a href="index.php">Inicio</a></li>
+                  <li><a href="listings.php">Tiendas</a></li>
+                  <li class="">
+                    <a href="about.php">Comparativa</a>
                     
-                  }else{
-                    ?>
+                  </li>
+                  
+                  <li class="mr-5"><a href="contact.php">Contacto</a></li>
+                  <!-- <li><a class="username" href="#"></a></!-->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <?php echo $_SESSION['nombre']; ?>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="./admin/">Panel de administrador</a>
+                      <a class="dropdown-item" href="./admin/pages-profile.php">Mi cuenta</a>
+                      <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          <?php
+            }else{
+          ?>
+            <div class="col-12 col-md-10 d-none d-xl-block">
+              <nav class="site-navigation position-relative text-right" role="navigation">
+
+                <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                  <li class="active"><a href="index.php">Inicio</a></li>
+                  <li><a href="listings.php">Tiendas</a></li>
+                  <li class="">
+                    <a href="about.php">Comparativa</a>
+                    
+                  </li>
+                  <li class="mr-5"><a href="contact.php">Contacto</a></li>
+                  <?php
+                    if(isset($_SESSION['log']) && $_SESSION['log'] === true){
+                  ?>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php echo $_SESSION['nombre']; ?>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Mi cuenta</a>
+                        <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                    </li>
+                  <?php
+                    }else{
+                  ?>
                     <li class="ml-xl-3 login"><a href="inicio.php"><span class="border-left pl-xl-4"></span>Iniciar sesion</a></li>
                     <li><a href="register.php" class="cta"><span class="bg-primary text-white rounded">Registro</span></a></li>
-                <?php
-                  }
-                ?>
-              </ul>
-            </nav>
-          </div>
+                  <?php
+                    }
+                  ?>
+                </ul>
+              </nav>
+            </div>
+          <?php
+            }
+          ?>
 
 
           <div class="d-inline-block d-xl-none ml-auto py-3 col-6 text-right" style="position: relative; top: 3px;">

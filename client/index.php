@@ -15,15 +15,17 @@
             <div class="row justify-content-center mb-4">
               <div class="col-md-8 text-center">
                 <?php
-                  if(isset($_SESSION['log'])){ ?>
-                    <h1 class="" data-aos="fade-up">Bienvenido <?php echo $_SESSION['nombre']; ?></h1>
+                  if(isset($_SESSION['admin']) && $_SESSION['admin'] === true){
+                ?>
+                <h1 class="" data-aos="fade-up">Bienvenidos a FoxScout admins</h1>
                 <?php
-                  }else{?>
+                  }else{
+                ?>
                   <h1 class="" data-aos="fade-up">Bienvenidos a FoxScout</h1>
                 <?php
                   }
                 ?>
-                <p data-aos="fade-up" data-aos-delay="100">El mejor buscador local de productos </p>
+                  <p data-aos="fade-up" data-aos-delay="100">El mejor buscador de productos locales.</p>
               </div>
             </div>
 

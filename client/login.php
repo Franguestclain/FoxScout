@@ -29,7 +29,7 @@
         // Evaluamos si no tenemos errores y validamos credenciales
         if( empty($correo_err) && empty($contraseña_err) ){
             // Hacemos una consulta preparada
-            $sql = "SELECT id_usuario, nombre, email, contra FROM usuarios WHERE email = ?";
+            $sql = "SELECT id_usuario, nombre, email, contra, admin FROM usuarios WHERE email = ?";
 
             if( $stmt = $con->prepare($sql) ){
                 // Enlazamos la variable
@@ -44,7 +44,7 @@
 
                     if($stmt->num_rows == 1){
                         // Enlazamos los campos seleccionados con las siguientes variables
-                        $stmt->bind_result($id, $nombre, $correo, $contraseña_hasheada);
+                        $stmt->bind_result($id, $nombre, $correo, $contraseña_hasheada, $admin);
                         if($stmt-> fetch()){
                             if(password_verify($contraseña, $contraseña_hasheada)){
                                 
@@ -58,9 +58,13 @@
                                 $_SESSION["id"]  = $id;
                                 $_SESSION["correo"] = $correo;
                                 $_SESSION["nombre"] = $nombre;
+                                $_SESSION["admin"] = false;
+                                if($admin == 1){
+                                    $_SESSION["admin"] = true;
+                                }
 
                                 // header("location: index.php");
-                                echo json_encode(["status" => "1"]);
+                                echo json_encode(["status" => "1", "permiso" => $admin]);
 
                             }else{
                                 $contraseña_err = "La contraseña es incorrecta";

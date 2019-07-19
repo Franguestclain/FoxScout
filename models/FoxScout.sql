@@ -17,10 +17,17 @@ CREATE TABLE IF NOT EXISTS Direccion(
     colonia varchar(60) not null,
     numero  varchar(10) not null,
     tienda_id int not null,
+    ciudad_id int not null,
     primary key(id_direccion),
+
+
     CONSTRAINT rel_tienda
     FOREIGN KEY (tienda_id)
     REFERENCES Tienda(id_tienda)
+
+    CONSTRAINT rel_ciudadD
+    FOREIGN KEY (ciudad_id)
+    REFERENCES Ciudad(id_ciudad)
 )
 auto_increment = 1,
 engine = InnoDB;
@@ -100,7 +107,7 @@ CREATE TABLE IF NOT EXISTS Ciudad(
     primary key(id_ciudad),
 
     CONSTRAINT rel_estado
-    FOREIGN KEY estado_id
+    FOREIGN KEY (estado_id)
     REFERENCES Estado(id_estado)
 )
 auto_increment = 1,
@@ -112,11 +119,12 @@ CREATE TABLE IF NOT EXISTS Usuarios(
     apellidoP   varchar(20) null,
     apellidoM   varchar(20) null,
     email       varchar(255) not null,
-    contraseña  varchar(255) not null,
+    contra      varchar(255) not null,
+    admin       boolean not null,
     ciudad_id   int not null,
 
     CONSTRAINT rel_ciudad
-    FOREIGN KEY ciudad_id
+    FOREIGN KEY (ciudad_id)
     REFERENCES Ciudad(id_ciudad)
 )
 auto_increment = 1,
@@ -131,15 +139,15 @@ CREATE TABLE IF NOT EXISTS Califa(
     usuario_id      int not null,
 
     CONSTRAINT rel_producto_califa
-    FOREIGN KEY prod_id
+    FOREIGN KEY (prod_id)
     REFERENCES Producto(id_prod),
 
     CONSTRAINT rel_direccion_califa
-    FOREIGN KEY direccion_id
+    FOREIGN KEY (direccion_id)
     REFERENCES Direccion(id_direccion),
 
     CONSTRAINT rel_usuario_califa
-    FOREIGN KEY usuario_id
+    FOREIGN KEY (usuario_id)
     REFERENCES Usuarios(id_usuario)
 
 )
