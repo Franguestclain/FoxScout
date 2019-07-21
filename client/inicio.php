@@ -99,7 +99,7 @@ include("barramenu.php");
           dataType: "json",
           success: function(data, status, jqXHR){
             if(data.status == 1){
-              (data.permiso === 1) ? window.location.href = "./admin/" :
+              (data.permiso) ? window.location.href = "./admin/" :
                                       window.location.href = "index.php";
             }else{
               $("#alertError").toggleClass("fade").append(data.mensaje);

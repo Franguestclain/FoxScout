@@ -6,6 +6,10 @@
 
     // Verificamos el metodo de peticion al servidor
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
+        /**
+         * FIXME:
+         * Evaluar si los inputs de nombre y apellidos estan vacios
+         */
         // Inicializamos variables con los valores de los inputs sin caracteres especiales ni espacios en blanco
         $nombre = $con -> real_escape_string(trim($_POST['nombre']));
         $apellidoP = $con -> real_escape_string(trim($_POST['apellidoP']));

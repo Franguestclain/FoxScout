@@ -1,46 +1,25 @@
 <?php
     session_start();
 
-    if(!isset($_SESSION['log']) ){
-        header("../index.php");
+    if(!isset($_SESSION['log']) && $_SESSION['log'] !== true ){
+        header("location: ../index.php");
         exit;
     }else{
         /**
          * FIXME:
          * Los usuarios normales pueden ver este directorio
          */
-        if( isset($_SESSION['admin']) && $_SESSION['admin'] === false){
-            header("../index.php");
+        if($_SESSION['admin'] == false){
+            header("location: ../index.php");
         }
     }
 
+    include("../conexion.php");
+    if($con -> connect_errno){
+        echo "Hubo un error en la conexion";
+    }else{
+        include("header.php");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <!-- <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png"> -->
-    <title>$</title>
-    <!-- Custom CSS -->
-    <link href="assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/style.min.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-</head>
-
-<body>
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -57,132 +36,71 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        <header class="topbar" data-navbarbg="skin5">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header" data-logobg="skin5">
-                    <!-- ============================================================== -->
-                    <!-- Logo -->
-                    <!-- ============================================================== -->
-                    <a class="navbar-brand" href="../index.php">
-                        <!-- Logo icon -->
-                        <b class="logo-icon">
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
-                            <!-- Light Logo icon -->
-                            <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
-                        </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        <span class="logo-text">
-                             <!-- dark Logo text -->
-                             <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                             <!-- Light Logo text -->    
-                             <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
-                        </span>
-                    </a>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-left mr-auto">
-                        <!-- ============================================================== -->
-                        <!-- Search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item search-box"> <a class="nav-link waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <form class="app-search position-absolute">
-                                <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"><i class="ti-close"></i></a>
-                            </form>
-                        </li>
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- Right side toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-right">
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-                            </div>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                    </ul>
-                </div>
-            </nav>
-        </header>
+        <?php include("nav.php"); ?>
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <aside class="left-sidebar" data-sidebarbg="skin6">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <!-- User Profile-->
-                        <li>
-                            <!-- User Profile-->
-                            <div class="user-profile d-flex no-block dropdown m-t-20">
-                                <div class="user-pic"><img src="assets/images/users/1.jpg" alt="users" class="rounded-circle" width="40" /></div>
-                                <div class="user-content hide-menu m-l-10">
-                                    <a href="javascript:void(0)" class="" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <h5 class="m-b-0 user-name font-medium">Steave Jobs <i class="fa fa-angle-down"></i></h5>
-                                        <span class="op-5 user-email">varun@gmail.com</span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Userdd">
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End User Profile-->
-                        </li>
-                        <li class="p-15 m-t-10"><a href="javascript:void(0)" class="btn btn-block create-btn text-white no-block d-flex align-items-center"><i class="fa fa-plus-square"></i> <span class="hide-menu m-l-5">Create New</span> </a></li>
-                        <!-- User Profile-->
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.html" aria-expanded="false"><i class="mdi mdi-account-network"></i><span class="hide-menu">Profile</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-basic.html" aria-expanded="false"><i class="mdi mdi-border-all"></i><span class="hide-menu">Table</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.html" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Icon</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="starter-kit.html" aria-expanded="false"><i class="mdi mdi-file"></i><span class="hide-menu">Blank</span></a></li>
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="error-404.html" aria-expanded="false"><i class="mdi mdi-alert-outline"></i><span class="hide-menu">404</span></a></li>
-                        <li class="text-center p-40 upgrade-btn">
-                            <a href="https://wrappixel.com/templates/xtremeadmin/" class="btn btn-block btn-danger text-white" target="_blank">Upgrade to Pro</a>
-                        </li>
-                    </ul>
-                    
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
+        <?php include("aside.php"); ?>
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
+        <div class="modal fade" id="modalAgregarU" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAgregarUTitulo">Agregar usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addUser" action="#" method="POST">
+                            <div class="form-group">
+                                <label for="addNombre">Nombre</label>
+                                <input type="text" name="addNombre" id="addName" class="form-control">
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="addApellidoP">Apellido Paterno</label>
+                                    <input type="text" name="addApellidoP" id="addApellidoP" class="form-control">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="addApellidoM">Apellido Materno</label>
+                                    <input type="text" name="addApellidoM" id="addApellidoM" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="addEmail">Email</label>
+                                <input type="email" name="addEmail" id="addEmail" class="form-control">
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="addCheck" id="addCheck" class="form-check-input">
+                                        <label for="addCheck" class="form-check-label">Administrador</label>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                    <select class="form-control" name="addCiudad" id="addCiudad">
+                                        <option value="cd1">Chihuahua</option>
+                                        <option value="cd2">Ciudad 2</option>
+                                        <option value="cd3">Ciudad 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
@@ -192,19 +110,14 @@
             <div class="page-breadcrumb">
                 <div class="row align-items-center">
                     <div class="col-5">
-                        <h4 class="page-title">Dashboard</h4>
+                        <h4 class="page-title">Usuarios</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
                                 </ol>
                             </nav>
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="text-right upgrade-btn">
-                            <a href="https://wrappixel.com/templates/xtremeadmin/" class="btn btn-danger text-white" target="_blank">Upgrade to Pro</a>
                         </div>
                     </div>
                 </div>
@@ -217,58 +130,6 @@
             <!-- ============================================================== -->
             <div class="container-fluid">
                 <!-- ============================================================== -->
-                <!-- Sales chart -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-md-flex align-items-center">
-                                    <div>
-                                        <h4 class="card-title">Sales Summary</h4>
-                                        <h5 class="card-subtitle">Overview of Latest Month</h5>
-                                    </div>
-                                    <div class="ml-auto d-flex no-block align-items-center">
-                                        <ul class="list-inline font-12 dl m-r-15 m-b-0">
-                                            <li class="list-inline-item text-info"><i class="fa fa-circle"></i> Iphone</li>
-                                            <li class="list-inline-item text-primary"><i class="fa fa-circle"></i> Ipad</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!-- column -->
-                                    <div class="col-lg-12">
-                                        <div class="campaign ct-charts"></div>
-                                    </div>
-                                    <!-- column -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Feeds</h4>
-                                <div class="feed-widget">
-                                    <ul class="list-style-none feed-body m-0 p-b-20">
-                                        <li class="feed-item">
-                                            <div class="feed-icon bg-info"><i class="far fa-bell"></i></div> You have 4 pending tasks. <span class="ml-auto font-12 text-muted">Just Now</span></li>
-                                        <li class="feed-item">
-                                            <div class="feed-icon bg-success"><i class="ti-server"></i></div> Server #1 overloaded.<span class="ml-auto font-12 text-muted">2 Hours ago</span></li>
-                                        <li class="feed-item">
-                                            <div class="feed-icon bg-warning"><i class="ti-shopping-cart"></i></div> New order received.<span class="ml-auto font-12 text-muted">31 May</span></li>
-                                        <li class="feed-item">
-                                            <div class="feed-icon bg-danger"><i class="ti-user"></i></div> New user registered.<span class="ml-auto font-12 text-muted">30 May</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- Sales chart -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
                 <!-- Table -->
                 <!-- ============================================================== -->
                 <div class="row">
@@ -279,18 +140,13 @@
                                 <!-- title -->
                                 <div class="d-md-flex align-items-center">
                                     <div>
-                                        <h4 class="card-title">Top Selling Products</h4>
-                                        <h5 class="card-subtitle">Overview of Top Selling Items</h5>
+                                        <h4 class="card-title">Usuarios</h4>
+                                        <!-- <h5 class="card-subtitle">Overview of Top Selling Items</h5> -->
                                     </div>
                                     <div class="ml-auto">
-                                        <div class="dl">
-                                            <select class="custom-select">
-                                                <option value="0" selected>Monthly</option>
-                                                <option value="1">Daily</option>
-                                                <option value="2">Weekly</option>
-                                                <option value="3">Yearly</option>
-                                            </select>
-                                        </div>
+                                        <button class="btn btn-success btnAgregar" data-toggle="modal" data-target="#modalAgregarU"><i class="fa fa-plus"></i> Agregar</button>
+                                        <button class="btn btn-primary btnEditar"><i class="fa fa-sync-alt"></i> Editar</button>
+                                        <button class="btn btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
                                     </div>
                                 </div>
                                 <!-- title -->
@@ -299,96 +155,48 @@
                                 <table class="table v-middle">
                                     <thead>
                                         <tr class="bg-light">
-                                            <th class="border-top-0">Products</th>
-                                            <th class="border-top-0">License</th>
-                                            <th class="border-top-0">Support Agent</th>
-                                            <th class="border-top-0">Technology</th>
-                                            <th class="border-top-0">Tickets</th>
-                                            <th class="border-top-0">Sales</th>
-                                            <th class="border-top-0">Earnings</th>
+                                            <th class="border-top-0">#</th>
+                                            <th class="border-top-0">Nombre</th>
+                                            <th class="border-top-0">Apellido Paterno</th>
+                                            <th class="border-top-0">Apellido Materno</th>
+                                            <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Privilegio</th>
+                                            <th class="border-top-0">Ciudad</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="m-r-10"><a class="btn btn-circle btn-info text-white">EA</a></div>
-                                                    <div class="">
-                                                        <h4 class="m-b-0 font-16">Elite Admin</h4>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>Single Use</td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <label class="label label-danger">Angular</label>
-                                            </td>
-                                            <td>46</td>
-                                            <td>356</td>
-                                            <td>
-                                                <h5 class="m-b-0">$2850.06</h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="m-r-10"><a class="btn btn-circle btn-orange text-white">MA</a></div>
-                                                    <div class="">
-                                                        <h4 class="m-b-0 font-16">Monster Admin</h4>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>Single Use</td>
-                                            <td>Venessa Fern</td>
-                                            <td>
-                                                <label class="label label-info">Vue Js</label>
-                                            </td>
-                                            <td>46</td>
-                                            <td>356</td>
-                                            <td>
-                                                <h5 class="m-b-0">$2850.06</h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="m-r-10"><a class="btn btn-circle btn-success text-white">MP</a></div>
-                                                    <div class="">
-                                                        <h4 class="m-b-0 font-16">Material Pro Admin</h4>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>Single Use</td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <label class="label label-success">Bootstrap</label>
-                                            </td>
-                                            <td>46</td>
-                                            <td>356</td>
-                                            <td>
-                                                <h5 class="m-b-0">$2850.06</h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="m-r-10"><a class="btn btn-circle btn-purple text-white">AA</a></div>
-                                                    <div class="">
-                                                        <h4 class="m-b-0 font-16">Ample Admin</h4>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>Single Use</td>
-                                            <td>John Doe</td>
-                                            <td>
-                                                <label class="label label-purple">React</label>
-                                            </td>
-                                            <td>46</td>
-                                            <td>356</td>
-                                            <td>
-                                                <h5 class="m-b-0">$2850.06</h5>
-                                            </td>
-                                        </tr>
+                                        <?php
+                                            $listar = "SELECT u.*, c.nombre nombreC FROM usuarios u INNER JOIN ciudad c ON id_ciudad = ciudad_id";
+                                            // $ciudad = "SELECT nombre from ciudad"
+                                            if($res = $con -> query($listar)){
+                                                if($res -> num_rows > 0){
+                                                    while($fila = $res -> fetch_assoc()) {
+                                                        echo "<tr>";
+                                                            echo "<td>{$fila['id_usuario']}</td>";
+                                                            echo "<td>{$fila['nombre']}</td>";
+                                                            echo "<td>{$fila['apellidoP']}</td>";
+                                                            echo "<td>{$fila['apellidoM']}</td>";
+                                                            echo "<td>{$fila['email']}</td>";
+                                                            if($fila['admin'] == 1){
+                                                                echo "<td><label class='label label-warning'>Admin</label></td>";
+                                                            }else{
+                                                                echo "<td><label class='label label-primary'>Usuario</label></td>";
+                                                            }
+                                                            echo "<td>{$fila['nombreC']}</td>";
+                                                        echo "</tr>";
+                                                    }
+                                                }else{
+                                                    echo "<tr>";
+                                                        echo "<td colspan='7'>";
+                                                            echo "<div class='container text-center'>";
+                                                                echo "<h5 class='display-5'> <i class='mdi mdi-cloud-outline-off'></i> </h5>";
+                                                                echo "<h3>No existen elementos</h3>";
+                                                            echo "</div>";
+                                                        echo "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -525,15 +333,6 @@
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer text-center">
-                All Rights Reserved by Xtreme Admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
@@ -545,22 +344,7 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/app-style-switcher.js"></script>
-    <!--Wave Effects -->
-    <script src="js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="js/sidebarmenu.js"></script>
-    <!--Custom JavaScript -->
-    <script src="js/custom.js"></script>
-    <!--This page JavaScript -->
-    <!--chartis chart-->
-    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
-    <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
-    <script src="js/pages/dashboards/dashboard1.js"></script>
-</body>
-
-</html>
+<?php
+    include("footer.php");
+    }
+?>

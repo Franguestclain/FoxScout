@@ -59,12 +59,12 @@
                                 $_SESSION["correo"] = $correo;
                                 $_SESSION["nombre"] = $nombre;
                                 $_SESSION["admin"] = false;
-                                if($admin == 1){
+                                if($admin === 1){
                                     $_SESSION["admin"] = true;
                                 }
 
                                 // header("location: index.php");
-                                echo json_encode(["status" => "1", "permiso" => $admin]);
+                                echo json_encode(["status" => "1", "permiso" => $_SESSION['admin']]);
 
                             }else{
                                 $contraseña_err = "La contraseña es incorrecta";
