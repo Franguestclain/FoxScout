@@ -9,12 +9,6 @@
         return (bool) ((mb_strlen($nombre,"UTF-8") > 225) ? true : false);
     }
 
-    // Obtenemos el ID maximo para actualizar la tabla en el frontend
-    $maxSql = "SELECT max(id_tienda) id FROM tienda";
-    $resQuery = $con -> query($maxSql);
-    $res = $resQuery -> fetch_assoc();
-
-
     $extensionesValidas = ['jpeg', 'jpg', 'png'];
     $nombre = $nombreImagen = "";
     $nombre_err = $imagen_err = $error = "";
@@ -23,7 +17,7 @@
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
         
         // Validar si el nombre de la tienda esta vacio
-        if( empty(trim($_POST['addNombre'])) ){
+        if( empty(trim($_POST['editNombre'])) ){
             $nombre_err = "Introduce el nombre de la tienda";
         }else{
             // Evaluamos si la tienda ya existe
@@ -34,7 +28,7 @@
                 $stmt -> bind_param("s", $param_nombre);
 
                 // Inicializamos la variable
-                $param_nombre = $con -> real_escape_string(trim($_POST['addNombre']));
+                $param_nombre = $con -> real_escape_string(trim($_POST['editNombre']));
 
                 // Ejecutamos el query de la consulta
                 if( $stmt -> execute() ){
@@ -44,7 +38,7 @@
                     if( $stmt -> num_rows == 1 ){
                         $nombre_err = "Esta tienda ya ha sido registrada";
                     }else{
-                        $nombre = $con -> real_escape_string(trim($_POST['addNombre']));
+                        $nombre = $con -> real_escape_string(trim($_POST['editNombre']));
                     }
                 }else{
                     $error = "Algo salio mal, intentalo de nuevo.";
@@ -53,11 +47,11 @@
             $stmt -> close();
         }
 
-        $img = $_FILES['addImage']['name'];
-        $tmp = $_FILES['addImage']['tmp_name'];
+        $img = $_FILES['editImage']['name'];
+        $tmp = $_FILES['editImage']['tmp_name'];
 
         // Validar si el archivo subido no esta vacio
-        if( empty($img) || !$_FILES['addImage'] ){
+        if( empty($img) || !$_FILES['editImage'] ){
             $imagen_err = "Selecciona la imagen de la tienda";
         }else{
             // Evaluamos si no tiene caracteres especiales
@@ -91,18 +85,19 @@
         
         if( empty($nombre_err) && empty($imagen_err) ){
             // Preparamos nuestro query
-            $sql = "INSERT INTO Tienda (nombre, img) VALUES (?,?)";
+            $sql = "UPDATE tienda SET nombre=?, img=? WHERE id_tienda=?";
             
             if( $stmt = $con -> prepare($sql) ){
-                $stmt -> bind_param("ss", $param_nombre, $param_imagen);
+                $stmt -> bind_param("ssi", $param_nombre, $param_imagen, $param_id);
 
                 $param_nombre = $nombre;
                 $param_imagen = $carpetaDestino;
+                $param_id = $_POST['id'];
 
                 if( $stmt -> execute() ){
-                    echo json_encode(["status" => "1", "id" => (($res['id'])+1), "nombre" => $nombre, "rutaImg" => $carpetaDestino]);
+                    echo json_encode(["status" => "1", "mensaje" => "Se actualizo correctamente", "nombre" => $nombre, "rutaImg" => $carpetaDestino]);
                 }else{
-                    echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro de la tienda"]);
+                    echo json_encode(["status" => "0", "mensaje" => "Hubo un error al actualizar la tienda"]);
                 }
 
             }

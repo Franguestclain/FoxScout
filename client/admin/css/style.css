@@ -14905,6 +14905,35 @@ File: scss
   transition: all 0.6s ease;
 }
 
+.alertGen{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  opacity: 0;
+}
+
+.btn.disabled, .btn:disabled{
+  /* outline: none; */
+  opacity: .4;
+}
+.btnAccion{
+  color: #fff !important;
+}
+.btnHecho{
+  display: none;
+}
+
+@media (min-width: 576px){
+  .alertGen{
+    width: 400px;
+    right: 0;
+    margin: 1.3rem;
+  }
+}
+
 @keyframes wave {
   50% {
     transform: scale(0.9);
