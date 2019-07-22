@@ -38,20 +38,36 @@
         <!-- ============================================================== -->
         <?php 
             include("nav.php");
-        ?>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <?php
             include("aside.php");
         ?>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
+        <div class="modal fade" id="modalAgregarSucursal" tabindex="-1" role="dialog" aria-labelledby="modalAgregarSucursalTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAgregarSucursalTitulo">Agregar Sucursal</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modal-body-sucursal" class="modal-body">
+                        <form id="addTienda" action="./actions/regTienda.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                            <div class="form-group">
+                                <label for="addNombre">Nombre</label>
+                                <input type="text" name="addNombre" id="addNombre" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="addImage">Imagen</label>
+                                <input type="file" accept="image/png, image/jpeg, image/jpg" name="addImage" id="addImage" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input form="addTienda" id="registrarTienda" name="registrarTienda" type="submit" class="btn btn-primary" value="Registrar">
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
@@ -68,8 +84,7 @@
                             <div class="card-body">
                                 <div class="d-md-flex align-items-center">
                                     <div>
-                                        <h4 class="card-title">Direcciones</h4>
-                                        <!-- <h5 class="card-subtitle">Overview of Top Selling Items</h5> -->
+                                        <h4 class="card-title">Sucursales</h4>
                                     </div>
                                     <div class="ml-auto">
                                         <button class="btn btn-success btnAgregar" data-toggle="modal" data-target=""><i class="fa fa-plus"></i> Agregar</button>
@@ -144,16 +159,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -165,9 +170,6 @@
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
     <!-- ============================================================== -->
     <?php
     include("footer.php");

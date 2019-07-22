@@ -6,6 +6,7 @@ use foxscout;
 CREATE TABLE IF NOT EXISTS Tienda(
     id_tienda int not null auto_increment,
     Nombre varchar(25) not null,
+    img varchar(100) not null,
     primary key(id_tienda)
 )
 auto_increment = 1,
@@ -122,6 +123,7 @@ CREATE TABLE IF NOT EXISTS Usuarios(
     contra      varchar(255) not null,
     admin       boolean not null,
     ciudad_id   int not null,
+    primary key(id_usuario),
 
     CONSTRAINT rel_ciudad
     FOREIGN KEY (ciudad_id)
@@ -137,6 +139,7 @@ CREATE TABLE IF NOT EXISTS Califa(
     prod_id     int not null,
     direccion_id int not null,
     usuario_id      int not null,
+    primary key(id_califa),
 
     CONSTRAINT rel_producto_califa
     FOREIGN KEY (prod_id)

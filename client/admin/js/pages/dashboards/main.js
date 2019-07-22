@@ -194,6 +194,13 @@ $(document).ready(function(){
         });
     });
 
+    /**
+     * ==============================
+     *          Localidades
+     *      (Estados y ciudades)
+     * ==============================
+     */
+
 
 
 
