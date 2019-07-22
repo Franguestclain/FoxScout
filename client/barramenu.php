@@ -46,7 +46,7 @@
         <div class="row align-items-center">
           
           <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="index.php" class="text-white mb-0">FoxScout</a></h1>
+            <h1 class="mb-0 site-logo"><a href="index.php" class="text-white mb-0"><img src="./images/logomamalonch.png" alt="" srcset=""> FoxScout</a></h1>
           </div>
           <?php
             if(isset($_SESSION['admin']) && $_SESSION['admin'] === true){
