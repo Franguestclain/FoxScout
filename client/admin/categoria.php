@@ -64,6 +64,35 @@
                 </div>
             </div>
         </div>
+        
+        <div class="modal fade" id="modalAgregarSubcategoria" tabindex="-1" role="dialog" aria-labelledby="modalAgregarCategoriaTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalAgregarCategoriaTitulo">Agregar Categoria</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modal-body-categoria" class="modal-body">
+                        <form id="addCategoria" action="./actions/regCategoria.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                            <div class="form-group">
+                                <label for="addNombre">Nombre</label>
+                                <input type="text" name="addNombre" id="addNombre" class="form-control">
+                            </div>
+                            <!-- <div class="form-group">
+                                <label for="addImage">Imagen</label>
+                                <input type="file" accept="image/png, image/jpeg, image/jpg" name="addImage" id="addImage" class="form-control">
+                            </div> -->
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input form="addCategoria" id="registrarCategoria" name="registrarCategoria" type="submit" class="btn btn-primary" value="Registrar">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="modalEditarCategoria" tabindex="-1" role="dialog" aria-labelledby="modalEditarCategoriaTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -130,7 +159,7 @@
                                         <!-- <h5 class="card-subtitle">Overview of Top Selling Items</h5> -->
                                     </div>
                                     <div class="ml-auto">
-                                        <button id="btnAgregarCategoria" class="btn mb-2 btnAccion btn-success btnAgregar" data-toggle="modal" data-target="#modalAgregarCategoria"><i class="fa fa-plus"></i> Agregar</button>
+                                        <button id="btnAgregarCategoria" class="btn mb-2 btnAccion btn-success btnAgregar" data-toggle="modal" data-target="#modalAgregarSubcategoria"><i class="fa fa-plus"></i> Agregar</button>
                                         <button id="btnEditarCategoria" class="btn mb-2 btnAccion btn-primary btnEditar" data-toggle="modal" ><i class="fa fa-sync-alt"></i> Editar</button>
                                         <!-- <button id="btnHechoCategoria" class="btn mb-2 btnAccion btn-success btnHecho"><i class="fa fa-check"></i> Hecho</!-->
                                         <button id="btnEliminarCategoria" class="btn mb-2 btnAccion btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
