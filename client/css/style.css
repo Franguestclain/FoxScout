@@ -1891,4 +1891,13 @@ figure figcaption {
     left: 100%;
     width: 25%;
   }
+
+  .logo-fs{
+    max-width: 100%;
+    height: auto;
+  }
+
+.nombre-s{
+  font-size: 17px !important;
+}
 }

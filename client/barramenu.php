@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +47,7 @@
         <div class="row align-items-center">
           
           <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="index.php" class="text-white mb-0"><img src="./images/logomamalonch.png" alt="" srcset=""> FoxScout</a></h1>
+            <h1 class="mb-0 site-logo logo=fs"><a href="index.php" class="text-white mb-0"><img src="./images/logomamalonch.png" width="40" height="40"  alt="" srcset=""> FoxScout</a></h1>
           </div>
           <?php
             if(isset($_SESSION['admin']) && $_SESSION['admin'] === true){
@@ -58,15 +59,15 @@
                   <li class="active"><a href="index.php">Inicio</a></li>
                   <li><a href="listings.php">Tiendas</a></li>
                   <li class="">
-                    <a href="about.php">Comparativa</a>
+                    <a href="comparativa.php">Comparativa</a>
                     
                   </li>
                   
                   <li class="mr-5"><a href="contact.php">Contacto</a></li>
                   <!-- <li><a class="username" href="#"></a></!-->
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <?php echo $_SESSION['nombre']; ?>
+                    <a class="nav-link dropdown-toggle nombre-s cta" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="bg-primary text-white rounded"><?php echo $_SESSION['nombre']; ?></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <a class="dropdown-item" href="./admin/">Panel de administrador</a>
@@ -86,7 +87,7 @@
                   <li class="active"><a href="index.php">Inicio</a></li>
                   <li><a href="listings.php">Tiendas</a></li>
                   <li class="">
-                    <a href="about.php">Comparativa</a>
+                    <a href="comparativa.php">Comparativa</a>
                     
                   </li>
                   <li class="mr-5"><a href="contact.php">Contacto</a></li>
@@ -94,8 +95,10 @@
                     if(isset($_SESSION['log']) && $_SESSION['log'] === true){
                   ?>
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $_SESSION['nombre']; ?>
+                      <a class="nav-link dropdown-toggle nombre-s cta" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        
+                      
+                        <span class="bg-primary text-white rounded"><?php echo $_SESSION['nombre']; ?></span>
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Mi cuenta</a>

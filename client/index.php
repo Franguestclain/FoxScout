@@ -1,11 +1,12 @@
 <?php
     session_start();
 ?>
+
   
   <?php include("barramenu.php");?>
   
 
-    <div class="site-blocks-cover overlay" style="background-image: url(images/dustin-lee-jLwVAUtLOAQ-unsplash.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay" style="background-image: url(images/banter-snaps-kKEBaGVUwXY-unsplash.jpg" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center justify-content-center text-center">
 
@@ -95,10 +96,17 @@
               <div class="d-block d-md-flex listing vertical">
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_1.jpg')"></a>
                 <div class="lh-content">
-                  <span class="category">Cars &amp; Vehicles</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <h3><a href="listings-single.html">New Black Car</a></h3>
+                  <span class="category">Real Estate</span>
+                  <!-- aqui es el cocoro -->
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <?php } ?>
+
+                  <h3><a href="listings-single.html">Own New House</a></h3>
                   <address>Don St, Brooklyn, New York</address>
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -106,7 +114,9 @@
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-secondary"></span>
                     <span class="review">(3 Reviews)</span>
-                  </p>
+                  </p>                  
+                  <?php } ?>
+
                 </div>
               </div>
 
@@ -114,9 +124,16 @@
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_2.jpg')"></a>
                 <div class="lh-content">
                   <span class="category">Real Estate</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <!-- aqui es el cocoro -->
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <?php } ?>
+
                   <h3><a href="listings-single.html">Own New House</a></h3>
                   <address>Don St, Brooklyn, New York</address>
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -124,17 +141,26 @@
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-secondary"></span>
                     <span class="review">(3 Reviews)</span>
-                  </p>
+                  </p>                  
+                  <?php } ?>
+
                 </div>
               </div>
 
               <div class="d-block d-md-flex listing vertical">
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_3.jpg')"></a>
                 <div class="lh-content">
-                  <span class="category">Furniture</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <h3><a href="listings-single.html">Wooden Chair &amp; Table</a></h3>
+                  <span class="category">Real Estate</span>
+                  <!-- aqui es el cocoro -->
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <?php } ?>
+
+                  <h3><a href="listings-single.html">Own New House</a></h3>
                   <address>Don St, Brooklyn, New York</address>
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -142,17 +168,26 @@
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-secondary"></span>
                     <span class="review">(3 Reviews)</span>
-                  </p>
+                  </p>                  
+                  <?php } ?>
+
                 </div>
               </div>
 
               <div class="d-block d-md-flex listing vertical">
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_4.jpg')"></a>
                 <div class="lh-content">
-                  <span class="category">Electronics</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <h3><a href="listings-single.html">iPhone X gray</a></h3>
+                  <span class="category">Real Estate</span>
+                  <!-- aqui es el cocoro -->
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <?php } ?>
+
+                  <h3><a href="listings-single.html">Own New House</a></h3>
                   <address>Don St, Brooklyn, New York</address>
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -160,17 +195,26 @@
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-secondary"></span>
                     <span class="review">(3 Reviews)</span>
-                  </p>
+                  </p>                  
+                  <?php } ?>
+
                 </div>
               </div>
 
               <div class="d-block d-md-flex listing vertical">
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_1.jpg')"></a>
                 <div class="lh-content">
-                  <span class="category">Cars &amp; Vehicles</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <h3><a href="listings-single.html">New Black Car</a></h3>
+                  <span class="category">Real Estate</span>
+                  <!-- aqui es el cocoro -->
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <?php } ?>
+
+                  <h3><a href="listings-single.html">Own New House</a></h3>
                   <address>Don St, Brooklyn, New York</address>
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -178,7 +222,9 @@
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-secondary"></span>
                     <span class="review">(3 Reviews)</span>
-                  </p>
+                  </p>                  
+                  <?php } ?>
+
                 </div>
               </div>
 
@@ -186,9 +232,16 @@
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_2.jpg')"></a>
                 <div class="lh-content">
                   <span class="category">Real Estate</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <!-- aqui es el cocoro -->
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <?php } ?>
+
                   <h3><a href="listings-single.html">Own New House</a></h3>
                   <address>Don St, Brooklyn, New York</address>
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -196,17 +249,26 @@
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-secondary"></span>
                     <span class="review">(3 Reviews)</span>
-                  </p>
+                  </p>                  
+                  <?php } ?>
+
                 </div>
               </div>
 
               <div class="d-block d-md-flex listing vertical">
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_3.jpg')"></a>
                 <div class="lh-content">
-                  <span class="category">Furniture</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <h3><a href="listings-single.html">Wooden Chair &amp; Table</a></h3>
+                  <span class="category">Real Estate</span>
+                  <!-- aqui es el cocoro -->
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <?php } ?>
+
+                  <h3><a href="listings-single.html">Own New House</a></h3>
                   <address>Don St, Brooklyn, New York</address>
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -214,17 +276,26 @@
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-secondary"></span>
                     <span class="review">(3 Reviews)</span>
-                  </p>
+                  </p>                  
+                  <?php } ?>
+
                 </div>
               </div>
 
               <div class="d-block d-md-flex listing vertical">
                 <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_4.jpg')"></a>
                 <div class="lh-content">
-                  <span class="category">Electronics</span>
-                  <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <h3><a href="listings-single.html">iPhone X gray</a></h3>
+                  <span class="category">Real Estate</span>
+                  <!-- aqui es el cocoro -->
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                  <?php } ?>
+
+                  <h3><a href="listings-single.html">Own New House</a></h3>
                   <address>Don St, Brooklyn, New York</address>
+
+                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
                   <p class="mb-0">
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-warning"></span>
@@ -232,7 +303,9 @@
                     <span class="icon-star text-warning"></span>
                     <span class="icon-star text-secondary"></span>
                     <span class="review">(3 Reviews)</span>
-                  </p>
+                  </p>                  
+                  <?php } ?>
+
                 </div>
               </div>
 
@@ -497,7 +570,7 @@
 
 
 
-    <div class="site-section bg-light">
+    <!-- <div class="site-section bg-light">
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 text-center border-primary">
@@ -536,7 +609,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   
     
     <?php

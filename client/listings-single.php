@@ -1,3 +1,9 @@
+<?php
+    session_start();
+?>
+
+
+
 <?php include("barramenu.php");?>
   
     <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(images/hero_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
