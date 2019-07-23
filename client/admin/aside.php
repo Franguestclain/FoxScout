@@ -38,7 +38,7 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="sucursales.php" aria-expanded="false"><i class="mdi mdi-google-maps"></i><span class="hide-menu">Sucursales</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="error-404.php" aria-expanded="false"><i class="mdi mdi-map-marker-multiple"></i><span class="hide-menu">Error 404</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="localidades.php" aria-expanded="false"><i class="mdi mdi-map-marker-multiple"></i><span class="hide-menu">Localidades</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="categorias.php" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">Categorías</span></a></li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="categoria.php" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">Categorías</span></a></li>
             </ul>
             
         </nav>
