@@ -9,11 +9,6 @@
         return (bool) ((mb_strlen($nombre,"UTF-8") > 225) ? true : false);
     }
 
-    // Obtenemos el ID maximo para actualizar la tabla en el frontend
-    $maxSql = "SELECT max(id_tienda) id FROM tienda";
-    $resQuery = $con -> query($maxSql);
-    $res = $resQuery -> fetch_assoc();
-
 
     $extensionesValidas = ['jpeg', 'jpg', 'png'];
     $nombre = $nombreImagen = "";
@@ -100,7 +95,11 @@
                 $param_imagen = $carpetaDestino;
 
                 if( $stmt -> execute() ){
-                    echo json_encode(["status" => "1", "id" => (($res['id'])+1), "nombre" => $nombre, "rutaImg" => $carpetaDestino]);
+                    // Obtenemos el ID maximo para actualizar la tabla en el frontend
+                    $maxSql = "SELECT max(id_tienda) maximus FROM tienda";
+                    $resQuery = $con -> query($maxSql);
+                    $res = $resQuery -> fetch_assoc();
+                    echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $nombre, "rutaImg" => $carpetaDestino]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro de la tienda"]);
                 }

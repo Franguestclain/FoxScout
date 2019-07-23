@@ -73,6 +73,7 @@
                       <a class="dropdown-item" href="./admin/">Panel de administrador</a>
                       <a class="dropdown-item" href="./admin/pages-profile.php">Mi cuenta</a>
                       <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                    </div>
                   </li>
                 </ul>
               </nav>
@@ -103,6 +104,7 @@
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Mi cuenta</a>
                         <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                      </div>
                     </li>
                   <?php
                     }else{
