@@ -2,65 +2,70 @@
 
     include("../../conexion.php");
 
-    $nombre  = "";
+    $nombre = "";
     $nombre_err = $error = "";
 
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
 
-        // Evaluar si el estado ya existe
-        // Primero si esta vacio el campo
-        if(empty(trim($_POST['addNombreEstado']))){
-            $nombre_err = "El nombre esta vacio";
+        // Evaluar si el nombre de la ciudad esta vacio
+        if( empty(trim($_POST['addNombreCiudad'])) ){
+            $nombre_err = "Introduce una ciudad";
         }else{
-            // Creamos nuestra consulta con una incognita
-            $existe = "SELECT id_estado FROM estado WHERE nombre = ?";
-            // Evaluamos si podemos crear la sentencia preparada
+            // Evaluar si ya existe esa ciudad
+            $existe = "SELECT id_ciudad FROM ciudad WHERE nombre = ?";
+
+            // Verificamos si podemos crear una consulta preparada
             if( $stmt = $con -> prepare($existe) ){
-                // Enlazamos variables
+                // Enlazamos variable con constante
                 $stmt -> bind_param("s", $param_nombre);
 
                 // Inicializamos variable
-                $param_nombre = $con -> real_escape_string(trim($_POST['addNombreEstado']));
-                
-                // Intentamos ejecutar la consulta
+                $param_nombre = $con -> real_escape_string(trim($_POST['addNombreCiudad']));
+
+                // Intentamos ejecutar el query
                 if( $stmt -> execute() ){
                     // Guardamos el resultado
                     $stmt -> store_result();
-                    // Evaluamos si hay un registro
+                    // Evaluamos si existe ese registro
                     if( $stmt -> num_rows == 1 ){
-                        $nombre_err = "Este estado ya ha sido registrado";
+                        $nombre_err = "Esa ciudad ya existe";
                     }else{
-                        $nombre = $con -> real_escape_string(trim($_POST['addNombreEstado']));
+                        $nombre = $con -> real_escape_string(trim($_POST['addNombreCiudad']));
                     }
                 }else{
-                    $error = "Algo salio mal. Intentalo de nuevo";
+                    $error = "Algo salio mal. Intentalo de nuevo.";
                 }
+
             }
             // Cerramos la consulta preparada
             $stmt -> close();
+
+
         }
 
-        // Si no tenemos errores
+        // Evaluamos si tenemos errores
         if( empty($nombre_err) && empty($error) ){
-            $insertar = "INSERT INTO estado (nombre) VALUES (?)";
+            $insertar = "INSERT INTO ciudad (nombre, estado_id) VALUES (?,?)";
 
-            if( $stmt = $con -> prepare($insertar) ){
-                $stmt -> bind_param("s", $param_nombre);
+            if($stmt = $con -> prepare($insertar)){
+                $stmt -> bind_param("ss", $param_nombre, $param_idEst);
 
                 $param_nombre = $nombre;
+                $param_idEst = $_POST['selectEstado'];
 
                 if( $stmt -> execute() ){
-                    $max = "SELECT max(id_estado) maximus FROM estado";
+                    $max = "SELECT max(id_ciudad) maximus, e.nombre nombreE FROM ciudad c, estado e WHERE estado_id = id_estado";
                     $result = $con -> query($max);
                     $num = $result -> fetch_assoc(); 
-                    echo json_encode(["status" => "1","id" => (intval($num['maximus'])) ,"nombre" => $nombre]);
+                    echo json_encode(["status" => "1", "id" => intval($num['maximus']), "nombre" => $nombre, "estado" => $num['nombreE']]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error al insertar"]);
                 }
 
             }
-            
+
             $stmt -> close();
+
         }else{
             $cadenaReturn = "";
             $errores = [$nombre_err, $error];
@@ -72,5 +77,5 @@
             echo json_encode(["status" => "0", "mensaje" => $cadenaReturn]);
         }
 
-        $con -> close();
+
     }

@@ -345,7 +345,46 @@ $(document).ready(function(){
     $("#addCiudad").submit(function(e){
         e.preventDefault();
 
-        alert("Agregando Ciudad");
+        let info = $(this).serialize();
+
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: info,
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == "1"){
+                    $("#modalAgregarCiudad").modal("hide");
+                    limpiarFormulario("#modalAgregarCiudad", "#addCiudad");
+                    let newRow = `<tr id='row-ciudad${data.id}'>
+                    <td><input style='display: none;' class='inp-cbx checkboxCiudad' type='checkbox' data-idRow='${data.id}' name='check-Ciudad${data.id}' id='check-Ciudad${data.id}'>
+                                    <label class='cbx' for='check-Ciudad${data.id}'>
+                                        <span>
+                                            <svg width='12px' height='10px' viewbox='0 0 12 10'>
+                                                <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
+                                            </svg>
+                                        </span>
+                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-ciudad-${data.id}'>${data.nombre}</td> <td>${data.estado}</td> </tr>`
+                    $("#table-body-ciudad").append(newRow);
+                }else{
+                    let mensaje = `<div id='alertAddCiudadError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-ciudad").append(mensaje);
+                    $("#alertAddCiudadError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertAddCiudadError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertAddCiudadError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
     });
 
 

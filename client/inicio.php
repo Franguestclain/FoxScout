@@ -89,6 +89,7 @@ include("barramenu.php");
 
     <script>
       $("#formLogin").submit(function(e){
+        // Cancelando submit
         e.preventDefault();
         console.log("Entramos al submit cancelado");
         let info = $(this).serialize();

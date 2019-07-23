@@ -90,7 +90,7 @@
                                         if($resOptionE = $con -> query($optionEstado)){
                                             if( $resOptionE -> num_rows > 0 ){
                                                 while($filaOptionE = $resOptionE -> fetch_assoc()){
-                                                    echo "<option value='{$filaOptionE['id_estado']}'>{$filaOptionE['nombre']}</option>";
+                                                    echo "<option id='option-estado-id{$filaOptionE['id_estado']}' value='{$filaOptionE['id_estado']}'>{$filaOptionE['nombre']}</option>";
                                                 }
                                             }
                                         }
@@ -276,7 +276,7 @@
                                             <th class="border-top-0">Estado</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="table-body-ciudad">
                                         <?php
                                             $listarCiudad = "SELECT c.*, e.nombre nombreE FROM ciudad c, estado e WHERE c.estado_id = e.id_estado";
 
