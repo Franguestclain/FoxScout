@@ -126,7 +126,7 @@
                                 <!-- title -->
                                 <div class="d-md-flex align-items-center">
                                     <div>
-                                        <h4 class="card-title">Categorias</h4>
+                                        <h4 class="card-title">Categorías</h4>
                                         <!-- <h5 class="card-subtitle">Overview of Top Selling Items</h5> -->
                                     </div>
                                     <div class="ml-auto">
