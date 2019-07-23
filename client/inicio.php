@@ -11,7 +11,7 @@ include("barramenu.php");
 ?>
 
   
-    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(images/hero_2.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(images/banter-snaps-kKEBaGVUwXY-unsplash.jpg);" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center justify-content-center text-center">
 
@@ -20,8 +20,8 @@ include("barramenu.php");
             
             <div class="row justify-content-center mt-5">
               <div class="col-md-8 text-center">
-                <h1>Log In</h1>
-                <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
+                <h1>Inicio de sesión</h1>
+                <!-- <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit</p> -->
               </div>
             </div>
 

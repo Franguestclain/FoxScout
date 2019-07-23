@@ -387,6 +387,27 @@ $(document).ready(function(){
         
     });
 
+// Eventos de checkboxes
+checkboxes("#checkAll-Categoria",".checkboxCategoria");
 
+// Evaluar editar Categoria
+$("#btnEditarCategoria").on('click', function(){
+    if( evaluarEditar("#checkAll-Categoria",".checkboxCategoria") ){
+        $("#alertGenCategoria").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+        setTimeout(function(){
+            $("#alertGenCategoria").toggleClass("fadeInUp fadeOutDown").empty();
+            setTimeout(function(){
+                $("#alertGenCategoria").toggleClass("animated");
+            },500);
+        },2000);
+    }else{
+        let id = $(".checkboxCategoria:checked").attr("data-idRow");
+        let nombre = $("#datos-nombre-Categoria-"+id).text();
+        $("#editNombreCategoria").val(nombre);
+        $("#id-edit-Categoria").val(id);
+        $("#modalEditarCategoria").modal("show");
+        limpiarFormulario("#modalEditarCategoria","#editCategoria");
+    }
+});
 
 });
