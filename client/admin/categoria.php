@@ -36,60 +36,60 @@
             include("aside.php");
         ?>
 
-        <div class="modal fade" id="modalAgregarTienda" tabindex="-1" role="dialog" aria-labelledby="modalAgregarTiendaTitulo" aria-hidden="true">
+        <div class="modal fade" id="modalAgregarCategoria" tabindex="-1" role="dialog" aria-labelledby="modalAgregarCategoriaTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalAgregarTiendaTitulo">Agregar Tienda</h5>
+                        <h5 class="modal-title" id="modalAgregarCategoriaTitulo">Agregar Categoria</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="modal-body-tienda" class="modal-body">
-                        <form id="addTienda" action="./actions/regTienda.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                    <div id="modal-body-categoria" class="modal-body">
+                        <form id="addCategoria" action="./actions/regCategoria.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
                             <div class="form-group">
                                 <label for="addNombre">Nombre</label>
                                 <input type="text" name="addNombre" id="addNombre" class="form-control">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="addImage">Imagen</label>
                                 <input type="file" accept="image/png, image/jpeg, image/jpg" name="addImage" id="addImage" class="form-control">
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <input form="addTienda" id="registrarTienda" name="registrarTienda" type="submit" class="btn btn-primary" value="Registrar">
+                        <input form="addCategoria" id="registrarCategoria" name="registrarCategoria" type="submit" class="btn btn-primary" value="Registrar">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="modalEditarTienda" tabindex="-1" role="dialog" aria-labelledby="modalEditarTiendaTitulo" aria-hidden="true">
+        <div class="modal fade" id="modalEditarCategoria" tabindex="-1" role="dialog" aria-labelledby="modalEditarCategoriaTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalEditarTiendaTitulo">Editar Tienda</h5>
+                        <h5 class="modal-title" id="modalEditarCategoriaTitulo">Editar Categoria</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="modal-body-editienda" class="modal-body">
-                        <form id="editTienda" action="./actions/editTienda.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                    <div id="modal-body-ediCategoria" class="modal-body">
+                        <form id="editCategoria" action="./actions/editCategoria.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
                             <div class="form-group">
-                                <label for="editNombre">Nombre</label>
-                                <input type="text" name="editNombre" id="editNombre" class="form-control">
+                                <label for="editNombreCategoria">Nombre</label>
+                                <input type="text" name="editNombreCategoria" id="editNombreCategoria" class="form-control">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="editImage">Imagen</label>
                                 <input type="file" accept="image/png, image/jpeg, image/jpg" name="editImage" id="editImage" class="form-control">
-                            </div>
-                            <input type="hidden" name="id" id="id-edit">
+                            </div> -->
+                            <input type="hidden" name="id" id="id-edit-Categoria">
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <input form="editTienda" id="editarTienda" name="editarTienda" type="submit" class="btn btn-success" value="Hecho">
+                        <input form="editCategoria" id="editarCategoria" name="editarCategoria" type="submit" class="btn btn-success" value="Hecho">
                     </div>
                 </div>
             </div>
@@ -126,14 +126,14 @@
                                 <!-- title -->
                                 <div class="d-md-flex align-items-center">
                                     <div>
-                                        <h4 class="card-title">Tiendas</h4>
+                                        <h4 class="card-title">Categorias</h4>
                                         <!-- <h5 class="card-subtitle">Overview of Top Selling Items</h5> -->
                                     </div>
                                     <div class="ml-auto">
-                                        <button id="btnAgregarTienda" class="btn mb-2 btnAccion btn-success btnAgregar" data-toggle="modal" data-target="#modalAgregarTienda"><i class="fa fa-plus"></i> Agregar</button>
-                                        <button id="btnEditarTienda" class="btn mb-2 btnAccion btn-primary btnEditar" data-toggle="modal" ><i class="fa fa-sync-alt"></i> Editar</button>
-                                        <!-- <button id="btnHechoTienda" class="btn mb-2 btnAccion btn-success btnHecho"><i class="fa fa-check"></i> Hecho</!-->
-                                        <button id="btnEliminarTienda" class="btn mb-2 btnAccion btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
+                                        <button id="btnAgregarCategoria" class="btn mb-2 btnAccion btn-success btnAgregar" data-toggle="modal" data-target="#modalAgregarCategoria"><i class="fa fa-plus"></i> Agregar</button>
+                                        <button id="btnEditarCategoria" class="btn mb-2 btnAccion btn-primary btnEditar" data-toggle="modal" ><i class="fa fa-sync-alt"></i> Editar</button>
+                                        <!-- <button id="btnHechoCategoria" class="btn mb-2 btnAccion btn-success btnHecho"><i class="fa fa-check"></i> Hecho</!-->
+                                        <button id="btnEliminarCategoria" class="btn mb-2 btnAccion btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
                                     </div>
                                 </div>
                                 <!-- title -->
@@ -143,8 +143,8 @@
                                     <thead>
                                         <tr class="bg-light">
                                             <th class="border-top-0">
-                                                <input style="display: none;" class="inp-cbx" type="checkbox" name="checkAll-Tienda" id="checkAll-Tienda">
-                                                <label class="cbx" for="checkAll-Tienda">
+                                                <input style="display: none;" class="inp-cbx" type="checkbox" name="checkAll-Categoria" id="checkAll-Categoria">
+                                                <label class="cbx" for="checkAll-Categoria">
                                                     <span>
                                                         <svg width="12px" height="10px" viewbox="0 0 12 10">
                                                             <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
@@ -154,20 +154,20 @@
                                             </th>
                                             <th class="border-top-0">#</th>
                                             <th class="border-top-0">Nombre</th>
-                                            <th class="border-top-0">Logo</th>
+                                            
                                         </tr>
                                     </thead>
-                                    <tbody id="table-body-tienda">
+                                    <tbody id="table-body-Categoria">
                                         <?php
-                                            $listarTiendas = "SELECT * FROM tienda";
+                                            $listarCategorias = "SELECT * FROM categoria";
                                             // $ciudad = "SELECT nombre from ciudad"
-                                            if($res = $con -> query($listarTiendas)){
+                                            if($res = $con -> query($listarCategorias)){
                                                 if($res -> num_rows > 0){
                                                     while($fila = $res -> fetch_assoc()) {
-                                                        echo "<tr id='row-{$fila['id_tienda']}'>";
+                                                        echo "<tr id='row-{$fila['id_categoria']}'>";
                                                             echo "<td>";
-                                                                echo "<input style='display: none;' class='inp-cbx checkboxTienda' type='checkbox' data-idRow='{$fila['id_tienda']}' name='check-Tienda{$fila['id_tienda']}' id='check-Tienda{$fila['id_tienda']}'>";
-                                                                echo "<label class='cbx' for='check-Tienda{$fila['id_tienda']}'>";
+                                                                echo "<input style='display: none;' class='inp-cbx checkboxCategoria' type='checkbox' data-idRow='{$fila['id_categoria']}' name='check-Categoria{$fila['id_categoria']}' id='check-Categoria{$fila['id_categoria']}'>";
+                                                                echo "<label class='cbx' for='check-Categoria{$fila['id_categoria']}'>";
                                                                     echo "<span>";
                                                                         echo "<svg width='12px' height='10px' viewbox='0 0 12 10'>";
                                                                             echo "<polyline points='1.5 6 4.5 9 10.5 1'></polyline>";
@@ -175,9 +175,9 @@
                                                                     echo "</span>";
                                                                 echo "</label>";
                                                             echo "</td>";
-                                                            echo "<td>{$fila['id_tienda']}</td>";
-                                                            echo "<td id='datos-{$fila['id_tienda']}' >{$fila['nombre']}</td>";
-                                                            echo "<td><img id='img-tienda{$fila['id_tienda']}' class='img-tienda' src='{$fila['img']}' /></td>";
+                                                            echo "<td>{$fila['id_categoria']}</td>";
+                                                            echo "<td id='datos-nombre-Categoria{$fila['id_categoria']}' >{$fila['nombre']}</td>";
+                                                            // echo "<td><img id='img-Categoria{$fila['id_categoria']}' class='img-Categoria' src='{$fila['img']}' /></td>";
                                                         echo "</tr>";
                                                     }
                                                 }else{
@@ -200,7 +200,7 @@
                 </div>
             </div>
         </div>
-        <div id="alertGen" class="alert bg-dark alertGen fadeOutDown"></div>
+        <div id="alertGenCategoria" class="alert bg-dark alertGen fadeOutDown"></div>
     </div>
 
 
