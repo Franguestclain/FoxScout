@@ -194,18 +194,12 @@
                                         ?>
                                     </tbody>
                                 </table>
-                            </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div id="alertGenCategoria" class="alert bg-dark alertGen fadeOutDown"></div>
-    </div>
-
-    <!-- Subcategorias -->
-
-<div class="row">
+                <!-- Subcategorias -->
+                <div class="row">
                     <!-- column -->
                     <div class="col-12">
                         <div class="card">
@@ -282,10 +276,16 @@
                                         ?>
                                     </tbody>
                                 </table>
-                            </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        
+        </div>
+        <div id="alertGenCategoria" class="alert bg-dark alertGen fadeOutDown"></div>
+    </div>
+
 
 
 <?php
