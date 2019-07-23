@@ -132,6 +132,44 @@
                 </div>
             </div>
         </div>
+       
+        <div class="modal fade" id="modalEditarSubcategoria" tabindex="-1" role="dialog" aria-labelledby="modalEditarSubcategoriaTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarSubcategoriaTitulo">Editar Subcategoria</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modal-body-ediSubcategoria" class="modal-body">
+                        <form id="editSubcategoria" action="./actions/editSubcategoria.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                            <div class="form-group">
+                                <label for="editNombreSubcategoria">Nombre</label>
+                                <input type="text" name="editNombreSubcategoria" id="editNombreSubcategoria" class="form-control">
+                            </div>
+                            <select class="form-control" name="selectSubcat" id="selectSubcat">
+                           <?php
+                                        $optionSubcat = "SELECT * FROM categoria";
+                                        if($resOptionE = $con -> query($optionSubcat)){
+                                            if( $resOptionE -> num_rows > 0 ){
+                                                while($filaOptionE = $resOptionE -> fetch_assoc()){
+                                                    echo "<option id='option-subcategoria-id{$filaOptionE['id_categoria']}' value='{$filaOptionE['id_categoria']}'>{$filaOptionE['nombre']}</option>";
+                                                }
+                                            }
+                                        }
+                                    ?> 
+                            </select>
+                            <input type="hidden" name="id" id="id-edit-Subcategoria">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input form="editSubcategoria" id="editarSubcategoria" name="editarSubcategoria" type="submit" class="btn btn-success" value="Hecho">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="modalDel" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
