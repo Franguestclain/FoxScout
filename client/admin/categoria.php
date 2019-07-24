@@ -258,7 +258,7 @@
                                                     }
                                                 }else{
                                                     echo "<tr>";
-                                                        echo "<td colspan='2'>";
+                                                        echo "<td colspan='3'>";
                                                             echo "<div class='container text-center'>";
                                                                 echo "<h5 class='display-5'> <i class='mdi mdi-cloud-outline-off'></i> </h5>";
                                                                 echo "<h3>No existen elementos</h3>";
