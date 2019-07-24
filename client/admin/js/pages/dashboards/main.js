@@ -249,11 +249,11 @@ $(document).ready(function(){
     // Evaluar editar estado
     $("#btnEditarEstado").on('click', function(){
         if( evaluarEditar("#checkAll-Estado",".checkboxEstado") ){
-            $("#alertGenEstado").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            $("#alertGenLocalidad").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
             setTimeout(function(){
-                $("#alertGenEstado").toggleClass("fadeInUp fadeOutDown").empty();
+                $("#alertGenLocalidad").toggleClass("fadeInUp fadeOutDown").empty();
                 setTimeout(function(){
-                    $("#alertGenEstado").toggleClass("animated");
+                    $("#alertGenLocalidad").toggleClass("animated");
                 },500);
             },2000);
         }else{
@@ -306,11 +306,11 @@ $(document).ready(function(){
     // Evaluar Chkbxs Borrar Estado
     $("#btnEliminarEstado").on('click', function(){
         if( evaluarDel("#checkAll-Estado",".checkboxEstado") ){
-            $("#alertGenEstado").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            $("#alertGenLocalidad").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
             setTimeout(function(){
-                $("#alertGenEstado").toggleClass("fadeInUp fadeOutDown").empty();
+                $("#alertGenLocalidad").toggleClass("fadeInUp fadeOutDown").empty();
                 setTimeout(function(){
-                    $("#alertGenEstado").toggleClass("animated");
+                    $("#alertGenLocalidad").toggleClass("animated");
                 },500);
             },2000);
         }else{
@@ -342,6 +342,7 @@ $(document).ready(function(){
         });
     });
 
+    // Agregar Ciudad
     $("#addCiudad").submit(function(e){
         e.preventDefault();
 
@@ -386,6 +387,111 @@ $(document).ready(function(){
         });
         
     });
+
+    // Eventos de checkboxes
+    checkboxes("#checkAll-Ciudad",".checkboxCiudad");
+
+    // Animacion al hacer click en editar
+    $("#btnEditarCiudad").on('click', function(){
+        // Evaluamos si solo hay un checkbox seleccionado
+        if( evaluarEditar("#checkAll-Ciudad",".checkboxCiudad") ){
+            $("#alertGenLocalidad").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenLocalidad").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenLocalidad").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            let id = $(".checkboxCiudad:checked").attr("data-idRow");
+            let nombre = $("#datos-ciudad-nombre"+id).text();
+            $("#editNombreCiudad").val(nombre);
+            $("#id-edit-ciudad").val(id);
+            $("#modalEditarCiudad").modal("show");
+            limpiarFormulario("#modalEditarCiudad","#editCiudad");
+        }
+    });
+
+    // Editar ciudad
+    $("#editCiudad").submit(function(e){
+        e.preventDefault();
+        let datos = $(this).serialize();
+
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: datos,
+            dataType: "json",
+            success: function(data,status,jqXHR){
+                if(data.status == 1){
+                    setTimeout(function(){
+                        $("#modalEditarCiudad").modal("hide");
+                        limpiarFormulario("#modalEditarCiudad","#editCiudad");
+                        $("#temporal").remove();
+                        window.location.href = "localidades.php";
+                    },1000);
+                }else{
+                    let mensaje = `<div id='alertEditCiudadError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-editCiudad").append(mensaje);
+                    $("#alertEditCiudadError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertEditCiudadError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertEditCiudadError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
+
+
+    // Evaluar Chkbxs Borrar Ciudad
+    $("#btnEliminarCiudad").on('click', function(){
+        if( evaluarDel("#checkAll-Ciudad",".checkboxCiudad") ){
+            $("#alertGenLocalidad").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenLocalidad").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenLocalidad").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            $("#modalDelCiudad").modal("show");
+        }
+    });
+
+    // Boton OK de confirmacion
+    $("#confirmarCiudad").on('click', function(){
+        let ids = $.map($(".checkboxCiudad:checked"), (x) => $(x).attr('data-idRow') );
+        $.ajax({
+            url: "./actions/delCiudad.php",
+            method: "POST",
+            data: {ids: ids},
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == 1){
+                    data.arr.forEach((item) => $("#row-ciudad"+item).remove() );
+                    $("#modalDelCiudad").modal('hide');
+                }else{
+                    console.log("Nel no jalo");
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
+
+
 
 // Eventos de checkboxes
 checkboxes("#checkAll-Categoria",".checkboxCategoria");

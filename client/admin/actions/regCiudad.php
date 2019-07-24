@@ -54,7 +54,7 @@
                 $param_idEst = $_POST['selectEstado'];
 
                 if( $stmt -> execute() ){
-                    $max = "SELECT max(id_ciudad) maximus, e.nombre nombreE FROM ciudad c, estado e WHERE estado_id = id_estado";
+                    $max = "SELECT max(id_ciudad) maximus, e.nombre nombreE FROM ciudad c, estado e WHERE id_estado = {$param_idEst}";
                     $result = $con -> query($max);
                     $num = $result -> fetch_assoc(); 
                     echo json_encode(["status" => "1", "id" => intval($num['maximus']), "nombre" => $nombre, "estado" => $num['nombreE']]);

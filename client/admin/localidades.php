@@ -134,6 +134,48 @@
                 </div>
             </div>
         </div> <!-- Fin modal edit Estado -->
+        
+        <!-- Modal edit Ciudad -->
+        <div class="modal fade" id="modalEditarCiudad" tabindex="-1" role="dialog" aria-labelledby="modalEditarCiudadTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarCiudadTitulo">Editar Ciudad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modal-body-editCiudad" class="modal-body">
+                        <form id="editCiudad" action="./actions/editCiudad.php" method="POST"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                            <div class="form-group">
+                                <label for="editNombreCiudad">Nombre</label>
+                                <input type="text" name="editNombreCiudad" id="editNombreCiudad" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="selectEditEstado">Estado</label>
+                                <select class="form-control" name="selectEditEstado" id="selectEditEstado">
+                                    <?php
+                                        $optionEstado = "SELECT * FROM estado";
+                                        if($resOptionE = $con -> query($optionEstado)){
+                                            if( $resOptionE -> num_rows > 0 ){
+                                                while($filaOptionE = $resOptionE -> fetch_assoc()){
+                                                    echo "<option id='option-editEstado-id{$filaOptionE['id_estado']}' value='{$filaOptionE['id_estado']}'>{$filaOptionE['nombre']}</option>";
+                                                }
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <input type="hidden" name="id" id="id-edit-ciudad" value="">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input form="editCiudad" id="editarCiudad" name="editarCiudad" type="submit" class="btn btn-primary" value="Registrar">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Fin modal edit Ciudad -->
 
 
         <!-- Modal Delete Estado -->
@@ -151,6 +193,27 @@
                 </div>
                 <div class="modal-footer">
                     <button id="confirmarEstado" type="button" class="btn btn-primary">Ok</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+                </div>
+            </div>
+        </div> <!-- Fin modal Delete Estado -->
+        
+        <!-- Modal Delete Estado -->
+        <div class="modal fade" id="modalDelCiudad" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">¿Estas seguro de eliminar estos registros?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Estos datos se eliminaran de forma permanente.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirmarCiudad" type="button" class="btn btn-primary">Ok</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </div>
                 </div>
@@ -252,8 +315,8 @@
                                     </div>
                                     <div class="ml-auto">
                                         <button class="btn btn-success btnAgregar" data-toggle="modal" data-target="#modalAgregarCiudad"><i class="fa fa-plus"></i> Agregar</button>
-                                        <button class="btn btn-primary btnEditar"><i class="fa fa-sync-alt"></i> Editar</button>
-                                        <button class="btn btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
+                                        <button id="btnEditarCiudad" class="btn btn-primary btnEditar"><i class="fa fa-sync-alt"></i> Editar</button>
+                                        <button id="btnEliminarCiudad" class="btn btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
                                     </div>
                                 </div>
                             </div>
@@ -283,7 +346,7 @@
                                             if( $res = $con -> query($listarCiudad) ){
                                                 if( $res -> num_rows > 0 ){
                                                     while($fila = $res -> fetch_assoc() ){
-                                                        echo "<tr id='row-{$fila['id_ciudad']}'>";
+                                                        echo "<tr id='row-ciudad{$fila['id_ciudad']}'>";
                                                             echo "<td>";
                                                                 echo "<input style='display: none;' class='inp-cbx checkboxCiudad' type='checkbox' data-idRow='{$fila['id_ciudad']}' name='check-Direccion{$fila['id_ciudad']}' id='check-Ciudad{$fila['id_ciudad']}'>";
                                                                 echo "<label class='cbx' for='check-Ciudad{$fila['id_ciudad']}'>";
@@ -295,8 +358,8 @@
                                                                 echo "</label>";
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_ciudad']}</td>";
-                                                            echo "<td>{$fila['nombre']}</td>";
-                                                            echo "<td>{$fila['nombreE']}</td>";
+                                                            echo "<td id='datos-ciudad-nombre{$fila['id_ciudad']}'>{$fila['nombre']}</td>";
+                                                            echo "<td id='datos-ciudad-nombreE'>{$fila['nombreE']}</td>";
                                                         echo "</tr>";
                                                     }
                                                 }else{
@@ -325,7 +388,7 @@
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
-        <div id="alertGenEstado" class="alert bg-dark alertGen fadeOutDown"></div>
+        <div id="alertGenLocalidad" class="alert bg-dark alertGen fadeOutDown"></div>
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
