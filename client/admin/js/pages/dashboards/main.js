@@ -410,4 +410,42 @@ $("#btnEditarCategoria").on('click', function(){
     }
 });
 
+// Evaluar Chkbxs Borrar categoria
+$("#btnEliminarCategoria").on('click', function(){
+    if( evaluarDel("#checkAll-Categoria",".checkboxCategoria") ){
+        $("#alertGenCategoria").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+        setTimeout(function(){
+            $("#alertGenCategoria").toggleClass("fadeInUp fadeOutDown").empty();
+            setTimeout(function(){
+                $("#alertGenCategoria").toggleClass("animated");
+            },500);
+        },2000);
+    }else{
+        $("#modalDelCategoria").modal("show");
+    }
+});
+
+// Boton OK de confirmacion
+$("#confirmarCategoria").on('click', function(){
+    let ids = $.map($(".checkboxCategoria:checked"), (x) => $(x).attr('data-idRow') );
+    $.ajax({
+        url: "./actions/delCategoria.php",
+        method: "POST",
+        data: {ids: ids},
+        dataType: "json",
+        success: function(data, status, jqXHR){
+            if(data.status == 1){
+                data.arr.forEach((item) => $("#row-Categoria"+item).remove() );
+                $("#modalDelCategoria").modal('hide');
+            }else{
+                console.log("Nel no jalo");
+            }
+        },
+        error: function(data, status, error){
+            console.log(data);
+            console.log(status);
+            console.log(error);
+        }
+    });
+});
 });
