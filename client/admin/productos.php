@@ -46,14 +46,35 @@
                         </button>
                     </div>
                     <div id="modal-body-Producto" class="modal-body">
-                        <form id="addProducto" action="./actions/regproducto.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                        <form id="addProducto" action="./actions/regProducto.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="addNombre">Nombre</label>
-                                <input type="text" name="addNombre" id="addNombre" class="form-control">
+                                <label for="addNombreProd">Nombre</label>
+                                <input type="text" name="addNombreProd" id="addNombreProd" class="form-control">
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="selectSubCat">Subcategoria</label>
+                                    <select class="form-control" name="selectSubCat" id="selectSubCat">
+                                        <?php
+                                            $listarSubcategorias = "SELECT * FROM subcategoria";
+                                            if( $res = $con -> query($listarSubcategorias) ){
+                                                if( $res -> num_rows > 0 ){
+                                                    while( $fila = $res -> fetch_assoc() ){
+                                                        echo "<option id='option-add-subcat-id{$fila['id_subcat']}' value='{$fila['id_subcat']}'>{$fila['nombre']}</option>";
+                                                    }
+                                                }
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="codigoB">Codigo de barras</label>
+                                    <input class="form-control" accept="image/png, image/jpeg, image/jpg" type="file" name="codigoB" id="codigoB">
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="addImage">Imagen</label>
-                                <input type="file" accept="image/png, image/jpeg, image/jpg" name="addImage" id="addImage" class="form-control">
+                                <label for="descripcion">Descripcion</label>
+                                <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="10"></textarea>
                             </div>
                         </form>
                     </div>
@@ -95,7 +116,7 @@
             </div>
         </div>
         
-        <div class="modal fade" id="modalDel" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modalDelProducto" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -161,16 +182,15 @@
                                     </thead>
                                     <tbody id="table-body-Producto">
                                         <?php
-                                            $listarProductos = "SELECT * FROM producto";
-                                            $categoria = "SELECT nombre from categoria";
-
+                                            $listarProductos = "SELECT p.*, s.nombre nombreS, c.nombre nombreC FROM producto p INNER JOIN subcategoria s ON subcategoria_id = id_subcat INNER JOIN categoria c ON categoria_id = id_categoria";
+                                            
                                             if($res = $con -> query($listarProductos)){
                                                 if($res -> num_rows > 0){
                                                     while($fila = $res -> fetch_assoc()) {
-                                                        echo "<tr id='row-{$fila['id_Producto']}'>";
+                                                        echo "<tr id='row-producto{$fila['id_prod']}'>";
                                                             echo "<td>";
-                                                                echo "<input style='display: none;' class='inp-cbx checkboxProducto' type='checkbox' data-idRow='{$fila['id_Producto']}' name='check-Producto{$fila['id_Producto']}' id='check-Producto{$fila['id_Producto']}'>";
-                                                                echo "<label class='cbx' for='check-Producto{$fila['id_Producto']}'>";
+                                                                echo "<input style='display: none;' class='inp-cbx checkboxProducto' type='checkbox' data-idRow='{$fila['id_prod']}' name='check-Producto{$fila['id_prod']}' id='check-Producto{$fila['id_prod']}'>";
+                                                                echo "<label class='cbx' for='check-Producto{$fila['id_prod']}'>";
                                                                     echo "<span>";
                                                                         echo "<svg width='12px' height='10px' viewbox='0 0 12 10'>";
                                                                             echo "<polyline points='1.5 6 4.5 9 10.5 1'></polyline>";
@@ -178,14 +198,16 @@
                                                                     echo "</span>";
                                                                 echo "</label>";
                                                             echo "</td>";
-                                                            echo "<td>{$fila['id_Producto']}</td>";
-                                                            echo "<td id='datos-{$fila['id_Producto']}' >{$fila['nombre']}</td>";
-                                                            echo "<td><img id='img-Producto{$fila['id_Producto']}' class='img-Producto' src='{$fila['img']}' /></td>";
+                                                            echo "<td>{$fila['id_prod']}</td>";
+                                                            echo "<td id='datos-nombre-producto-{$fila['id_prod']}' >{$fila['nombre']}</td>";
+                                                            echo "<td>{$fila['descripcion']}</td>";
+                                                            echo "<td>{$fila['nombreC']} > {$fila['nombreS']}</td>";
+                                                            echo "<td>{$fila['codigoB']}</td>";
                                                         echo "</tr>";
                                                     }
                                                 }else{
                                                     echo "<tr>";
-                                                        echo "<td colspan='2'>";
+                                                        echo "<td colspan='6'>";
                                                             echo "<div class='container text-center'>";
                                                                 echo "<h5 class='display-5'> <i class='mdi mdi-cloud-outline-off'></i> </h5>";
                                                                 echo "<h3>No existen elementos</h3>";

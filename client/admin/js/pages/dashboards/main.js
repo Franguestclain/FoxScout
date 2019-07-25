@@ -493,68 +493,95 @@ $(document).ready(function(){
 
 
 
-// Eventos de checkboxes
-checkboxes("#checkAll-Categoria",".checkboxCategoria");
+    // Eventos de checkboxes
+    checkboxes("#checkAll-Categoria",".checkboxCategoria");
 
-// Evaluar editar Categoria
-$("#btnEditarCategoria").on('click', function(){
-    if( evaluarEditar("#checkAll-Categoria",".checkboxCategoria") ){
-        $("#alertGenCategoria").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
-        setTimeout(function(){
-            $("#alertGenCategoria").toggleClass("fadeInUp fadeOutDown").empty();
+    // Evaluar editar Categoria
+    $("#btnEditarCategoria").on('click', function(){
+        if( evaluarEditar("#checkAll-Categoria",".checkboxCategoria") ){
+            $("#alertGenCategoria").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
             setTimeout(function(){
-                $("#alertGenCategoria").toggleClass("animated");
-            },500);
-        },2000);
-    }else{
-        let id = $(".checkboxCategoria:checked").attr("data-idRow");
-        let nombre = $("#datos-nombre-Categoria-"+id).text();
-        $("#editNombreCategoria").val(nombre);
-        $("#id-edit-Categoria").val(id);
-        $("#modalEditarCategoria").modal("show");
-        limpiarFormulario("#modalEditarCategoria","#editCategoria");
-    }
-});
-
-// Evaluar Chkbxs Borrar categoria
-$("#btnEliminarCategoria").on('click', function(){
-    if( evaluarDel("#checkAll-Categoria",".checkboxCategoria") ){
-        $("#alertGenCategoria").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
-        setTimeout(function(){
-            $("#alertGenCategoria").toggleClass("fadeInUp fadeOutDown").empty();
-            setTimeout(function(){
-                $("#alertGenCategoria").toggleClass("animated");
-            },500);
-        },2000);
-    }else{
-        $("#modalDelCategoria").modal("show");
-    }
-});
-
-// Boton OK de confirmacion
-$("#confirmarCategoria").on('click', function(){
-    let ids = $.map($(".checkboxCategoria:checked"), (x) => $(x).attr('data-idRow') );
-    $.ajax({
-        url: "./actions/delCategoria.php",
-        method: "POST",
-        data: {ids: ids},
-        dataType: "json",
-        success: function(data, status, jqXHR){
-            if(data.status == 1){
-                data.arr.forEach((item) => $("#row-Categoria"+item).remove() );
-                $("#modalDelCategoria").modal('hide');
-            }else{
-                console.log("Nel no jalo");
-            }
-        },
-        error: function(data, status, error){
-            console.log(data);
-            console.log(status);
-            console.log(error);
+                $("#alertGenCategoria").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenCategoria").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            let id = $(".checkboxCategoria:checked").attr("data-idRow");
+            let nombre = $("#datos-nombre-Categoria-"+id).text();
+            $("#editNombreCategoria").val(nombre);
+            $("#id-edit-Categoria").val(id);
+            $("#modalEditarCategoria").modal("show");
+            limpiarFormulario("#modalEditarCategoria","#editCategoria");
         }
     });
+
+    // Editar Categoria
+    $("#editCategoria").submit(function(e){
+        e.preventDefault();
+        let datos = $(this).serialize();
+
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: datos,
+            dataType: "json",
+            success: function(data,status,jqXHR){
+                if(data.status == 1){
+                    setTimeout(function(){
+                        $("#modalEditarCategoria").modal("hide");
+                        limpiarFormulario("#modalEditarCategoria","#editCategoria");
+                        $("#temporal").remove();
+                        window.location.href = "categoria.php";
+                    },1000);
+                }else{
+                    let mensaje = `<div id='alertEditCategoriaError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-editCategoria").append(mensaje);
+                    $("#alertEditCategoriaError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertEditCategoriaError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertEditCategoriaError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
+
+    // Evaluar Chkbxs Borrar categoria
+    $("#btnEliminarCategoria").on('click', function(){
+        if( evaluarDel("#checkAll-Categoria",".checkboxCategoria") ){
+            $("#alertGenCategoria").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenCategoria").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenCategoria").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            $("#modalDelCategoria").modal("show");
+        }
+    });
+
+    // Boton OK de confirmacion
+    $("#confirmarCategoria").on('click', function(){
+        let ids = $.map($(".checkboxCategoria:checked"), (x) => $(x).attr('data-idRow') );
+        $.ajax({
+            url: "./actions/delCategoria.php",
+
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 
 /////Sucursal
 
@@ -619,7 +646,7 @@ $("#confirmarSucursal").on('click', function(){
         }
     });
 });
-=======
+
 // Evaluar editar Subcategoria
 $("#btnEditarSubcategoria").on('click', function(){
     if( evaluarEditar("#checkAll-Subcategoria",".checkboxSubcategoria") ){
@@ -660,13 +687,19 @@ $("#btnEditarSubcategoria").on('click', function(){
         let ids = $.map($(".checkboxSubcategoria:checked"), (x) => $(x).attr('data-idRow') );
         $.ajax({
             url: "./actions/delSubcategoria.php",
+
             method: "POST",
             data: {ids: ids},
             dataType: "json",
             success: function(data, status, jqXHR){
                 if(data.status == 1){
+
+                    data.arr.forEach((item) => $("#row-Categoria"+item).remove() );
+                    $("#modalDelCategoria").modal('hide');
+
                     data.arr.forEach((item) => $("#row-Subcategoria"+item).remove() );
                     $("#modalDelSubcategoria").modal('hide');
+
                 }else{
                     console.log("Nel no jalo");
                 }
@@ -679,4 +712,54 @@ $("#btnEditarSubcategoria").on('click', function(){
         });
     });
 
+<<<<<<< HEAD
+=======
+    // Agregar Producto
+    $("#addProducto").submit(function(e){
+        e.preventDefault();
+
+        let info = new FormData(this);
+
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: info,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function(data, status, jqXHR){
+                if(data.status == "1"){
+                    $("#modalAgregarProducto").modal("hide");
+                    limpiarFormulario("#modalAgregarProducto", "#addProducto");
+                    let newRow = `<tr id='row-producto${data.id}'>
+                    <td><input style='display: none;' class='inp-cbx checkboxProducto' type='checkbox' data-idRow='${data.id}' name='check-Producto${data.id}' id='check-Producto${data.id}'>
+                                    <label class='cbx' for='check-Producto${data.id}'>
+                                        <span>
+                                            <svg width='12px' height='10px' viewbox='0 0 12 10'>
+                                                <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
+                                            </svg>
+                                        </span>
+                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-producto-${data.id}'>${data.nombre}</td> <td>${data.estado}</td> </tr>`
+                    $("#table-body-producto").append(newRow);
+                }else{
+                    let mensaje = `<div id='alertAddProductoError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-producto").append(mensaje);
+                    $("#alertAddProductoError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertAddProductoError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertAddProductoError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
+>>>>>>> origin/master
 });
