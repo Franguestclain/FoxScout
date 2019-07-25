@@ -50,7 +50,7 @@
                         </button>
                     </div>
                     <div id="modal-body-PxT" class="modal-body">
-                        <form id="addTienda" action="./actions/regPrecio.php" method="POST">
+                        <form id="addPxt" action="./actions/regPrecio.php" method="POST">
                             <div class="form-group">
                                 <label for="addPrecio">Precio</label>
                                 <input type="text" name="addPrecio" id="addPrecio" class="form-control">
@@ -106,7 +106,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <input form="addTienda" id="registrarTienda" name="registrarTienda" type="submit" class="btn btn-primary" value="Registrar">
+                        <input form="addPxt" id="submit" name="submit" type="submit" class="btn btn-primary" value="Registrar">
                     </div>
                 </div>
             </div>
