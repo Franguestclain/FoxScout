@@ -58,7 +58,7 @@
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="addProducto">Producto</label>
-                                        <select class="form-control" name="addProducto" id="addProducto">
+                                    <select class="form-control" name="addProducto" id="addProducto">
                                         <?php
                                         $optionProducto = "SELECT * FROM producto";
                                         if($resOptionP = $con -> query($optionProducto)){
@@ -69,25 +69,39 @@
                                             }
                                         }
                                         ?>
-
-                                        </select>
+                                    </select>
                                 </div>
-                                <div class="col form-group">
-                                <label for="addSucursal">Sucursal</label>
-                                    <select class="form-control" name="addSucursal" id="addSucursal">
-                                    <?php
-                                    $optionSucursal = "SELECT * FROM direccion";
-                                        if($resOptionS = $con -> query($optionSucursal)){
-                                            if( $resOptionS -> num_rows > 0 ){
-                                                while($filaOptionS = $resOptionS -> fetch_assoc()){
-                                                    echo "<option id='option-Sucursal-id{$filaOptionS['id_direccion']}' value='{$filaOptionS['id_direccion']}'>{$filaOptionS['calle']}</option>";
+                                    <div class="form-group">
+                                        <label for="addTienda">Tienda</label>
+                                        <select class="form-control" name="addTienda" id="addTienda">
+                                        <?php
+                                            $optionTienda = "SELECT * FROM tienda";
+                                            if($resOptionT = $con -> query($optionTienda)){
+                                            if( $resOptionT -> num_rows > 0 ){
+                                            while($filaOptionT = $resOptionT -> fetch_assoc()){
+                                                echo "<option id='option-Tienda-id{$filaOptionT['id_tienda']}' value='{$filaOptionT['id_tienda']}'>{$filaOptionT['nombre']}</option>";
                                                 }
                                             }
-                                        }
+                                         }
+                                        ?>
+                                        </select>
+                            </div>
+                            </div>
+                            <div class="col form-group">
+                                    <label for="addSucursal">Sucursal</label>
+                                    <select class="form-control" name="addSucursal" id="addSucursal">
+                                        <?php
+                                            $optionSucursal = "SELECT * FROM direccion";
+                                            if($resOptionS = $con -> query($optionSucursal)){
+                                                if( $resOptionS -> num_rows > 0 ){
+                                                    while($filaOptionS = $resOptionS -> fetch_assoc()){
+                                                        echo "<option id='option-Sucursal-id{$filaOptionS['id_direccion']}' value='{$filaOptionS['id_direccion']}'>{$filaOptionS['calle']}</option>";
+                                                    }
+                                                }
+                                            }
                                         ?>
                                     </select>
-                                </div>  
-                            </div>                          
+                                </div>                             
                         </form>
                     </div>
                     <div class="modal-footer">
