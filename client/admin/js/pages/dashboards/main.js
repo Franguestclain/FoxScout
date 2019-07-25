@@ -555,6 +555,72 @@ $("#confirmarCategoria").on('click', function(){
     });
 });
 
+<<<<<<< HEAD
+
+/////Sucursal
+
+// Eventos de checkboxes
+checkboxes("#checkAll-Sucursal",".checkboxSucursal");
+
+// Evaluar editar Sucursal
+$("#btnEditarSucursal").on('click', function(){
+    if( evaluarEditar("#checkAll-Sucursal",".checkboxSucursal") ){
+        $("#alertGenSucursal").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+        setTimeout(function(){
+            $("#alertGenSucursal").toggleClass("fadeInUp fadeOutDown").empty();
+            setTimeout(function(){
+                $("#alertGenSucursal").toggleClass("animated");
+            },500);
+        },2000);
+    }else{
+        let id = $(".checkboxSucursal:checked").attr("data-idRow");
+        let nombre = $("#datos-nombre-Sucursal-"+id).text();
+        $("#editNombreSucursal").val(nombre);
+        $("#id-edit-Sucursal").val(id);
+        $("#modalEditarSucursal").modal("show");
+        limpiarFormulario("#modalEditarSucursal","#editSucursal");
+    }
+});
+
+// Evaluar Chkbxs Borrar Sucursal
+$("#btnEliminarSucursal").on('click', function(){
+    if( evaluarDel("#checkAll-Sucursal",".checkboxSucursal") ){
+        $("#alertGenSucursal").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+        setTimeout(function(){
+            $("#alertGenSucursal").toggleClass("fadeInUp fadeOutDown").empty();
+            setTimeout(function(){
+                $("#alertGenSucursal").toggleClass("animated");
+            },500);
+        },2000);
+    }else{
+        $("#modalDelSucursal").modal("show");
+    }
+});
+
+// Boton OK de confirmacion
+$("#confirmarSucursal").on('click', function(){
+    let ids = $.map($(".checkboxSucursal:checked"), (x) => $(x).attr('data-idRow') );
+    $.ajax({
+        url: "./actions/delSucursales.php",
+        method: "POST",
+        data: {ids: ids},
+        dataType: "json",
+        success: function(data, status, jqXHR){
+            if(data.status == 1){
+                data.arr.forEach((item) => $("#row-Sucursal"+item).remove() );
+                $("#modalDelSucursal").modal('hide');
+            }else{
+                console.log("Nel no jalo");
+            }
+        },
+        error: function(data, status, error){
+            console.log(data);
+            console.log(status);
+            console.log(error);
+        }
+    });
+});
+=======
 // Evaluar editar Subcategoria
 $("#btnEditarSubcategoria").on('click', function(){
     if( evaluarEditar("#checkAll-Subcategoria",".checkboxSubcategoria") ){
@@ -615,4 +681,5 @@ $("#btnEditarSubcategoria").on('click', function(){
     });
 
 
+>>>>>>> 1157cebec5cf311792387811d0cf49f2e8fa1fa1
 });
