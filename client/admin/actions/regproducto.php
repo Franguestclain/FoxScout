@@ -113,7 +113,7 @@
                     $maxSql = "SELECT max(p.id_prod) maximus, s.nombre nombreS, c.nombre nombreC FROM producto p INNER JOIN subcategoria s ON subcategoria_id = id_subcat INNER JOIN categoria c ON categoria_id = id_categoria";
                     $resQuery = $con -> query($maxSql);
                     $res = $resQuery -> fetch_assoc();
-                    echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $producto,"categorias" => "{$res['nombreC']} > {$res['nombreS']}", "rutaImg" => $carpetaDestino]);
+                    echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $producto,"desc" => $descripcion,"categorias" => "{$res['nombreC']} > {$res['nombreS']}", "rutaImg" => $carpetaDestino]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro de la tienda"]);
                 }

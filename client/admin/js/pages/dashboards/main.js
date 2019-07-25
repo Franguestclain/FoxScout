@@ -639,8 +639,50 @@ $(document).ready(function(){
         });
     });
 
+    // Agregar Sucursal
+    $("#addSucursal").submit(function(e){
+        e.preventDefault();
 
-    /////Sucursal
+        let info = $(this).serialize();
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: info,
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == "1"){
+                    $("#modalAgregarSucursal").modal("hide");
+                    limpiarFormulario("#modalAgregarSucursal", "#addSucursal");
+                    let newRow = `<tr id='row-sucursal${data.id}'>
+                    <td><input style='display: none;' class='inp-cbx checkboxSucursal' type='checkbox' data-idRow='${data.id}' name='check-Sucursal${data.id}' id='check-Sucursal${data.id}'>
+                                    <label class='cbx' for='check-Sucursal${data.id}'>
+                                        <span>
+                                            <svg width='12px' height='10px' viewbox='0 0 12 10'>
+                                                <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
+                                            </svg>
+                                        </span>
+                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-sucursal-${data.id}'>${data.nombre}</td> <td>${data.categoria}</td></tr>`
+                    $("#table-body-sucursal").append(newRow);
+                }else{
+                    let mensaje = `<div id='alertAddSucursalError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-sucursal").append(mensaje);
+                    $("#alertAddSucursalError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertAddSucursalError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertAddSucursalError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
 
     // Eventos de checkboxes
     checkboxes("#checkAll-Sucursal",".checkboxSucursal");
@@ -743,16 +785,61 @@ $(document).ready(function(){
         });
     });
 
+    // Agregar Producto
+    $("#addSubcategoria").submit(function(e){
+        e.preventDefault();
+
+        let info = $(this).serialize();
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: info,
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == "1"){
+                    $("#modalAgregarSubcategoria").modal("hide");
+                    limpiarFormulario("#modalAgregarSubcategoria", "#addSubcategoria");
+                    let newRow = `<tr id='row-subcategoria${data.id}'>
+                    <td><input style='display: none;' class='inp-cbx checkboxSubcategoria' type='checkbox' data-idRow='${data.id}' name='check-Subcategoria${data.id}' id='check-Subcategoria${data.id}'>
+                                    <label class='cbx' for='check-Subcategoria${data.id}'>
+                                        <span>
+                                            <svg width='12px' height='10px' viewbox='0 0 12 10'>
+                                                <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
+                                            </svg>
+                                        </span>
+                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-subcategoria-${data.id}'>${data.nombre}</td> <td>${data.categoria}</td></tr>`
+                    $("#table-body-subcategoria").append(newRow);
+                }else{
+                    let mensaje = `<div id='alertAddSubcategoriaError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-subcategoria").append(mensaje);
+                    $("#alertAddSubcategoriaError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertAddSubcategoriaError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertAddSubcategoriaError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
+
     // Eventos de checkboxes
     checkboxes("#checkAll-Subcategoria",".checkboxSubcategoria");
     // Evaluar editar Subcategoria
     $("#btnEditarSubcategoria").on('click', function(){
         if( evaluarEditar("#checkAll-Subcategoria",".checkboxSubcategoria") ){
-            $("#alertGenSubcategoria").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            $("#alertGenCategoria").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
             setTimeout(function(){
-                $("#alertGenSubcategoria").toggleClass("fadeInUp fadeOutDown").empty();
+                $("#alertGenCategoria").toggleClass("fadeInUp fadeOutDown").empty();
                 setTimeout(function(){
-                    $("#alertGenSubcategoria").toggleClass("animated");
+                    $("#alertGenCategoria").toggleClass("animated");
                 },500);
             },2000);
         }else{
@@ -874,7 +961,7 @@ $(document).ready(function(){
                                                 <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
                                             </svg>
                                         </span>
-                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-producto-${data.id}'>${data.nombre}</td> <td>${data.estado}</td> </tr>`
+                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-producto-${data.id}'>${data.nombre}</td> <td>${data.desc}</td><td>${data.categorias}</td><td>${data.rutaImg}</td> </tr>`
                     $("#table-body-producto").append(newRow);
                 }else{
                     let mensaje = `<div id='alertAddProductoError' class='alert alert-danger fade'>${data.mensaje}</div>`;
@@ -896,6 +983,10 @@ $(document).ready(function(){
         });
         
     });
+
+
+    // Evaluar checkboxes de editar producto
+    
 
 
 

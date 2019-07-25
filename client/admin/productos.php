@@ -45,7 +45,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="modal-body-Producto" class="modal-body">
+                    <div id="modal-body-producto" class="modal-body">
                         <form id="addProducto" action="./actions/regProducto.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="addNombreProd">Nombre</label>
@@ -180,7 +180,7 @@
                                             <th class="border-top-0">CodigoBarras</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="table-body-Producto">
+                                    <tbody id="table-body-producto">
                                         <?php
                                             $listarProductos = "SELECT p.*, s.nombre nombreS, c.nombre nombreC FROM producto p INNER JOIN subcategoria s ON subcategoria_id = id_subcat INNER JOIN categoria c ON categoria_id = id_categoria";
                                             
