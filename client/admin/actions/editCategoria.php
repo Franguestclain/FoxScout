@@ -87,7 +87,10 @@
                 $param_id = $_POST['id'];
 
                 if( $stmt -> execute() ){
-                    echo json_encode(["status" => "1", "mensaje" => "Se actualizo correctamente", "nombre" => $nombre]);
+                    $sql = "SELECT max(id_categoria) maximo FROM categoria";
+                    $res = $con -> query($sql);
+                    $dato = $res -> fetch_assoc();
+                    echo json_encode(["status" => "1", "mensaje" => "Se actualizo correctamente", "nombre" => $nombre, "id" => $dato['maximo'] ]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error al actualizar la tienda"]);
                 }

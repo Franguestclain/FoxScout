@@ -96,11 +96,10 @@
 
                 if( $stmt -> execute() ){
                     // // Obtenemos el ID maximo para actualizar la tabla en el frontend
-                    // $maxSql = "SELECT max(id_categoria) maximus FROM categoria";
-                    // $resQuery = $con -> query($maxSql);
-                    // $res = $resQuery -> fetch_assoc();
-                    // echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $nombre]);
-                    echo json_encode(["status" => "1", "nombreCategoria" => $nombre]);
+                    $sql = "SELECT max(id_categoria) maximo FROM categoria";
+                    $res = $con -> query($sql);
+                    $dato = $res -> fetch_assoc();
+                    echo json_encode(["status" => "1", "mensaje" => "Se agrego correctamente", "nombre" => $nombre, "id" => $dato['maximo'] ]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro de la categoria"]);
                 }

@@ -59,17 +59,32 @@
                                 <div class="col form-group">
                                     <label for="addProducto">Producto</label>
                                         <select class="form-control" name="addProducto" id="addProducto">
-                                            <option value="cd1">Chihuahua</option>
-                                            <option value="cd2">Ciudad 2</option>
-                                            <option value="cd3">Ciudad 3</option>
+                                        <?php
+                                        $optionProducto = "SELECT * FROM producto";
+                                        if($resOptionP = $con -> query($optionProducto)){
+                                            if( $resOptionP -> num_rows > 0 ){
+                                                while($filaOptionP = $resOptionP -> fetch_assoc()){
+                                                    echo "<option id='option-producto-id{$filaOptionP['id_prod']}' value='{$filaOptionP['id_prod']}'>{$filaOptionP['nombre']}</option>";
+                                                }
+                                            }
+                                        }
+                                        ?>
+
                                         </select>
                                 </div>
                                 <div class="col form-group">
                                 <label for="addSucursal">Sucursal</label>
                                     <select class="form-control" name="addSucursal" id="addSucursal">
-                                        <option value="cd1">Chihuahua</option>
-                                        <option value="cd2">Ciudad 2</option>
-                                        <option value="cd3">Ciudad 3</option>
+                                    <?php
+                                    $optionSucursal = "SELECT * FROM direccion";
+                                        if($resOptionS = $con -> query($optionSucursal)){
+                                            if( $resOptionS -> num_rows > 0 ){
+                                                while($filaOptionS = $resOptionS -> fetch_assoc()){
+                                                    echo "<option id='option-Sucursal-id{$filaOptionS['id_direccion']}' value='{$filaOptionS['id_direccion']}'>{$filaOptionS['calle']}</option>";
+                                                }
+                                            }
+                                        }
+                                        ?>
                                     </select>
                                 </div>  
                             </div>                          
@@ -131,15 +146,15 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $listar = "SELECT * FROM direccion";
+                                            $listar = "SELECT * FROM precioxtienda";
 
                                             if( $res = $con -> query($listar) ){
                                                 if( $res -> num_rows > 0 ){
                                                     while($fila = $res -> fetch_assoc() ){
-                                                        echo "<tr id='row-{$fila['id_direccion']}'>";
+                                                        echo "<tr id='row-{$fila['id_PxTienda']}'>";
                                                             echo "<td>";
-                                                                echo "<input style='display: none;' class='inp-cbx checkboxDireccion' type='checkbox' data-idRow='{$fila['id_direccion']}' name='check-Direccion{$fila['id_direccion']}' id='check-Direccion{$fila['id_direccion']}'>";
-                                                                echo "<label class='cbx' for='check-Direccion{$fila['id_direccion']}'>";
+                                                                echo "<input style='display: none;' class='inp-cbx checkboxDireccion' type='checkbox' data-idRow='{$fila['id_PxTienda']}' name='check-Direccion{$fila['id_PxTienda']}' id='check-Direccion{$fila['id_PxTienda']}'>";
+                                                                echo "<label class='cbx' for='check-Direccion{$fila['id_PxTienda']}'>";
                                                                     echo "<span>";
                                                                         echo "<svg width='12px' height='10px' viewbox='0 0 12 10'>";
                                                                             echo "<polyline points='1.5 6 4.5 9 10.5 1'></polyline>";
@@ -147,12 +162,12 @@
                                                                     echo "</span>";
                                                                 echo "</label>";
                                                             echo "</td>";
-                                                            echo "<td>{$fila['id_direccion']}</td>";
-                                                            echo "<td>{$fila['calle']}</td>";
-                                                            echo "<td>{$fila['colonia']}</td>";
-                                                            echo "<td>{$fila['numero']}</td>";
-                                                            echo "<td>{$fila['nombreT']}</td>";
-                                                            echo "<td>{$fila['nombreC']}</td>";
+                                                            echo "<td>{$fila['id_PxTienda']}</td>";
+                                                            echo "<td>{$fila['precio']}</td>";
+                                                            echo "<td>{$fila['prod_id']}</td>";
+                                                            echo "<td>{$fila['direccion_id']}</td>";
+                                                            //echo "<td>{$fila['nombreT']}</td>";
+                                                            //echo "<td>{$fila['nombreC']}</td>";
                                                         echo "</tr>";
                                                     }
                                                 }else{
