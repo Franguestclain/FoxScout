@@ -112,8 +112,8 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="modal-body-ediCategoria" class="modal-body">
-                        <form id="editCategoria" action="./actions/editCategoria.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                    <div id="modal-body-editCategoria" class="modal-body">
+                        <form id="editCategoria" action="./actions/editCategoria.php" method="POST"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
                             <div class="form-group">
                                 <label for="editNombreCategoria">Nombre</label>
                                 <input type="text" name="editNombreCategoria" id="editNombreCategoria" class="form-control">
@@ -171,7 +171,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modalDel" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modalDelCategoria" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -184,7 +184,7 @@
                     <p>Estos datos se eliminaran de forma permanente.</p>
                 </div>
                 <div class="modal-footer">
-                    <button id="confirmar" type="button" class="btn btn-primary">Ok</button>
+                    <button id="confirmarCategoria" type="button" class="btn btn-primary">Ok</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </div>
                 </div>
