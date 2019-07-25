@@ -675,9 +675,25 @@ $("#btnEliminarCategoria").on('click', function(){
     $("#confirmarCategoria").on('click', function(){
         let ids = $.map($(".checkboxCategoria:checked"), (x) => $(x).attr('data-idRow') );
         $.ajax({
-            url: "./actions/delCategoria.php",
-
-});
+            url: "./actions/delcategoria.php",
+            method: "POST",
+            data: {ids: ids},
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == 1){
+                    data.arr.forEach((item) => $("#row-Categoria"+item).remove() );
+                    $("#modalDelCategoria").modal('hide');
+                }else{
+                    console.log("Nel no jalo");
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
 
 
 /////Sucursal
