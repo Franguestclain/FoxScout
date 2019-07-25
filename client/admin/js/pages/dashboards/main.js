@@ -555,7 +555,6 @@ $("#confirmarCategoria").on('click', function(){
     });
 });
 
-<<<<<<< HEAD
 
 /////Sucursal
 
@@ -680,6 +679,4 @@ $("#btnEditarSubcategoria").on('click', function(){
         });
     });
 
-
->>>>>>> 1157cebec5cf311792387811d0cf49f2e8fa1fa1
 });
