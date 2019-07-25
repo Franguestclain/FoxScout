@@ -576,7 +576,7 @@ $(document).ready(function(){
         $.ajax({
             url: "./actions/delCategoria.php",
 
-});
+    });
 
 
 
@@ -756,4 +756,7 @@ $("#btnEditarSubcategoria").on('click', function(){
         });
         
     });
+
+
+
 });
