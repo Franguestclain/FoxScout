@@ -554,4 +554,65 @@ $("#confirmarCategoria").on('click', function(){
         }
     });
 });
+
+// Evaluar editar Subcategoria
+$("#btnEditarSubcategoria").on('click', function(){
+    if( evaluarEditar("#checkAll-Subcategoria",".checkboxSubcategoria") ){
+        $("#alertGenSubcategoria").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+        setTimeout(function(){
+            $("#alertGenSubcategoria").toggleClass("fadeInUp fadeOutDown").empty();
+            setTimeout(function(){
+                $("#alertGenSubcategoria").toggleClass("animated");
+            },500);
+        },2000);
+    }else{
+        let id = $(".checkboxSubcategoria:checked").attr("data-idRow");
+        let nombre = $("#datos-nombre-Subcategoria-"+id).text();
+        $("#editNombreSubcategoria").val(nombre);
+        $("#id-edit-Subcategoria").val(id);
+        $("#modalEditarSubcategoria").modal("show");
+        limpiarFormulario("#modalEditarSubcategoria","#editSubcategoria");
+    }
+});
+
+// Evaluar Chkbxs Borrar Subcategoria
+    $("#btnEliminarSubcategoria").on('click', function(){
+        if( evaluarDel("#checkAll-Subcategoria",".checkboxSubcategoria") ){
+            $("#alertGenSubcategoria").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenSubcategoria").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenSubcategoria").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            $("#modalDelSubcategoria").modal("show");
+        }
+    });
+
+    // Boton OK de confirmacion
+    $("#confirmarSubcategoria").on('click', function(){
+        let ids = $.map($(".checkboxSubcategoria:checked"), (x) => $(x).attr('data-idRow') );
+        $.ajax({
+            url: "./actions/delSubcategoria.php",
+            method: "POST",
+            data: {ids: ids},
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == 1){
+                    data.arr.forEach((item) => $("#row-Subcategoria"+item).remove() );
+                    $("#modalDelSubcategoria").modal('hide');
+                }else{
+                    console.log("Nel no jalo");
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
+
+
 });
