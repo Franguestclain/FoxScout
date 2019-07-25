@@ -493,6 +493,53 @@ $(document).ready(function(){
 
 
 
+
+// Agregar Categoria
+$("#addCategoria").submit(function(e){
+    e.preventDefault();
+
+    let info = $(this).serialize();
+
+    $.ajax({
+        url: $(this).attr("action"),
+        method: "POST",
+        data: info,
+        dataType: "json",
+        success: function(data, status, jqXHR){
+            if(data.status == "1"){
+                $("#modalAgregarCategoria").modal("hide");
+                limpiarFormulario("#modalAgregarCategoria", "#addCategoria");
+                let newRow = `<tr id='row-Categoria${data.id}'>
+                <td><input style='display: none;' class='inp-cbx checkboxCategoria' type='checkbox' data-idRow='${data.id}' name='check-Categoria${data.id}' id='check-Categoria${data.id}'>
+                                <label class='cbx' for='check-Categoria${data.id}'>
+                                    <span>
+                                        <svg width='12px' height='10px' viewbox='0 0 12 10'>
+                                            <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
+                                        </svg>
+                                    </span>
+                                </label></td> <td>${data.id}</td> <td id='datos-nombre-Categoria-${data.id}'>${data.nombre}</td></tr>`
+                $("#table-body-Categoria").append(newRow);
+            }else{
+                let mensaje = `<div id='alertAddCategoriaError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                $("#modal-body-Categoria").append(mensaje);
+                $("#alertAddCategoriaError").toggleClass("fade");
+                setTimeout(function(){
+                    $("#alertAddCategoriaError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertAddCategoriaError").remove();
+                    },500);
+                },2000);
+            }
+        },
+        error: function(data, status, error){
+            console.log(data);
+            console.log(status);
+            console.log(error);
+        }
+    });
+    
+});
+
 // Eventos de checkboxes
 checkboxes("#checkAll-Categoria",".checkboxCategoria");
 
@@ -514,6 +561,44 @@ $("#btnEditarCategoria").on('click', function(){
         $("#modalEditarCategoria").modal("show");
         limpiarFormulario("#modalEditarCategoria","#editCategoria");
     }
+});
+
+$("#editCategoria").submit(function(e){
+    e.preventDefault();
+    let datos = $(this).serialize();
+
+    $.ajax({
+        url: $(this).attr("action"),
+        method: "POST",
+        data: datos,
+        dataType: "json",
+        success: function(data,status,jqXHR){
+            if(data.status == 1){
+                setTimeout(function(){
+                    $("#modalEditarCategoria").modal("hide");
+                    limpiarFormulario("#modalEditarCategoria","#editCategoria");
+                    $("#temporal").remove();
+                    window.location.href = "categoria.php";
+                },1000);
+            }else{
+                let mensaje = `<div id='alertEditCategoriaError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                $("#modal-body-editCategoria").append(mensaje);
+                $("#alertEditCategoriaError").toggleClass("fade");
+                setTimeout(function(){
+                    $("#alertEditCategoriaError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertEditCategoriaError").remove();
+                    },500);
+                },2000);
+            }
+        },
+        error: function(data, status, error){
+            console.log(data);
+            console.log(status);
+            console.log(error);
+        }
+    });
+    
 });
 
 // Evaluar Chkbxs Borrar categoria
@@ -555,7 +640,6 @@ $("#confirmarCategoria").on('click', function(){
     });
 });
 
-<<<<<<< HEAD
 
 /////Sucursal
 
@@ -580,6 +664,45 @@ $("#btnEditarSucursal").on('click', function(){
         $("#modalEditarSucursal").modal("show");
         limpiarFormulario("#modalEditarSucursal","#editSucursal");
     }
+});
+
+
+$("#editSucursal").submit(function(e){
+    e.preventDefault();
+    let datos = $(this).serialize();
+
+    $.ajax({
+        url: $(this).attr("action"),
+        method: "POST",
+        data: datos,
+        dataType: "json",
+        success: function(data,status,jqXHR){
+            if(data.status == 1){
+                setTimeout(function(){
+                    $("#modalEditarSucursal").modal("hide");
+                    limpiarFormulario("#modalEditarSucursal","#editSucursal");
+                    $("#temporal").remove();
+                    window.location.href = "sucursales.php";
+                },1000);
+            }else{
+                let mensaje = `<div id='alertEditSucursalError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                $("#modal-body-editSucursal").append(mensaje);
+                $("#alertEditSucursalError").toggleClass("fade");
+                setTimeout(function(){
+                    $("#alertEditSucursalError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertEditSucursalError").remove();
+                    },500);
+                },2000);
+            }
+        },
+        error: function(data, status, error){
+            console.log(data);
+            console.log(status);
+            console.log(error);
+        }
+    });
+    
 });
 
 // Evaluar Chkbxs Borrar Sucursal
@@ -620,7 +743,9 @@ $("#confirmarSucursal").on('click', function(){
         }
     });
 });
-=======
+
+// Eventos de checkboxes
+checkboxes("#checkAll-Subcategoria",".checkboxSubcategoria");
 // Evaluar editar Subcategoria
 $("#btnEditarSubcategoria").on('click', function(){
     if( evaluarEditar("#checkAll-Subcategoria",".checkboxSubcategoria") ){
@@ -639,6 +764,44 @@ $("#btnEditarSubcategoria").on('click', function(){
         $("#modalEditarSubcategoria").modal("show");
         limpiarFormulario("#modalEditarSubcategoria","#editSubcategoria");
     }
+});
+
+$("#editSubcategoria").submit(function(e){
+    e.preventDefault();
+    let datos = $(this).serialize();
+
+    $.ajax({
+        url: $(this).attr("action"),
+        method: "POST",
+        data: datos,
+        dataType: "json",
+        success: function(data,status,jqXHR){
+            if(data.status == 1){
+                setTimeout(function(){
+                    $("#modalEditarSubcategoria").modal("hide");
+                    limpiarFormulario("#modalEditarSubcategoria","#editSubcategoria");
+                    $("#temporal").remove();
+                    window.location.href = "categoria.php";
+                },1000);
+            }else{
+                let mensaje = `<div id='alertEditSubcategoriaError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                $("#modal-body-editSubcategoria").append(mensaje);
+                $("#alertEditSubcategoriaError").toggleClass("fade");
+                setTimeout(function(){
+                    $("#alertEditSubcategoriaError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertEditSubcategoriaError").remove();
+                    },500);
+                },2000);
+            }
+        },
+        error: function(data, status, error){
+            console.log(data);
+            console.log(status);
+            console.log(error);
+        }
+    });
+    
 });
 
 // Evaluar Chkbxs Borrar Subcategoria
@@ -681,5 +844,4 @@ $("#btnEditarSubcategoria").on('click', function(){
     });
 
 
->>>>>>> 1157cebec5cf311792387811d0cf49f2e8fa1fa1
 });

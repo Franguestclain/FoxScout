@@ -260,7 +260,7 @@
                                             if($res = $con -> query($listarCategorias)){
                                                 if($res -> num_rows > 0){
                                                     while($fila = $res -> fetch_assoc()) {
-                                                        echo "<tr id='row-{$fila['id_categoria']}'>";
+                                                        echo "<tr id='row-Categoria{$fila['id_categoria']}'>";
                                                             echo "<td>";
                                                                 echo "<input style='display: none;' class='inp-cbx checkboxCategoria' type='checkbox' data-idRow='{$fila['id_categoria']}' name='check-Categoria{$fila['id_categoria']}' id='check-Categoria{$fila['id_categoria']}'>";
                                                                 echo "<label class='cbx' for='check-Categoria{$fila['id_categoria']}'>";
