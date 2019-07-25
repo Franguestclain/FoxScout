@@ -74,7 +74,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="modal-body-categoria" class="modal-body">
+                    <div id="modal-body-subcategoria" class="modal-body">
                         <form id="addSubcategoria" action="./actions/regSubcategoria.php" method="POST" > <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
                             <div class="form-group">
                                 <label for="addNombre">Nombre</label>
@@ -334,7 +334,7 @@
                                             <th class="border-top-0">Categoria</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="table-body-subcategorias">
+                                    <tbody id="table-body-subcategoria">
                                         <?php
                                             $listarSubcategorias = "SELECT s.*, c.nombre nombreC FROM subcategoria s, categoria c WHERE categoria_id=id_categoria";
                                             // $ciudad = "SELECT nombre from ciudad"

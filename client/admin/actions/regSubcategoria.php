@@ -1,19 +1,8 @@
 <?php
     include("../../conexion.php");
 
-    // function checarNombreDeImagen($nombre){
-    //     return (bool) ( (preg_match("`^[-0-9A-Z_\.]+$`i",$nombre)) ? true : false );
-    // }
-
-    // function checarTamañoDeLaImagen($nombre){
-    //     return (bool) ((mb_strlen($nombre,"UTF-8") > 225) ? true : false);
-    // }
-
-
-    // $extensionesValidas = ['jpeg', 'jpg', 'png'];
-    // $nombre = $nombreImagen = "";
-    // $nombre_err = $imagen_err = $error = "";
-    // $carpetaDestino = "../imagenes/";
+    $nombre = "";
+    $nombre_err = $error = "";
 
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
         
@@ -61,12 +50,11 @@
                 
 
                 if( $stmt -> execute() ){
-                    // // Obtenemos el ID maximo para actualizar la tabla en el frontend
-                    // $maxSql = "SELECT max(id_categoria) maximus FROM categoria";
-                    // $resQuery = $con -> query($maxSql);
-                    // $res = $resQuery -> fetch_assoc();
-                    // echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $nombre]);
-                    echo json_encode(["status" => "1", "nombreSubategoria" => $nombre]);
+                    // Obtenemos el ID maximo para actualizar la tabla en el frontend
+                    $maxSql = "SELECT max(id_subcat) maximus, c.nombre nombreC FROM subcategoria, categoria c WHERE id_categoria = {$param_id}";
+                    $resQuery = $con -> query($maxSql);
+                    $res = $resQuery -> fetch_assoc();
+                    echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $nombre, "categoria" => $res['nombreC']]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro de la subcategoria"]);
                 }

@@ -71,7 +71,7 @@
                                         if($resOptionE = $con -> query($optionTienda)){
                                             if( $resOptionE -> num_rows > 0 ){
                                                 while($filaOptionE = $resOptionE -> fetch_assoc()){
-                                                    echo "<option id='option-addTienda-id{$filaOptionE['id_tienda']}' value='{$filaOptionE['id_tienda']}'>{$filaOptionE['nombre']}</option>";
+                                                    echo "<option id='option-tienda-id{$filaOptionE['id_tienda']}' value='{$filaOptionE['id_tienda']}'>{$filaOptionE['nombre']}</option>";
                                                 }
                                             }
                                         }
@@ -79,14 +79,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="addCiudad">Ciudad</label>
+                                <label for="selectCiudad">Ciudad</label>
                                 <select class="form-control" name="selectCiudad" id="selectCiudad">
                                     <?php
                                         $optionCiudad = "SELECT * FROM ciudad";
                                         if($resOptionE = $con -> query($optionCiudad)){
                                             if( $resOptionE -> num_rows > 0 ){
                                                 while($filaOptionE = $resOptionE -> fetch_assoc()){
-                                                    echo "<option id='option-addCiudad-id{$filaOptionE['id_ciudad']}' value='{$filaOptionE['id_ciudad']}'>{$filaOptionE['nombre']}</option>";
+                                                    echo "<option id='option-ciudad-id{$filaOptionE['id_ciudad']}' value='{$filaOptionE['id_ciudad']}'>{$filaOptionE['nombre']}</option>";
                                                 }
                                             }
                                         }
@@ -241,7 +241,7 @@
                                             <th class="border-top-0">Ciudad</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="table-body-sucursal">
                                         <?php
                                             $listar = "SELECT d.*, t.nombre nombreT, c.nombre nombreC FROM direccion d, tienda t, ciudad c WHERE tienda_id=id_tienda && ciudad_id=id_ciudad";
 
