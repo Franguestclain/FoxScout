@@ -1382,6 +1382,74 @@ $(document).ready(function(){
 
 
 
+    // Evaluar editar usuario
+
+    $("#btnEditarUsuario").on('click', function(){
+        if( evaluarEditar("#checkAll-Usuario",".checkboxUsuario") ){
+            $("#alertGenUsuario").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenUsuario").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenUsuario").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            let id = $(".checkboxUsuario:checked").attr("data-idRow");
+            let nombre = $("#datos-nombre-"+id).text();
+            let apellidop = $("#datos-ap-"+id).text();
+            let apellidom = $("#datos-am-"+id).text();
+            let email = $("#datos-email-"+id).text();
+            // let ciudad = $("#datos-ciudad-"+id).text();
+            $("#editNombre").val(nombre);
+            $("#editApellidoP").val(apellidop);
+            $("#editApellidoM").val(apellidom);
+            $("#editEmail").val(email);
+            // $("#id-edit-nombre").val(id);
+            // $(`#option-Sucursal-id${id}`).attr('selected','selected');
+            $("#modalEditarU").modal("show");
+            limpiarFormulario("#modalEditarU","#editUser");
+        }
+    });
+// Editar usuario
+
+$("#editUser").submit(function(e){
+    e.preventDefault();
+    let datos = $(this).serialize();
+
+    $.ajax({
+        url: $(this).attr("action"),
+        method: "POST",
+        data: datos,
+        dataType: "json",
+        success: function(data,status,jqXHR){
+            if(data.status == 1){
+                setTimeout(function(){
+                    $("#modalEditarUsuario").modal("hide");
+                    limpiarFormulario("#modalEditarUsuario","#editUsuario");
+                    $("#temporal").remove();
+                    window.location.href = "index.php";
+                },1000);
+            }else{
+                let mensaje = `<div id='alertEditUsuarioError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                $("#modal-body-editUsuario").append(mensaje);
+                $("#alertEditUsuarioError").toggleClass("fade");
+                setTimeout(function(){
+                    $("#alertEditUsuarioError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertEditUsuarioError").remove();
+                    },500);
+                },2000);
+            }
+        },
+        error: function(data, status, error){
+            console.log(data);
+            console.log(status);
+            console.log(error);
+        }
+    });
+    
+});
+
 
     
 });
