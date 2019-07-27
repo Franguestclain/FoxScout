@@ -4,25 +4,42 @@
 
 
 
-    $numero = $nombreSucursal = "";
-    $nombre_err = $error = "";
+    $numero = $tienda = $colonia = $calle = $ciudad = "";
+    $numero_err = $colonia_err = $calle_err = $error = "";
 
 
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
         
-        // Validar si el nombre de la tienda esta vacio
+        
+        // Evaluar si la colonia esta vacia
+        if( empty(trim($_POST['editColonia'])) ){
+            $colonia_err = "Introduce una colonia";
+        }else{
+            $colonia = $con -> real_escape_string(trim($_POST['editColonia']));
+        }
+        
+        // Evaluar si esta vacia la calle
+        if( empty(trim($_POST['editCalle'])) ){
+            $calle_err = "Introduce una calle";
+        }else{
+            $calle = $con -> real_escape_string(trim($_POST['editCalle']));
+        }
+        
+        // Validar si el numero 
         if( empty(trim($_POST['editNumero'])) ){
             $nombre_err = "Introduce el numero de la Sucursal";
         }else{
             // Evaluamos si la tienda ya existe
-            $sql = "SELECT id_direccion FROM direccion WHERE numero = ?";
+            $sql = "SELECT id_direccion FROM direccion WHERE numero = ? && calle = ? && ciudad_id = ?";
             // Creamos el prepare Statement
             if( $stmt = $con -> prepare($sql) ){
                 // Enlazamos una constante (incognita) con una variable
-                $stmt -> bind_param("s", $param_numero);
+                $stmt -> bind_param("sss", $param_numero, $param_calle, $param_ciudad);
 
                 // Inicializamos la variable
                 $param_numero = $con -> real_escape_string(trim($_POST['editNumero']));
+                $param_calle = $calle;
+                $param_ciudad = $_POST['editselectCiudad'];
 
                 // Ejecutamos el query de la consulta
                 if( $stmt -> execute() ){
@@ -42,41 +59,8 @@
         }
 
 
-
-        // Validar si el archivo subido no esta vacio
-        // if( empty($img) || !$_FILES['editImage'] ){
-        //     $imagen_err = "Selecciona la imagen de la tienda";
-        // }else{
-        //     // Evaluamos si no tiene caracteres especiales
-        //     if( checarNombreDeImagen($img) ){
-        //         // Evaluamos si el nombre es muy grande
-        //         if( checarTamañoDeLaImagen($img) ){
-        //             $imagen_err = "Nombre de la imagen muy largo";
-        //         }else{
-        //             // Evaluamos la extension
-        //             $extensionImagen = strtolower(pathinfo($img, PATHINFO_EXTENSION));
-        //             if( in_array($extensionImagen, $extensionesValidas) ){
-        //                 $carpetaDestino = $carpetaDestino.$img;                
-        //                 // Intentamos mover la imagen a la carpeta de destino
-        //                 if( !file_exists($carpetaDestino) ){ // No existe el fichero
-        //                     if( move_uploaded_file($tmp, "../".$carpetaDestino) ){
-        //                         // No tengo nada que hacer aqui :v
-        //                     }else{
-        //                         $imagen_err = "No se pudo subir la imagen. Intentelo de nuevo mas tarde.";
-        //                     }
-        //                 }
-        //             }else{
-        //                 $imagen_err = "Tipo de extension no permitida";
-        //             }
-        //         }
-        //     }else{
-        //         $imagen_err = "Nombre del archivo no permitido";
-        //     }
-        // }
-
-
         
-        if( empty($nombre_err) && empty($error)){
+        if( empty($numero_err) && empty($colonia_err) && empty($calle_err) && empty($error) ){
             // Preparamos nuestro query
             $sql = "UPDATE direccion SET calle=?, colonia=?, numero=?, tienda_id=?, ciudad_id=? WHERE id_direccion=?";
             
@@ -101,7 +85,7 @@
             // echo json_encode(["status" => "1", "nombreTienda" => $nombre, "nombreArchivo" => $nombreImagen]);
         }else{
             $cadenaReturn = "";
-            $errores = [$nombre_err, $error];
+            $errores = [$numero_err, $colonia_err, $calle_err, $error];
             foreach($errores as $error){
                 if(!empty($error)){
                     $cadenaReturn = $cadenaReturn."<li>{$error}</li>";

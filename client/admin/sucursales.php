@@ -115,7 +115,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="modal-body-sucursal" class="modal-body">
+                    <div id="modal-body-editSucursal" class="modal-body">
                         <form id="editSucursal" action="./actions/editSucursales.php" method="POST" > <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
                             <div class="form-group">
                                 <label for="editCalle">Calle</label>
@@ -137,7 +137,7 @@
                                         if($resOptionE = $con -> query($optionTienda)){
                                             if( $resOptionE -> num_rows > 0 ){
                                                 while($filaOptionE = $resOptionE -> fetch_assoc()){
-                                                    echo "<option id='option-editTienda-id{$filaOptionE['id_tienda']}' value='{$filaOptionE['id_tienda']}'>{$filaOptionE['nombre']}</option>";
+                                                    echo "<option id='option-editTienda-{$filaOptionE['nombre']}' value='{$filaOptionE['id_tienda']}'>{$filaOptionE['nombre']}</option>";
                                                 }
                                             }
                                         }
@@ -152,7 +152,7 @@
                                         if($resOptionE = $con -> query($optionCiudad)){
                                             if( $resOptionE -> num_rows > 0 ){
                                                 while($filaOptionE = $resOptionE -> fetch_assoc()){
-                                                    echo "<option id='option-editCiudad-id{$filaOptionE['id_ciudad']}' value='{$filaOptionE['id_ciudad']}'>{$filaOptionE['nombre']}</option>";
+                                                    echo "<option id='option-editCiudad-{$filaOptionE['nombre']}' value='{$filaOptionE['id_ciudad']}'>{$filaOptionE['nombre']}</option>";
                                                 }
                                             }
                                         }
@@ -160,11 +160,6 @@
                                 </select>
                             </div>
                             <input type="hidden" name="id" id="id-edit-Sucursal" value="">
-
-                            <!-- <div class="form-group">
-                                <label for="addImage">Imagen</label>
-                                <input type="file" accept="image/png, image/jpeg, image/jpg" name="addImage" id="addImage" class="form-control">
-                            </div> -->
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -243,7 +238,7 @@
                                     </thead>
                                     <tbody id="table-body-sucursal">
                                         <?php
-                                            $listar = "SELECT d.*, t.nombre nombreT, c.nombre nombreC FROM direccion d, tienda t, ciudad c WHERE tienda_id=id_tienda && ciudad_id=id_ciudad";
+                                            $listar = "SELECT d.*, t.nombre nombreT, c.nombre nombreC FROM direccion d, tienda t, ciudad c WHERE tienda_id=id_tienda && ciudad_id=id_ciudad ORDER BY id_direccion";
 
                                             if( $res = $con -> query($listar) ){
                                                 if( $res -> num_rows > 0 ){
@@ -260,11 +255,11 @@
                                                                 echo "</label>";
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_direccion']}</td>";
-                                                            echo "<td>{$fila['calle']}</td>";
-                                                            echo "<td>{$fila['colonia']}</td>";
-                                                            echo "<td>{$fila['numero']}</td>";
-                                                            echo "<td>{$fila['nombreT']}</td>";
-                                                            echo "<td>{$fila['nombreC']}</td>";
+                                                            echo "<td id='datos-calle-sucursal-{$fila['id_direccion']}'>{$fila['calle']}</td>";
+                                                            echo "<td id='datos-colonia-sucursal-{$fila['id_direccion']}'>{$fila['colonia']}</td>";
+                                                            echo "<td id='datos-numero-sucursal-{$fila['id_direccion']}'>{$fila['numero']}</td>";
+                                                            echo "<td id='datos-tienda-sucursal-{$fila['id_direccion']}'>{$fila['nombreT']}</td>";
+                                                            echo "<td id='datos-ciudad-sucursal-{$fila['id_direccion']}'>{$fila['nombreC']}</td>";
                                                         echo "</tr>";
                                                     }
                                                 }else{

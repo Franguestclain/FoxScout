@@ -22,15 +22,15 @@
             $producto_err = "Introduce el nombre del producto";
         }else{
             // Evaluamos si existe ese producto
-            $existe = "SELECT id_prod FROM producto WHERE nombre = ?";
+            $existe = "SELECT id_prod FROM producto WHERE nombre = ? && subcategoria_id= ?";
 
             // Evaluamos si podemos preparar la consulta
             if( $stmt = $con -> prepare($existe) ){
-                $stmt -> bind_param("s", $param_nombre);
+                $stmt -> bind_param("ss", $param_nombre, $param_subcat);
 
                 // Inicializamos la variable
                 $param_nombre = $con -> real_escape_string(trim($_POST['addNombreProd']));
-
+                $param_subcat = $_POST["selectSubCat"];
                 // Verificamos si podemos ejecutar el query
                 if( $stmt -> execute() ){
 

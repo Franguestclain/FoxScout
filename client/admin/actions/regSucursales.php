@@ -24,19 +24,16 @@
         if( empty(trim($_POST['addNumero'])) ){
             $numero_err = "Introduce el numero de la Sucursal";
         }else{
-            /**
-             * FIXME: Arreglar la evaluacion de el numero dependiendo de la colonia
-             */
             // Evaluamos si la tienda ya existe
-            $sql = "SELECT id_direccion FROM direccion WHERE numero = ?";
+            $sql = "SELECT id_direccion FROM direccion WHERE numero = ? && calle = ?";
             // Creamos el prepare Statement
             if( $stmt = $con -> prepare($sql) ){
                 // Enlazamos una constante (incognita) con una variable
-                $stmt -> bind_param("s", $param_nombre);
+                $stmt -> bind_param("ss", $param_nombre, $param_calle);
 
                 // Inicializamos la variable
                 $param_nombre = $con -> real_escape_string(trim($_POST['addNumero']));
-
+                $param_calle = $calle;
                 // Ejecutamos el query de la consulta
                 if( $stmt -> execute() ){
                     // Guardamos el resultado

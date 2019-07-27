@@ -661,7 +661,13 @@ $(document).ready(function(){
                                                 <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
                                             </svg>
                                         </span>
-                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-sucursal-${data.id}'>${data.nombre}</td> <td>${data.categoria}</td></tr>`
+                                    </label></td>
+                                    <td>${data.id}</td>
+                                    <td id='datos-calle-sucursal-${data.id}'>${data.calle}</td>
+                                    <td id='datos-colonia-sucursal-${data.id}'>${data.colonia}</td>
+                                    <td id='datos-numero-sucursal-${data.id}'>${data.numero}</td>
+                                    <td id='datos-tienda-sucursal-${data.id}'>${data.tienda}</td>
+                                    <td id='datos-ciudad-sucursal-${data.id}'>${data.ciudad}</td></tr>`
                     $("#table-body-sucursal").append(newRow);
                 }else{
                     let mensaje = `<div id='alertAddSucursalError' class='alert alert-danger fade'>${data.mensaje}</div>`;
@@ -699,15 +705,23 @@ $(document).ready(function(){
             },2000);
         }else{
             let id = $(".checkboxSucursal:checked").attr("data-idRow");
-            let nombre = $("#datos-nombre-Sucursal-"+id).text();
-            $("#editNombreSucursal").val(nombre);
+            let calle = $("#datos-calle-sucursal-"+id).text();
+            let colonia = $("#datos-colonia-sucursal-"+id).text();
+            let numero = $("#datos-numero-sucursal-"+id).text();
+            let tienda = $("#datos-tienda-sucursal-"+id).text();
+            let ciudad = $("#datos-ciudad-sucursal-"+id).text();
+            $("#editCalle").val(calle);
+            $("#editColonia").val(colonia);
+            $("#editNumero").val(numero);
+            $(`#option-editTienda-${tienda}`).attr('selected', 'selected');
+            $(`#option-editCiudad-${ciudad}`).attr('selected', 'selected');
             $("#id-edit-Sucursal").val(id);
             $("#modalEditarSucursal").modal("show");
             limpiarFormulario("#modalEditarSucursal","#editSucursal");
         }
     });
 
-
+    // Editar sucursal
     $("#editSucursal").submit(function(e){
         e.preventDefault();
         let datos = $(this).serialize();
@@ -785,7 +799,7 @@ $(document).ready(function(){
         });
     });
 
-    // Agregar Producto
+    // Agregar Subcategoria
     $("#addSubcategoria").submit(function(e){
         e.preventDefault();
 
@@ -986,8 +1000,110 @@ $(document).ready(function(){
 
 
     // Evaluar checkboxes de editar producto
-    
+    checkboxes("#checkAll-Producto",".checkboxProducto");
+    // Evaluar editar Producto
+    $("#btnEditarProducto").on('click', function(){
+        if( evaluarEditar("#checkAll-Producto",".checkboxProducto") ){
+            $("#alertGenProducto").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenProducto").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenProducto").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            let id = $(".checkboxProducto:checked").attr("data-idRow");
+            let nombre = $("#datos-nombre-producto-"+id).text();
+            let desc = $("#datos-desc-producto-"+id).text();
+            let subcat = $("#datos-subcat-producto-"+id).text();
+            $("#editNombreProd").val(nombre);
+            $(`#option-editSubcat-${subcat}`).attr('selected', 'selected');
+            $("#editDescripcion").val(desc);
+            $("#id-edit-producto").val(id);
+            $("#modalEditarProducto").modal("show");
+            limpiarFormulario("#modalEditarProducto","#editProducto");
+        }
+    });
 
+    // Editar producto
+    $("#editProducto").submit(function(e){
+        e.preventDefault();
+        let datos = new FormData(this);
+
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: datos,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function(data,status,jqXHR){
+                if(data.status == 1){
+                    setTimeout(function(){
+                        $("#modalEditarProducto").modal("hide");
+                        limpiarFormulario("#modalEditarProducto","#editProducto");
+                        $("#temporal").remove();
+                        window.location.href = "productos.php";
+                    },1000);
+                }else{
+                    let mensaje = `<div id='alertEditProductoError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-editProducto").append(mensaje);
+                    $("#alertEditProductoError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertEditProductoError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertEditProductoError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
+
+    // Evaluar Chkbxs Borrar Subcategoria
+    $("#btnEliminarProducto").on('click', function(){
+        if( evaluarDel("#checkAll-Producto",".checkboxProducto") ){
+            $("#alertGenProducto").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenProducto").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenProducto").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            $("#modalDelProducto").modal("show");
+        }
+    });
+
+    // Boton OK de confirmacion
+    $("#confirmarProducto").on('click', function(){
+        let ids = $.map($(".checkboxProducto:checked"), (x) => $(x).attr('data-idRow') );
+        $.ajax({
+            url: "./actions/delProducto.php",
+            method: "POST",
+            data: {ids: ids},
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == 1){
+                    data.arr.forEach((item) => $("#row-producto"+item).remove() );
+                    $("#modalDelProducto").modal('hide');
+                }else{
+                    console.log("Nel no jalo");
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
 
 
 });

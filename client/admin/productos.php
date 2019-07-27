@@ -95,17 +95,38 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div id="modal-body-ediProducto" class="modal-body">
-                        <form id="editProducto" action="./actions/editproducto.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
-                            <div class="form-group">
-                                <label for="editNombre">Nombre</label>
-                                <input type="text" name="editNombre" id="editNombre" class="form-control">
+                    <div id="modal-body-editProducto" class="modal-body">
+                        <form id="editProducto" action="./actions/editProducto.php" method="POST" enctype="multipart/form-data"> <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
+                        <div class="form-group">
+                                <label for="editNombreProd">Nombre</label>
+                                <input type="text" name="editNombreProd" id="editNombreProd" class="form-control">
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="selecteditSubCat">Subcategoria</label>
+                                    <select class="form-control" name="selecteditSubCat" id="selecteditSubCat">
+                                        <?php
+                                            $listarSubcategorias = "SELECT * FROM subcategoria";
+                                            if( $res = $con -> query($listarSubcategorias) ){
+                                                if( $res -> num_rows > 0 ){
+                                                    while( $fila = $res -> fetch_assoc() ){
+                                                        echo "<option id='option-editSubcat-{$fila['nombre']}' value='{$fila['id_subcat']}'>{$fila['nombre']}</option>";
+                                                    }
+                                                }
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="editCodigoB">Codigo de barras</label>
+                                    <input class="form-control" accept="image/png, image/jpeg, image/jpg" type="file" name="editCodigoB" id="editCodigoB">
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="editImage">Imagen</label>
-                                <input type="file" accept="image/png, image/jpeg, image/jpg" name="editImage" id="editImage" class="form-control">
+                                <label for="editDescripcion">Descripcion</label>
+                                <textarea class="form-control" name="editDescripcion" id="editDescripcion" cols="30" rows="10"></textarea>
                             </div>
-                            <input type="hidden" name="id" id="id-edit">
+                            <input type="hidden" name="id" id="id-edit-producto">
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -129,7 +150,7 @@
                     <p>Estos datos se eliminaran de forma permanente.</p>
                 </div>
                 <div class="modal-footer">
-                    <button id="confirmar" type="button" class="btn btn-primary">Ok</button>
+                    <button id="confirmarProducto" type="button" class="btn btn-primary">Ok</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </div>
                 </div>
@@ -182,7 +203,7 @@
                                     </thead>
                                     <tbody id="table-body-producto">
                                         <?php
-                                            $listarProductos = "SELECT p.*, s.nombre nombreS, c.nombre nombreC FROM producto p INNER JOIN subcategoria s ON subcategoria_id = id_subcat INNER JOIN categoria c ON categoria_id = id_categoria";
+                                            $listarProductos = "SELECT p.*, s.nombre nombreS, c.nombre nombreC FROM producto p INNER JOIN subcategoria s ON subcategoria_id = id_subcat INNER JOIN categoria c ON categoria_id = id_categoria ORDER BY id_prod";
                                             
                                             if($res = $con -> query($listarProductos)){
                                                 if($res -> num_rows > 0){
@@ -200,8 +221,8 @@
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_prod']}</td>";
                                                             echo "<td id='datos-nombre-producto-{$fila['id_prod']}' >{$fila['nombre']}</td>";
-                                                            echo "<td>{$fila['descripcion']}</td>";
-                                                            echo "<td>{$fila['nombreC']} > {$fila['nombreS']}</td>";
+                                                            echo "<td id='datos-desc-producto-{$fila['id_prod']}'>{$fila['descripcion']}</td>";
+                                                            echo "<td id='datos-subcat-producto-{$fila['id_prod']}'>{$fila['nombreS']}</td>";
                                                             echo "<td>{$fila['codigoB']}</td>";
                                                         echo "</tr>";
                                                     }
@@ -225,7 +246,7 @@
                 </div>
             </div>
         </div>
-        <div id="alertGen" class="alert bg-dark alertGen fadeOutDown"></div>
+        <div id="alertGenProducto" class="alert bg-dark alertGen fadeOutDown"></div>
     </div>
 
 
