@@ -1104,6 +1104,164 @@ $(document).ready(function(){
             }
         });
     });
+        
+    // Agregar precioxTienda
+    $("#addPxt").submit(function(e){
+        e.preventDefault();
 
+        let info = $(this).serialize();
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: info,
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == "1"){
+                    $("#modalAgregarPxT").modal("hide");
+                    limpiarFormulario("#modalAgregarPxT", "#addPxt");
+                    let newRow = `<tr id='row-Precio${data.id}'>
+                    <td><input style='display: none;' class='inp-cbx checkboxPrecio' type='checkbox' data-idRow='${data.id}' name='check-Precio${data.id}' id='check-Precio${data.id}'>
+                                    <label class='cbx' for='check-Precio${data.id}'>
+                                        <span>
+                                            <svg width='12px' height='10px' viewbox='0 0 12 10'>
+                                                <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
+                                            </svg>
+                                        </span>
+                                    </label></td> <td>${data.id}</td> <td id='datos-Precio-${data.id}'>${data.precio}</td> <td>${data.producto}</td> <td>${data.sucursal}</td></tr>`
+                    $("#table-body-Precio").append(newRow);
+                }else{
+                    let mensaje = `<div id='alertAddPrecioError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-Precio").append(mensaje);
+                    $("#alertAddPrecioError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertAddPrecioError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertAddPrecioError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
+
+
+
+
+
+    // Eventos de checkboxes
+    checkboxes("#checkAll-Precio",".checkboxPrecio");
+    // Evaluar editar precioxTienda
+
+    $("#btnEditarPrecio").on('click', function(){
+        if( evaluarEditar("#checkAll-Precio",".checkboxPrecio") ){
+            $("#alertGenPrecio").append("Para realizar esta accion, selecciona solo un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenPrecio").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenPrecio").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            let id = $(".checkboxPrecio:checked").attr("data-idRow");
+            let precio = $("#datos-precio-"+id).text();
+            let producto = $("#datos-producto-"+id).text();
+            let direccion = $("#datos-direccion-"+id).text();
+            $("#editPrecio").val(precio);
+            $("#id-edit-Precio").val(id);
+            $(`#option-Sucursal-id${id}`).attr('selected','selected');
+            $("#modalEditarPxT").modal("show");
+            limpiarFormulario("#modalEditarPxT","#editPxt");
+        }
+    });
+    // Editar precioxTienda
+
+    $("#editPxt").submit(function(e){
+        e.preventDefault();
+        let datos = $(this).serialize();
+
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: datos,
+            dataType: "json",
+            success: function(data,status,jqXHR){
+                if(data.status == 1){
+                    setTimeout(function(){
+                        $("#modalEditarPrecio").modal("hide");
+                        limpiarFormulario("#modalEditarPrecio","#editPrecio");
+                        $("#temporal").remove();
+                        window.location.href = "precioxtienda.php";
+                    },1000);
+                }else{
+                    let mensaje = `<div id='alertEditPrecioError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-editPrecio").append(mensaje);
+                    $("#alertEditPrecioError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertEditPrecioError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertEditPrecioError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
+
+    // Evaluar Chkbxs Borrar PrecioxTienda
+    $("#btnEliminarPrecio").on('click', function(){
+        if( evaluarDel("#checkAll-Precio",".checkboxPrecio") ){
+            $("#alertGenPrecio").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenPrecio").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenPrecio").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            $("#modalDelPrecio").modal("show");
+        }
+    });
+
+    // Boton OK de confirmacion
+    $("#confirmarPrecio").on('click', function(){
+        let ids = $.map($(".checkboxPrecio:checked"), (x) => $(x).attr('data-idRow') );
+        $.ajax({
+            url: "./actions/delPrecio.php",
+
+            method: "POST",
+            data: {ids: ids},
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == 1){
+
+                    data.arr.forEach((item) => $("#row-Precio"+item).remove() );
+                    $("#modalDelPrecio").modal('hide');
+
+                    data.arr.forEach((item) => $("#row-Precio"+item).remove() );
+                    $("#modalDelPrecio").modal('hide');
+
+                }else{
+                    console.log("Nel no jalo");
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    });
 
 });
