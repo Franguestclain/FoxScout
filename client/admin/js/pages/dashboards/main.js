@@ -1280,19 +1280,13 @@ $(document).ready(function(){
         let ids = $.map($(".checkboxPrecio:checked"), (x) => $(x).attr('data-idRow') );
         $.ajax({
             url: "./actions/delPrecio.php",
-
             method: "POST",
             data: {ids: ids},
             dataType: "json",
             success: function(data, status, jqXHR){
                 if(data.status == 1){
-
                     data.arr.forEach((item) => $("#row-Precio"+item).remove() );
                     $("#modalDelPrecio").modal('hide');
-
-                    data.arr.forEach((item) => $("#row-Precio"+item).remove() );
-                    $("#modalDelPrecio").modal('hide');
-
                 }else{
                     console.log("Nel no jalo");
                 }
@@ -1308,7 +1302,7 @@ $(document).ready(function(){
 
 
 
-    // Agregar Usuario
+    // Admin Usuario
     checkboxes("#checkAll-Usuario",".checkboxUsuario");
     $("#btnAdmin").on('click', function(){
         if( evaluarDel("#checkAll-Usuario",".checkboxUsuario") ){
@@ -1343,6 +1337,46 @@ $(document).ready(function(){
                 }
             })
         }
+    });
+
+
+    // Evaluar Chkbxs Borrar Subcategoria
+    $("#btnEliminarUsuario").on('click', function(){
+        if( evaluarDel("#checkAll-Usuario",".checkboxUsuario") ){
+            $("#alertGenUsuarios").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenUsuarios").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenUsuarios").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            $("#modalDelUsuario").modal("show");
+        }
+    });
+
+    // Boton OK de confirmacion
+    $("#confirmarUsuario").on('click', function(){
+        let ids = $.map($(".checkboxUsuario:checked"), (x) => $(x).attr('data-idRow') );
+        $.ajax({
+            url: "./actions/delUsuario.php",
+            method: "POST",
+            data: {ids: ids},
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == 1){
+                    data.arr.forEach((item) => $("#row-usuario"+item).remove() );
+                    $("#modalDelUsuario").modal('hide');
+                }else{
+                    console.log("Nel no jalo");
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
     });
 
 

@@ -114,6 +114,25 @@
         
         <!-- Termina el editar usuario -->
 
+        <div class="modal fade" id="modalDelUsuario" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">¿Estas seguro de eliminar estos registros?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Estos datos se eliminaran de forma permanente.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirmarUsuario" type="button" class="btn btn-primary">Ok</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -247,15 +266,13 @@
                 <!-- ============================================================== -->
                 <!-- Recent comment and chats -->
                 <!-- ============================================================== -->
-                <div class="row">
-                    <!-- column -->
+                <!-- <div class="row">
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Recent Comments</h4>
                             </div>
                             <div class="comment-widgets scrollable">
-                                <!-- Comment Row -->
                                 <div class="d-flex flex-row comment-row m-t-0">
                                     <div class="p-2"><img src="assets/images/users/1.jpg" alt="user" width="50" class="rounded-circle"></div>
                                     <div class="comment-text w-100">
@@ -270,7 +287,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Comment Row -->
                                 <div class="d-flex flex-row comment-row">
                                     <div class="p-2"><img src="assets/images/users/4.jpg" alt="user" width="50" class="rounded-circle"></div>
                                     <div class="comment-text active w-100">
@@ -287,7 +303,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Comment Row -->
                                 <div class="d-flex flex-row comment-row">
                                     <div class="p-2"><img src="assets/images/users/5.jpg" alt="user" width="50" class="rounded-circle"></div>
                                     <div class="comment-text w-100">
@@ -307,7 +322,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- column -->
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
@@ -363,7 +377,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- ============================================================== -->
                 <!-- Recent comment and chats -->
                 <!-- ============================================================== -->

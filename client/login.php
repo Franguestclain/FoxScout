@@ -29,7 +29,7 @@
         // Evaluamos si no tenemos errores y validamos credenciales
         if( empty($correo_err) && empty($contraseña_err) ){
             // Hacemos una consulta preparada
-            $sql = "SELECT id_usuario, nombre, email, contra, admin FROM usuarios WHERE email = ?";
+            $sql = "SELECT id_usuario, nombre,apellidoP, apellidoM, email, contra, admin, ciudad_id admin FROM usuarios WHERE email = ?";
 
             if( $stmt = $con->prepare($sql) ){
                 // Enlazamos la variable
@@ -44,7 +44,7 @@
 
                     if($stmt->num_rows == 1){
                         // Enlazamos los campos seleccionados con las siguientes variables
-                        $stmt->bind_result($id, $nombre, $correo, $contraseña_hasheada, $admin);
+                        $stmt->bind_result($id, $nombre, $apellidoP, $apellidoM, $correo, $contraseña_hasheada, $admin, $ciudad_id);
                         if($stmt-> fetch()){
                             if(password_verify($contraseña, $contraseña_hasheada)){
                                 
@@ -56,8 +56,11 @@
 
                                 $_SESSION["log"] = true;
                                 $_SESSION["id"]  = $id;
-                                $_SESSION["correo"] = $correo;
                                 $_SESSION["nombre"] = $nombre;
+                                $_SESSION["apellidoP"] = $apellidoP;
+                                $_SESSION["apellidoM"] = $apellidoM;
+                                $_SESSION["correo"] = $correo;
+                                $_SESSION['ciudad'] = $ciudad_id;
                                 $_SESSION["admin"] = false;
                                 if($admin === 1){
                                     $_SESSION["admin"] = true;

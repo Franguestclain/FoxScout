@@ -29,18 +29,18 @@
                 </li>
                 <!-- User Profile-->
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.php" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Usuarios</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.php" aria-expanded="false"><i class="mdi mdi-shopping"></i><span class="hide-menu">Perfil</span></a></li>
+                <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.php" aria-expanded="false"><i class="mdi mdi-shopping"></i><span class="hide-menu">Perfil</span></a></li> -->
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="productos.php" aria-expanded="false"><i class="mdi mdi-shopping"></i><span class="hide-menu">Productos</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.php" aria-expanded="false"><i class="mdi mdi-account-network"></i><span class="hide-menu">Perfil Page</span></a></li>
+                <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.php" aria-expanded="false"><i class="mdi mdi-account-network"></i><span class="hide-menu">Perfil Page</span></a></li> -->
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="tiendas.php" aria-expanded="false"><i class="mdi mdi-store"></i><span class="hide-menu">Tiendas</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="precioxtienda.php" aria-expanded="false"><i class="mdi mdi-store"></i><span class="hide-menu">Precio por tienda</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="sucursales.php" aria-expanded="false"><i class="mdi mdi-google-maps"></i><span class="hide-menu">Sucursales</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="localidades.php" aria-expanded="false"><i class="mdi mdi-map-marker-multiple"></i><span class="hide-menu">Localidades</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="categoria.php" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">Categorías</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="error-404.php" aria-expanded="false"><i class="mdi mdi-map-marker-multiple"></i><span class="hide-menu">Error 404</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-basic.php" aria-expanded="false"><i class="mdi mdi-border-all"></i><span class="hide-menu">Tablas</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.php" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">Iconos</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.php" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Iconos</span></a></li>
+                <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="error-404.php" aria-expanded="false"><i class="mdi mdi-map-marker-multiple"></i><span class="hide-menu">Error 404</span></a></li> -->
+                <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-basic.php" aria-expanded="false"><i class="mdi mdi-border-all"></i><span class="hide-menu">Tablas</span></a></li> -->
+                <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.php" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">Iconos</span></a></li> -->
+                <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.php" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Iconos</span></a></li> -->
             </ul>
             
         </nav>

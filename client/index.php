@@ -3,7 +3,10 @@
 ?>
 
   
-  <?php include("barramenu.php");?>
+  <?php
+    include("barramenu.php");
+    include("./conexion.php");
+  ?>
   
 
     <div class="site-blocks-cover overlay" style="background-image: url(images/banter-snaps-kKEBaGVUwXY-unsplash.jpg" data-aos="fade" data-stellar-background-ratio="0.5">
@@ -18,7 +21,7 @@
                 <?php
                   if(isset($_SESSION['admin']) && $_SESSION['admin'] === true){
                 ?>
-                <h1 class="" data-aos="fade-up">Bienvenidos a FoxScout admins</h1>
+                <h1 class="" data-aos="fade-up">Bienvenido <?php echo $_SESSION['nombre']; ?></h1>
                 <?php
                   }else{
                 ?>
@@ -39,21 +42,40 @@
                   <div class="col-lg-12 mb-4 mb-xl-0 col-xl-3">
                     <div class="wrap-icon">
                       <span class="icon icon-room"></span>
+                      <?php
+                        if( isset($_SESSION["log"]) && isset( $_SESSION['ciudad'] ) ){
+                          $localidad = "SELECT * FROM ciudad WHERE id_ciudad = {$_SESSION['ciudad']}";
+                          if($res = $con -> query($localidad)){
+                            if($res -> num_rows == 1){
+                              $fila = $res -> fetch_assoc();
+                            ?>
+                              <input type="text" class="form-control rounded disabled" value="<?php echo $fila['nombre'] ?>">
+                            <?php
+                            }
+                          }
+                        }else{
+                      ?>
                       <input type="text" class="form-control rounded" placeholder="Localidad">
+                      <?php 
+                        }
+                      ?>
                     </div>
                     
                   </div>
                   <div class="col-lg-12 mb-4 mb-xl-0 col-xl-3">
                     <div class="select-wrap">
                       <span class="icon"><span class="icon-keyboard_arrow_down"></span></span>
-                      <select class="form-control rounded" name="" id="">
-                        <option value="">Todas las categorías</option>
-                        <option value="">Línea Blanca</option>
-                        <option value="">Libros &amp;  Revistas</option>
-                        <option value="">Electrónicos</option>
-                        <option value="">Herramienta para el hogar</option>
-                        <option value="">Automóviles  &amp; Accesorios</option>
-                        <option value="">Otros</option>
+                      <select class="form-control rounded" name="categorias" id="categorias-inicio">
+                        <?php
+                          $categoria = "SELECT * FROM categoria";
+                          if($res = $con -> query($categoria)){
+                            if($res -> num_rows > 0){
+                              while($fila = $res -> fetch_assoc()){
+                                echo "<option value='{$fila['id_categoria']}'>{$fila['nombre']}</option>";
+                              }
+                            }
+                          }
+                        ?>
                       </select>
                     </div>
                   </div>
