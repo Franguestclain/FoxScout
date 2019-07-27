@@ -36,12 +36,12 @@
                 
 
                 if( $stmt -> execute() ){
-                    // // Obtenemos el ID maximo para actualizar la tabla en el frontend
-                    // $maxSql = "SELECT max(id_categoria) maximus FROM categoria";
-                    // $resQuery = $con -> query($maxSql);
-                    // $res = $resQuery -> fetch_assoc();
-                    // echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $nombre]);
-                    echo json_encode(["status" => "1", "nombreProducto" => $precio]);
+                    // Obtenemos el ID maximo para actualizar la tabla en el frontend
+                    $maxSql = "SELECT max(id_PxTienda) maximus FROM precioxtienda";
+                    $resQuery = $con -> query($maxSql);
+                    $res = $resQuery -> fetch_assoc();
+                    echo json_encode(["status" => "1", "id" => $res['maximus'], "precio" => $param_precio, "producto" => $param_productoid, "sucursal" => $param_direccion]);
+                   
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro de la subcategoria"]);
                 }

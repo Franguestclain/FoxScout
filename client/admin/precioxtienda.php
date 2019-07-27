@@ -111,6 +111,102 @@
                 </div>
             </div>
         </div>
+
+        <!-- Aqui comienza el modal de edit -->
+        <div class="modal fade" id="modalEditarPxT" tabindex="-1" role="dialog" aria-labelledby="modalEditarPxTTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarPxTTitulo">Editar Precio</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modal-body-PxT" class="modal-body">
+                        <form id="editPxt" action="./actions/editPrecio.php" method="POST">
+                            <div class="form-group">
+                                <label for="editPrecio">Precio</label>
+                                <input type="text" name="editPrecio" id="editPrecio" class="form-control">
+                            </div>
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="editProducto">Producto</label>
+                                    <select class="form-control" name="editProducto" id="editProducto">
+                                        <?php
+                                        $optionProducto = "SELECT * FROM producto";
+                                        if($resOptionP = $con -> query($optionProducto)){
+                                            if( $resOptionP -> num_rows > 0 ){
+                                                while($filaOptionP = $resOptionP -> fetch_assoc()){
+                                                    echo "<option id='option-producto-id{$filaOptionP['id_prod']}' value='{$filaOptionP['id_prod']}'>{$filaOptionP['nombre']}</option>";
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                    <div class="form-group">
+                                        <label for="editTienda">Tienda</label>
+                                        <select class="form-control" name="editTienda" id="editTienda">
+                                        <?php
+                                            $optionTienda = "SELECT * FROM tienda";
+                                            if($resOptionT = $con -> query($optionTienda)){
+                                            if( $resOptionT -> num_rows > 0 ){
+                                            while($filaOptionT = $resOptionT -> fetch_assoc()){
+                                                echo "<option id='option-Tienda-id{$filaOptionT['id_tienda']}' value='{$filaOptionT['id_tienda']}'>{$filaOptionT['nombre']}</option>";
+                                                }
+                                            }
+                                         }
+                                        ?>
+                                        </select>
+                            </div>
+                            </div>
+                            <div class="col form-group">
+                                    <label for="editSucursal">Sucursal</label>
+                                    <select class="form-control" name="editSucursal" id="editSucursal">
+                                        <?php
+                                            $optionSucursal = "SELECT * FROM direccion";
+                                            if($resOptionS = $con -> query($optionSucursal)){
+                                                if( $resOptionS -> num_rows > 0 ){
+                                                    while($filaOptionS = $resOptionS -> fetch_assoc()){
+                                                        echo "<option id='option-Sucursal-id{$filaOptionS['id_direccion']}' value='{$filaOptionS['id_direccion']}'>{$filaOptionS['calle']}</option>";
+                                                    }
+                                                }
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                                <input type="hidden" id='id-edit-Precio' name="id" value="">                            
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input form="editPxt" id="submit" name="submit" type="submit" class="btn btn-primary" value="Registrar">
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!-- Aqui acaba el modal de edit -->
+
+        <div class="modal fade" id="modalDelPrecio" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">¿Estas seguro de eliminar estos registros?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Estos datos se eliminaran de forma permanente.</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirmarPrecio" type="button" class="btn btn-primary">Ok</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+                </div>
+            </div>
+        </div>                                  
+
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
@@ -131,8 +227,8 @@
                                     </div>
                                     <div class="ml-auto">
                                         <button class="btn btn-success btnAgregar" data-toggle="modal" data-target="#modalAgregarPxT"><i class="fa fa-plus"></i> Agregar</button>
-                                        <button class="btn btn-primary btnEditar"><i class="fa fa-sync-alt"></i> Editar</button>
-                                        <button class="btn btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
+                                        <button id="btnEditarPrecio" class="btn btn-primary btnEditar"><i class="fa fa-sync-alt"></i> Editar</button>
+                                        <button id="btnEliminarPrecio" class="btn btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
                                     </div>
                                 </div>
                             </div>
@@ -141,8 +237,8 @@
                                     <thead>
                                         <tr class="bg-light">
                                             <th class="border-top-0">
-                                                <input style="display: none;" class="inp-cbx" type="checkbox" name="checkAll-Direccion" id="checkAll-Direccion">
-                                                <label class="cbx" for="checkAll-Direccion">
+                                                <input style="display: none;" class="inp-cbx" type="checkbox" name="checkAll-Precio" id="checkAll-Precio">
+                                                <label class="cbx" for="checkAll-Precio">
                                                     <span>
                                                         <svg width="12px" height="10px" viewbox="0 0 12 10">
                                                             <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
@@ -158,17 +254,17 @@
                                             <th class="border-top-0">Ciudad</th>-->
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="table-body-Precio">
                                         <?php
                                             $listar = "SELECT * FROM precioxtienda";
 
                                             if( $res = $con -> query($listar) ){
                                                 if( $res -> num_rows > 0 ){
                                                     while($fila = $res -> fetch_assoc() ){
-                                                        echo "<tr id='row-{$fila['id_PxTienda']}'>";
+                                                        echo "<tr id='row-Precio{$fila['id_PxTienda']}'>";
                                                             echo "<td>";
-                                                                echo "<input style='display: none;' class='inp-cbx checkboxDireccion' type='checkbox' data-idRow='{$fila['id_PxTienda']}' name='check-Direccion{$fila['id_PxTienda']}' id='check-Direccion{$fila['id_PxTienda']}'>";
-                                                                echo "<label class='cbx' for='check-Direccion{$fila['id_PxTienda']}'>";
+                                                                echo "<input style='display: none;' class='inp-cbx checkboxPrecio' type='checkbox' data-idRow='{$fila['id_PxTienda']}' name='check-Precio{$fila['id_PxTienda']}' id='check-Precio{$fila['id_PxTienda']}'>";
+                                                                echo "<label class='cbx' for='check-Precio{$fila['id_PxTienda']}'>";
                                                                     echo "<span>";
                                                                         echo "<svg width='12px' height='10px' viewbox='0 0 12 10'>";
                                                                             echo "<polyline points='1.5 6 4.5 9 10.5 1'></polyline>";
@@ -177,9 +273,9 @@
                                                                 echo "</label>";
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_PxTienda']}</td>";
-                                                            echo "<td>{$fila['precio']}</td>";
-                                                            echo "<td>{$fila['prod_id']}</td>";
-                                                            echo "<td>{$fila['direccion_id']}</td>";
+                                                            echo "<td id='datos-precio-{$fila['id_PxTienda']}'>{$fila['precio']}</td>";
+                                                            echo "<td id='datos-producto-{$fila['id_PxTienda']}'>{$fila['prod_id']}</td>";
+                                                            echo "<td id='datos-direccion-{$fila['id_PxTienda']}'>{$fila['direccion_id']}</td>";
                                                             //echo "<td>{$fila['nombreT']}</td>";
                                                             //echo "<td>{$fila['nombreC']}</td>";
                                                         echo "</tr>";
@@ -210,6 +306,7 @@
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
+        <div id="alertGenPrecio" class="alert bg-dark alertGen fadeOutDown"></div>
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
