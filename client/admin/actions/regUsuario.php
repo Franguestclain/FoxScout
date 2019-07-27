@@ -2,7 +2,7 @@
     include("../../conexion.php");
 
     $nombre = $apellidoP = $apellidoM = $email = $privilegio = $ciudad ="";
-    $nombre_err = $apellidoP_err = $apellidoM_err = $ciudad_error= $error = "";
+    $nombre_err = $apellidoP_err = $apellidoM_err = $ciudad_error= $error = $email_err = "";
     $admin=false; 
 
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
@@ -52,9 +52,9 @@
                     $stmt -> store_result();
                     // Evaluamos si nos regresa algun registro
                     if( $stmt -> num_rows == 1 ){
-                        $producto_err = "Este email ya existe";
+                        $email_err = "Este email ya existe";
                     }else{
-                        $producto = $con -> real_escape_string(trim($_POST['addEmail']));
+                        $email = $con -> real_escape_string(trim($_POST['addEmail']));
                     }
                 }else{
                     $error = "Hubo un error. Intentalo de nuevo.";
