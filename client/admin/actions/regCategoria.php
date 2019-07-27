@@ -1,19 +1,8 @@
 <?php
     include("../../conexion.php");
 
-    // function checarNombreDeImagen($nombre){
-    //     return (bool) ( (preg_match("`^[-0-9A-Z_\.]+$`i",$nombre)) ? true : false );
-    // }
-
-    // function checarTamañoDeLaImagen($nombre){
-    //     return (bool) ((mb_strlen($nombre,"UTF-8") > 225) ? true : false);
-    // }
-
-
-    // $extensionesValidas = ['jpeg', 'jpg', 'png'];
-    // $nombre = $nombreImagen = "";
-    // $nombre_err = $imagen_err = $error = "";
-    // $carpetaDestino = "../imagenes/";
+    $nombre = "";
+    $nombre_err = $error = "";
 
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
         
@@ -47,44 +36,8 @@
             }
             $stmt -> close();
         }
-
-        // $img = $_FILES['addImage']['name'];
-        // $tmp = $_FILES['addImage']['tmp_name'];
-
-        // // Validar si el archivo subido no esta vacio
-        // if( empty($img) || !$_FILES['addImage'] ){
-        //     $imagen_err = "Selecciona la imagen de la tienda";
-        // }else{
-        //     // Evaluamos si no tiene caracteres especiales
-        //     if( checarNombreDeImagen($img) ){
-        //         // Evaluamos si el nombre es muy grande
-        //         if( checarTamañoDeLaImagen($img) ){
-        //             $imagen_err = "Nombre de la imagen muy largo";
-        //         }else{
-        //             // Evaluamos la extension
-        //             $extensionImagen = strtolower(pathinfo($img, PATHINFO_EXTENSION));
-        //             if( in_array($extensionImagen, $extensionesValidas) ){
-        //                 $carpetaDestino = $carpetaDestino.$img;                
-        //                 // Intentamos mover la imagen a la carpeta de destino
-        //                 if( !file_exists($carpetaDestino) ){ // No existe el fichero
-        //                     if( move_uploaded_file($tmp, "../".$carpetaDestino) ){
-        //                         // No tengo nada que hacer aqui :v
-        //                     }else{
-        //                         $imagen_err = "No se pudo subir la imagen. Intentelo de nuevo mas tarde.";
-        //                     }
-        //                 }
-        //             }else{
-        //                 $imagen_err = "Tipo de extension no permitida";
-        //             }
-        //         }
-        //     }else{
-        //         $imagen_err = "Nombre del archivo no permitido";
-        //     }
-        // }
-
-
         
-        if( empty($nombre_err) ){
+        if( empty($nombre_err) && empty($error) ){
             // Preparamos nuestro query
             $sql = "INSERT INTO categoria (nombre) VALUES (?)";
             

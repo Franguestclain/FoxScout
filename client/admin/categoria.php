@@ -77,8 +77,8 @@
                     <div id="modal-body-subcategoria" class="modal-body">
                         <form id="addSubcategoria" action="./actions/regSubcategoria.php" method="POST" > <!-- si nuestro form utiliza un input file, necesitamos incluid enctype="multipart/form-data" -->
                             <div class="form-group">
-                                <label for="addNombre">Nombre</label>
-                                <input type="text" name="addNombre" id="addNombre" class="form-control">
+                                <label for="addNombreSubcategoria">Nombre</label>
+                                <input type="text" name="addNombreSubcategoria" id="addNombreSubcategoria" class="form-control">
                             </div>
                            
                            <select class="form-control" name="selectSubcat" id="selectSubcat">
@@ -154,7 +154,7 @@
                                         if($resOptionE = $con -> query($optionSubcat)){
                                             if( $resOptionE -> num_rows > 0 ){
                                                 while($filaOptionE = $resOptionE -> fetch_assoc()){
-                                                    echo "<option id='option-subcategoria-id{$filaOptionE['id_categoria']}' value='{$filaOptionE['id_categoria']}'>{$filaOptionE['nombre']}</option>";
+                                                    echo "<option id='option-selectCat-{$filaOptionE['nombre']}' value='{$filaOptionE['id_categoria']}'>{$filaOptionE['nombre']}</option>";
                                                 }
                                             }
                                         }
@@ -272,7 +272,7 @@
                                                                 echo "</label>";
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_categoria']}</td>";
-                                                            echo "<td id='datos-nombre-Categoria{$fila['id_categoria']}' >{$fila['nombre']}</td>";
+                                                            echo "<td id='datos-nombre-Categoria-{$fila['id_categoria']}' >{$fila['nombre']}</td>";
                                                             // echo "<td><img id='img-Categoria{$fila['id_categoria']}' class='img-Categoria' src='{$fila['img']}' /></td>";
                                                         echo "</tr>";
                                                     }
@@ -353,8 +353,8 @@
                                                                 echo "</label>";
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_subcat']}</td>";
-                                                            echo "<td id='datos-{$fila['id_subcat']}' >{$fila['nombre']}</td>";
-                                                            echo "<td>{$fila['nombreC']}</td>";
+                                                            echo "<td id='datos-nombre-subcat-{$fila['id_subcat']}' >{$fila['nombre']}</td>";
+                                                            echo "<td id='datos-nombre-sCat-{$fila['id_subcat']}'>{$fila['nombreC']}</td>";
                                                             
                                                         echo "</tr>";
                                                     }

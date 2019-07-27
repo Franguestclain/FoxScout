@@ -7,18 +7,19 @@
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
         
         // Validar si el nombre de la tienda esta vacio
-        if( empty(trim($_POST['addNombre'])) ){
+        if( empty(trim($_POST['addNombreSubcategoria'])) ){
             $nombre_err = "Introduce el nombre de la subcategoria";
         }else{
             // Evaluamos si la tienda ya existe
-            $sql = "SELECT id_subcat FROM subcategoria WHERE nombre = ?";
+            $sql = "SELECT id_subcat FROM subcategoria WHERE nombre = ? && categoria_id = ?";
             // Creamos el prepare Statement
             if( $stmt = $con -> prepare($sql) ){
                 // Enlazamos una constante (incognita) con una variable
-                $stmt -> bind_param("s", $param_nombre);
+                $stmt -> bind_param("ss", $param_nombre, $param_catid);
 
                 // Inicializamos la variable
-                $param_nombre = $con -> real_escape_string(trim($_POST['addNombre']));
+                $param_nombre = $con -> real_escape_string(trim($_POST['addNombreSubcategoria']));
+                $param_catid = $_POST["selectSubcat"];
 
                 // Ejecutamos el query de la consulta
                 if( $stmt -> execute() ){
@@ -28,7 +29,7 @@
                     if( $stmt -> num_rows == 1 ){
                         $nombre_err = "Esta subcategoria ya ha sido registrada";
                     }else{
-                        $nombre = $con -> real_escape_string(trim($_POST['addNombre']));
+                        $nombre = $con -> real_escape_string(trim($_POST['addNombreSubcategoria']));
                     }
                 }else{
                     $error = "Algo salio mal, intentalo de nuevo.";
