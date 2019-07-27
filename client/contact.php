@@ -35,24 +35,24 @@
 
             
 
-            <form action="#" class="p-5 bg-white">
+            <form action="admin/actions/enviar.php" method="POST" class="p-5 bg-white">
              
 
               <div class="row form-group">
                 <div class="col-md-6 mb-3 mb-md-0">
-                  <label class="text-black" for="fname">First Name</label>
-                  <input type="text" id="fname" class="form-control">
+                  <label class="text-black" for="name">Nombre</label>
+                  <input type="text" id="name" class="form-control">
                 </div>
                 <div class="col-md-6">
-                  <label class="text-black" for="lname">Last Name</label>
-                  <input type="text" id="lname" class="form-control">
+                  <label class="text-black" for="Apellido">Apellido</label>
+                  <input type="text" id="Apellido" class="form-control">
                 </div>
               </div>
 
               <div class="row form-group">
                 
                 <div class="col-md-12">
-                  <label class="text-black" for="email">Email</label> 
+                  <label class="text-black" for="email">Correo</label> 
                   <input type="email" id="email" class="form-control">
                 </div>
               </div>
@@ -60,21 +60,21 @@
               <div class="row form-group">
                 
                 <div class="col-md-12">
-                  <label class="text-black" for="subject">Subject</label> 
-                  <input type="subject" id="subject" class="form-control">
+                  <label class="text-black" for="Asunto">Asunto</label> 
+                  <input type="Asunto" id="Asunto" class="form-control">
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <label class="text-black" for="message">Message</label> 
-                  <textarea name="message" id="message" cols="30" rows="7" class="form-control" placeholder="Write your notes or questions here..."></textarea>
+                  <label class="text-black" for="Mensaje">Mensaje</label> 
+                  <textarea name="Mensaje" id="Mensaje" cols="30" rows="7" class="form-control" placeholder="Escribe aquí tu mensaje…"></textarea>
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" value="Send Message" class="btn btn-primary py-2 px-4 text-white">
+                  <input type="submit" value="Enviar Mensaje" class="btn btn-primary py-2 px-4 text-white">
                 </div>
               </div>
 
@@ -84,10 +84,10 @@
           <div class="col-md-5"  data-aos="fade" data-aos-delay="100">
             
             <div class="p-4 mb-3 bg-white">
-              <p class="mb-0 font-weight-bold">Address</p>
-              <p class="mb-4">203 Fake St. Mountain View, San Francisco, California, USA</p>
+              <p class="mb-0 font-weight-bold">Dirección</p>
+              <p class="mb-4">Av. Montes Americanos, No. 9501, Sector 35, C.P. 31216, Chihuahua, Chihuahua, México.</p>
 
-              <p class="mb-0 font-weight-bold">Phone</p>
+              <p class="mb-0 font-weight-bold">Teléfono</p>
               <p class="mb-4"><a href="#">+1 232 3235 324</a></p>
 
               <p class="mb-0 font-weight-bold">Email</p>
@@ -99,8 +99,10 @@
             </div>
             
             <div class="p-4 mb-3 bg-white">
-              <h3 class="h5 text-black mb-3">More Info</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur? Fugiat quaerat eos qui, libero neque sed nulla.</p>
+              <h3 class="h5 text-black mb-3">Mas Información:</h3>
+              <p>Nos dedicamos al desarrollo de software multiplataforma para crear soluciones tanto para empresas pequeñas como para empresas de una mayor escala.
+En este momento somos una micro empresa, nos ubicamos en la Universidad Tecnológica de Chihuahua.
+</p>
               <p><a href="#" class="btn btn-primary px-4 py-2 text-white">Learn More</a></p>
             </div>
 
@@ -113,8 +115,8 @@
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 text-center border-primary">
-            <h2 class="font-weight-light text-primary">Frequently Ask Question</h2>
-            <p class="color-black-opacity-5">Lorem Ipsum Dolor Sit Amet</p>
+            <h2 class="font-weight-light text-primary">Preguntas frecuentes</h2>
+            <!-- <p class="color-black-opacity-5">Lorem Ipsum Dolor Sit Amet</p> -->
           </div>
         </div>
 
@@ -122,41 +124,42 @@
         <div class="row justify-content-center">
           <div class="col-8">
             <div class="border p-3 rounded mb-2">
-              <a data-toggle="collapse" href="#collapse-1" role="button" aria-expanded="false" aria-controls="collapse-1" class="accordion-item h5 d-block mb-0">How to list my item?</a>
+              <a data-toggle="collapse" href="#collapse-1" role="button" aria-expanded="false" aria-controls="collapse-1" class="accordion-item h5 d-block mb-0">¿Se puede comprar en la página FoxScout?</a>
 
               <div class="collapse" id="collapse-1">
                 <div class="pt-2">
-                  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti esse voluptates deleniti, ratione, suscipit quam cumque beatae, enim mollitia voluptatum velit excepturi possimus odio dolore molestiae officiis aspernatur provident praesentium.</p>
+                  <p class="mb-0">FoxScout solo es una página para búsqueda y comparativa de productos.</p>
                 </div>
               </div>
             </div>
 
             <div class="border p-3 rounded mb-2">
-              <a data-toggle="collapse" href="#collapse-4" role="button" aria-expanded="false" aria-controls="collapse-4" class="accordion-item h5 d-block mb-0">Is this available in my country?</a>
+              <a data-toggle="collapse" href="#collapse-4" role="button" aria-expanded="false" aria-controls="collapse-4" class="accordion-item h5 d-block mb-0">¿Está disponible en mi país?</a>
 
               <div class="collapse" id="collapse-4">
                 <div class="pt-2">
-                  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti esse voluptates deleniti, ratione, suscipit quam cumque beatae, enim mollitia voluptatum velit excepturi possimus odio dolore molestiae officiis aspernatur provident praesentium.</p>
+                  <p class="mb-0">Fox Scout actualmente solo funciona en México.</p>
                 </div>
               </div>
             </div>
 
             <div class="border p-3 rounded mb-2">
-              <a data-toggle="collapse" href="#collapse-2" role="button" aria-expanded="false" aria-controls="collapse-2" class="accordion-item h5 d-block mb-0">Is it free?</a>
+              <a data-toggle="collapse" href="#collapse-2" role="button" aria-expanded="false" aria-controls="collapse-2" class="accordion-item h5 d-block mb-0">¿Es gratis? </a>
 
               <div class="collapse" id="collapse-2">
                 <div class="pt-2">
-                  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti esse voluptates deleniti, ratione, suscipit quam cumque beatae, enim mollitia voluptatum velit excepturi possimus odio dolore molestiae officiis aspernatur provident praesentium.</p>
+                  <p class="mb-0">Si, La consulta de productos y comparativas de productos es completamente gratis, así como el registro a la página. Próximamente los pequeños, medianos y grandes comercios se podrán suscribir en nuestra página para publicar sus productos (Esto si tendrá un costo). </p>
                 </div>
               </div>
             </div>
 
             <div class="border p-3 rounded mb-2">
-              <a data-toggle="collapse" href="#collapse-3" role="button" aria-expanded="false" aria-controls="collapse-3" class="accordion-item h5 d-block mb-0">How the system works?</a>
+              <a data-toggle="collapse" href="#collapse-3" role="button" aria-expanded="false" aria-controls="collapse-3" class="accordion-item h5 d-block mb-0">¿Cómo funciona la página?</a>
 
               <div class="collapse" id="collapse-3">
                 <div class="pt-2">
-                  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti esse voluptates deleniti, ratione, suscipit quam cumque beatae, enim mollitia voluptatum velit excepturi possimus odio dolore molestiae officiis aspernatur provident praesentium.</p>
+                  <p class="mb-0"> El uso de FoxScout es realmente fácil, solo hay que buscar un producto y nos mostrara en que tiendas está disponible, así como los precios de cada una. Además, en la pestaña de comparativas se puede realizar comparativas entre productos o tiendas. 
+</p>
                 </div>
               </div>
             </div>
