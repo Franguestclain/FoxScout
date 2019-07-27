@@ -5,10 +5,7 @@
         header("location: ../index.php");
         exit;
     }else{
-        /**
-         * FIXME:
-         * Los usuarios normales pueden ver este directorio
-         */
+        
         if($_SESSION['admin'] == false){
             header("location: ../index.php");
         }
@@ -50,66 +47,6 @@
         <!-- ============================================================== -->
 
         <!-- Comienza el Agregar usuario -->
-        <div class="modal fade" id="modalAgregarU" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUTitulo" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalAgregarUTitulo">Agregar usuario</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addUser" action="./actions/regUsuario.php" method="POST">
-                            <div class="form-group">
-                                <label for="addNombre">Nombre</label>
-                                <input type="text" name="addNombre" id="addName" class="form-control">
-                            </div>
-                            <div class="row">
-                                <div class="col form-group">
-                                    <label for="addApellidoP">Apellido Paterno</label>
-                                    <input type="text" name="addApellidoP" id="addApellidoP" class="form-control">
-                                </div>
-                                <div class="col form-group">
-                                    <label for="addApellidoM">Apellido Materno</label>
-                                    <input type="text" name="addApellidoM" id="addApellidoM" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="addEmail">Email</label>
-                                <input type="email" name="addEmail" id="addEmail" class="form-control">
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-check">
-                                        <input type="checkbox" name="addAdmin" id="addAdmin" class="form-check-input">
-                                        <label for="addAdmin" class="form-check-label">Administrador</label>
-                                    </div>
-                                </div>
-                                <div class="col form-group">
-                                    <select class="form-control" name="addCiudad" id="addCiudad">
-                                    <?php
-                                            $optionCiudad = "SELECT * FROM ciudad";
-                                            if($resOptionC = $con -> query($optionCiudad)){
-                                            if( $resOptionC -> num_rows > 0 ){
-                                            while($filaOptionC = $resOptionC -> fetch_assoc()){
-                                                echo "<option id='option-Ciudad-id{$filaOptionC['id_ciudad']}' value='{$filaOptionC['id_ciudad']}'>{$filaOptionC['nombre']}</option>";
-                                                }
-                                            }
-                                         }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <input form="addUser" id="registrarUsuario" name="registrarUsuario" type="submit" class="btn btn-primary" value="Registrar">
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Termina agregar usuario -->
 
         <!-- Comienza el editar usuarios -->
@@ -164,6 +101,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <input type="hidden" name="id" id="id-edit-usuario">
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -222,9 +160,9 @@
                                         <!-- <h5 class="card-subtitle">Overview of Top Selling Items</h5> -->
                                     </div>
                                     <div class="ml-auto">
-                                        <button class="btn btn-success btnAgregar" data-toggle="modal" data-target="#modalAgregarU"><i class="fa fa-plus"></i> Agregar</button>
-                                        <button class="btn btn-primary btnEditar"><i class="fa fa-sync-alt"></i> Editar</button>
-                                        <button class="btn btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
+                                        <button id="btnAdmin" class="btn btn-warning btnAgregar"><i class="fa fa-star"></i> Admin</button>
+                                        <button id="btnEditarUsuario" class="btn btn-primary btnEditar"><i class="fa fa-sync-alt"></i> Editar</button>
+                                        <button id="btnEliminarUsuario" class="btn btn-danger btnEliminar"><i class="fa fa-trash"></i> Eliminar</button>
                                     </div>
                                 </div>
                                 <!-- title -->
@@ -259,7 +197,7 @@
                                             if($res = $con -> query($listar)){
                                                 if($res -> num_rows > 0){
                                                     while($fila = $res -> fetch_assoc()) {
-                                                        echo "<tr id='row-usuario{$fila['id_usuario']}'>";
+                                                        echo "<tr class='row-usuario' id='row-usuario{$fila['id_usuario']}'>";
                                                             echo "<td>";
                                                                 echo "<input style='display: none;' class='inp-cbx checkboxUsuario' type='checkbox' data-idRow='{$fila['id_usuario']}' name='check-Usuario{$fila['id_usuario']}' id='check-Usuario{$fila['id_usuario']}'>";
                                                                 echo "<label class='cbx' for='check-Usuario{$fila['id_usuario']}'>";
@@ -437,6 +375,7 @@
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->
         <!-- ============================================================== -->
+        <div id="alertGenUsuarios" class="alert bg-dark alertGen fadeOutDown"></div>
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
