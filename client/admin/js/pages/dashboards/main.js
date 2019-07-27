@@ -1264,4 +1264,58 @@ $(document).ready(function(){
         });
     });
 
+
+
+
+    // Agregar Usuario
+    $("#addUser").submit(function(e){
+        e.preventDefault();
+
+        let info = $(this).serialize();
+        $.ajax({
+            url: $(this).attr("action"),
+            method: "POST",
+            data: info,
+            dataType: "json",
+            success: function(data, status, jqXHR){
+                if(data.status == "1"){
+                    $("#modalAgregarU").modal("hide");
+                    limpiarFormulario("#modalAgregarU", "#addUser");
+                    let newRow = `<tr id='row-Usuario${data.id}'>
+                    <td><input style='display: none;' class='inp-cbx checkboxUsuario' type='checkbox' data-idRow='${data.id}' name='check-Usuario${data.id}' id='check-Usuario${data.id}'>
+                                    <label class='cbx' for='check-Usuario${data.id}'>
+                                        <span>
+                                            <svg width='12px' height='10px' viewbox='0 0 12 10'>
+                                                <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
+                                            </svg>
+                                        </span>
+                                    </label></td> <td>${data.id}</td> <td id='datos-Usuario-${data.id}'>${data.Usuario}</td> <td>${data.producto}</td> <td>${data.sucursal}</td></tr>`
+                    $("#table-body-Usuario").append(newRow);
+                }else{
+                    let mensaje = `<div id='alertAddUsuarioError' class='alert alert-danger fade'>${data.mensaje}</div>`;
+                    $("#modal-body-Usuario").append(mensaje);
+                    $("#alertAddUsuarioError").toggleClass("fade");
+                    setTimeout(function(){
+                        $("#alertAddUsuarioError").toggleClass("fade");
+                        setTimeout(function(){
+                            $("#alertAddUsuarioError").remove();
+                        },500);
+                    },2000);
+                }
+            },
+            error: function(data, status, error){
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+        
+    });
+
+
+
+
+
+    // Eventos de checkboxes
+    checkboxes("#checkAll-Usuario",".checkboxUsuario");
 });

@@ -2,7 +2,7 @@
     include("../../conexion.php");
 
     $nombre = $apellidoP = $apellidoM = $email = $privilegio = $ciudad ="";
-    $nombre_err = $apellidoP_err = $apellidoM_err = $ciudad_error= $error = $email_err = "";
+    $nombre_err = $apellidoP_err = $apellidoM_err = $ciudad_err= $error = $email_err = "";
     $admin=false; 
 
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
@@ -86,7 +86,7 @@
                     $maxSql = "SELECT max(id_usuario) maximus FROM usuarios";
                     $resQuery = $con -> query($maxSql);
                     $res = $resQuery -> fetch_assoc();
-                    echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $nombre, "apellidoP" => $apellidoP, "apellidoM" => $apellidoM, "email" => $email, "admin" => $param_admin ,"ciudad" => $res['ciudad']]);
+                    echo json_encode(["status" => "1", "id" => $res['maximus'], "nombre" => $nombre, "apellidoP" => $apellidoP, "apellidoM" => $apellidoM, "email" => $email, "admin" => $param_admin ,"ciudad" => $param_ciudad]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro del usuario"]);
                 }

@@ -48,6 +48,8 @@
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
+
+        <!-- Comienza el Agregar usuario -->
         <div class="modal fade" id="modalAgregarU" tabindex="-1" role="dialog" aria-labelledby="modalAgregarUTitulo" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -108,6 +110,74 @@
                 </div>
             </div>
         </div>
+        <!-- Termina agregar usuario -->
+
+        <!-- Comienza el editar usuarios -->
+        <div class="modal fade" id="modalEditarU" tabindex="-1" role="dialog" aria-labelledby="modalEditarUTitulo" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarUTitulo">Editar usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editUser" action="./actions/editUsuario.php" method="POST">
+                            <div class="form-group">
+                                <label for="editNombre">Nombre</label>
+                                <input type="text" name="editNombre" id="editName" class="form-control">
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="editApellidoP">Apellido Paterno</label>
+                                    <input type="text" name="editApellidoP" id="editApellidoP" class="form-control">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="editApellidoM">Apellido Materno</label>
+                                    <input type="text" name="editApellidoM" id="editApellidoM" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEmail">Email</label>
+                                <input type="email" name="editEmail" id="editEmail" class="form-control">
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="editAdmin" id="editAdmin" class="form-check-input">
+                                        <label for="editAdmin" class="form-check-label">Administrador</label>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                    <select class="form-control" name="editCiudad" id="editCiudad">
+                                    <?php
+                                            $optionCiudad = "SELECT * FROM ciudad";
+                                            if($resOptionC = $con -> query($optionCiudad)){
+                                            if( $resOptionC -> num_rows > 0 ){
+                                            while($filaOptionC = $resOptionC -> fetch_assoc()){
+                                                echo "<option id='option-Ciudad-id{$filaOptionC['id_ciudad']}' value='{$filaOptionC['id_ciudad']}'>{$filaOptionC['nombre']}</option>";
+                                                }
+                                            }
+                                         }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <input form="editUser" id="editarUsuario" name="editarUsuario" type="submit" class="btn btn-primary" value="Registrar">
+                    </div>
+                </div>
+            </div>
+        </div>                                    
+
+
+
+
+
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
@@ -215,7 +285,7 @@
                                                                         echo "<tr>";
                                                     }
                                                 }else{
-                                                    echo "<tr>";
+                                                    echo "<tr class='no_existe'>";
                                                         echo "<td colspan='7'>";
                                                             echo "<div class='container text-center'>";
                                                                 echo "<h5 class='display-5'> <i class='mdi mdi-cloud-outline-off'></i> </h5>";

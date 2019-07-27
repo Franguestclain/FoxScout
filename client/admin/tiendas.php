@@ -181,7 +181,7 @@
                                                         echo "</tr>";
                                                     }
                                                 }else{
-                                                    echo "<tr>";
+                                                    echo "<tr class='no_existe'>";
                                                         echo "<td colspan='2'>";
                                                             echo "<div class='container text-center'>";
                                                                 echo "<h5 class='display-5'> <i class='mdi mdi-cloud-outline-off'></i> </h5>";
