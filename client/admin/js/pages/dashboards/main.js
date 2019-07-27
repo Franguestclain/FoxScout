@@ -1309,54 +1309,45 @@ $(document).ready(function(){
 
 
     // Agregar Usuario
-    $("#addUser").submit(function(e){
-        e.preventDefault();
-
-        let info = $(this).serialize();
-        $.ajax({
-            url: $(this).attr("action"),
-            method: "POST",
-            data: info,
-            dataType: "json",
-            success: function(data, status, jqXHR){
-                if(data.status == "1"){
-                    $("#modalAgregarU").modal("hide");
-                    limpiarFormulario("#modalAgregarU", "#addUser");
-                    let newRow = `<tr id='row-Usuario${data.id}'>
-                    <td><input style='display: none;' class='inp-cbx checkboxUsuario' type='checkbox' data-idRow='${data.id}' name='check-Usuario${data.id}' id='check-Usuario${data.id}'>
-                                    <label class='cbx' for='check-Usuario${data.id}'>
-                                        <span>
-                                            <svg width='12px' height='10px' viewbox='0 0 12 10'>
-                                                <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
-                                            </svg>
-                                        </span>
-                                    </label></td> <td>${data.id}</td> <td id='datos-Usuario-${data.id}'>${data.Usuario}</td> <td>${data.producto}</td> <td>${data.sucursal}</td></tr>`
-                    $("#table-body-Usuario").append(newRow);
-                }else{
-                    let mensaje = `<div id='alertAddUsuarioError' class='alert alert-danger fade'>${data.mensaje}</div>`;
-                    $("#modal-body-Usuario").append(mensaje);
-                    $("#alertAddUsuarioError").toggleClass("fade");
-                    setTimeout(function(){
-                        $("#alertAddUsuarioError").toggleClass("fade");
-                        setTimeout(function(){
-                            $("#alertAddUsuarioError").remove();
-                        },500);
-                    },2000);
+    checkboxes("#checkAll-Usuario",".checkboxUsuario");
+    $("#btnAdmin").on('click', function(){
+        if( evaluarDel("#checkAll-Usuario",".checkboxUsuario") ){
+            $("#alertGenUsuarios").append("Para realizar esta accion, selecciona al menos un registro.").toggleClass("fadeInUp animated fadeOutDown");
+            setTimeout(function(){
+                $("#alertGenUsuarios").toggleClass("fadeInUp fadeOutDown").empty();
+                setTimeout(function(){
+                    $("#alertGenUsuarios").toggleClass("animated");
+                },500);
+            },2000);
+        }else{
+            // Ajax
+            let ids = $.map($(".checkboxUsuario:checked"), (x) => $(x).attr('data-idRow') );
+            console.log(ids);
+            $.ajax({
+                url: "./actions/regUsuario.php",
+                method: "POST",
+                data: {ids:ids},
+                dataType: "json",
+                success: function(data, status, jqXHR){
+                    if(data.status == 1){
+                        // Aqui pasa algo en el front-end
+                        window.location.href = "index.php";
+                    }else{
+                        console.log(data.mensaje);
+                    }
+                },
+                error: function(data,status, error){
+                    console.log(data);
+                    console.log(status);
+                    console.log(error);
                 }
-            },
-            error: function(data, status, error){
-                console.log(data);
-                console.log(status);
-                console.log(error);
-            }
-        });
-        
+            })
+        }
     });
 
 
 
 
 
-    // Eventos de checkboxes
-    checkboxes("#checkAll-Usuario",".checkboxUsuario");
+    
 });
