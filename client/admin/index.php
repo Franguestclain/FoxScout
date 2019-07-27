@@ -63,7 +63,7 @@
                         <form id="editUser" action="./actions/editUsuario.php" method="POST">
                             <div class="form-group">
                                 <label for="editNombre">Nombre</label>
-                                <input type="text" name="editNombre" id="editName" class="form-control">
+                                <input type="text" name="editNombre" id="editNombre" class="form-control">
                             </div>
                             <div class="row">
                                 <div class="col form-group">

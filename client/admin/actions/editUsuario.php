@@ -11,7 +11,7 @@
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
         
         // Validar si el nombre del usuario esta vacio
-        if( empty(trim($_POST['editUsuario'])) ){
+        if( empty(trim($_POST['editNombre'])) ){
             $nombre_err = "Introduce el nombre del Usuario";
         }else{
             // Evaluamos si el email ya existe
@@ -22,7 +22,7 @@
                 $stmt -> bind_param("s", $param_email);
 
                 // Inicializamos la variable
-                $param_email = $con -> real_escape_string(trim($_POST['editUsuario']));
+                $param_email = $con -> real_escape_string(trim($_POST['editEmail']));
 
                 // Ejecutamos el query de la consulta
                 if( $stmt -> execute() ){
@@ -32,7 +32,7 @@
                     if( $stmt -> num_rows == 1 ){
                         $nombre_err = "Este Usuario ya ha sido registrado";
                     }else{
-                        $nombre = $con -> real_escape_string(trim($_POST['editUsuario']));
+                        $nombre = $con -> real_escape_string(trim($_POST['editNombre']));
                     }
                 }else{
                     $error = "Algo salio mal, intentalo de nuevo.";
@@ -62,14 +62,14 @@
                 }else{
                     $param_admin=0;
                 }
-                $param_ciudad = $_POST["id_ciudad"];
+                $param_ciudad = $_POST["editCiudad"];
                 $param_usuarioid = $_POST['id'];
 
                 if( $stmt -> execute() ){
                     $sql = "SELECT max(id_usuario) maximo FROM usuarios";
                     $res = $con -> query($sql);
                     $dato = $res -> fetch_assoc();
-                    echo json_encode(["status" => "1", "mensaje" => "Se actualizo correctamente", "id" => $res['maximus'], "nombre" => $nombre, "apellidoP" => $apellidoP, "apellidoM" => $apellidoM, "email" => $email, "admin" => $param_admin ,"ciudad" => $param_ciudad ]);
+                    echo json_encode(["status" => "1", "mensaje" => "Se actualizo correctamente", "id" => $dato['maximus'], "nombre" => $nombre, "apellidoP" => $apellidoP, "apellidoM" => $apellidoM, "email" => $email, "admin" => $param_admin ,"ciudad" => $param_ciudad ]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error al actualizar el usuario"]);
                 }
