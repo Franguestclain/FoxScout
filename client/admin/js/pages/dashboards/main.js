@@ -2,11 +2,6 @@ $(document).ready(function(){
 
     function limpiarFormulario(modal,formulario){
         $(modal).on('hidden.bs.modal', function(e){
-            // $(formulario)
-            // .not(':button, :submit, :reset, :hidden')
-            // .val('')
-            // .removeAttr('checked')
-            // .removeAttr('selected');
             $(formulario)[0].reset();
         });
     };
@@ -34,10 +29,42 @@ $(document).ready(function(){
 
     }
 
+    const quitarNoExiste = () => ($(".no_existe")) ? $(".no_existe").remove() : console.log("no existe el inexistente");
+
     const evaluarEditar = (checkAll, checkboxes) =>
                 ( $(checkAll).checked || $(checkboxes+":checked").length > 1 || $(checkboxes+":checked").length == 0 ) ?  true : false;
 
     const evaluarDel = (checkAll,checkboxes) => ( $(checkboxes+":checked").length == 0 || $(checkAll).checked === false ) ? true : false;
+
+    const reiniciarSelect = (select) => $(`#${select}`).empty(); 
+
+    const mostrarSucursal = () => {
+        $("#addTienda").on('change', function(e){
+            reiniciarSelect("addSucursalPxT");
+            let id = $(this).val();
+            $.ajax({
+                url: "./actions/getSucursal.php",
+                type: "GET",
+                data: {id:id},
+                dataType: 'json',
+                success: function(data, status, jqXHR){
+                    if( data.status == 1){
+                        data.registros.forEach((reg)=> {
+                            $("#addSucursalPxT").append(`<option value='${reg.id_direccion}'>${reg.calle} ${reg.colonia} ${reg.numero}</option>`);
+                        });
+                    }else{
+                        $("#addSucursalPxT").append(`<option>${data.mensaje}</option>`);
+                    }
+                },
+                error: function(data,status,error){
+                    console.log("error");
+                    console.log(data);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        });
+    }
 
     /**
      * ==============================
@@ -71,6 +98,7 @@ $(document).ready(function(){
                                         </span>
                                     </label></td><td>${data.id}</td><td id='datos-${data.id}'>${data.nombre}</td> <td><img class='img-tienda' src='${data.rutaImg}' /></td> </tr>`
                     $("#table-body-tienda").append(newRow);
+                    quitarNoExiste();
                 }else{
                     let mensaje = `<div id='alertAddTiendaError' class='alert alert-danger fade'>${data.mensaje}</div>`;
                     $("#modal-body-tienda").append(mensaje);
@@ -222,6 +250,7 @@ $(document).ready(function(){
                                         </span>
                                     </label></td><td>${data.id}</td><td id='datos-nombre-estado-${data.id}'>${data.nombre}</td></tr>`
                     $("#table-body-estado").append(newRow);
+                    quitarNoExiste();
                 }else{
                     let mensaje = `<div id='alertAddEstadoError' class='alert alert-danger fade'>${data.mensaje}</div>`;
                     $("#modal-body-estado").append(mensaje);
@@ -367,6 +396,7 @@ $(document).ready(function(){
                                         </span>
                                     </label></td> <td>${data.id}</td> <td id='datos-nombre-ciudad-${data.id}'>${data.nombre}</td> <td>${data.estado}</td> </tr>`
                     $("#table-body-ciudad").append(newRow);
+                    quitarNoExiste();
                 }else{
                     let mensaje = `<div id='alertAddCiudadError' class='alert alert-danger fade'>${data.mensaje}</div>`;
                     $("#modal-body-ciudad").append(mensaje);
@@ -519,9 +549,10 @@ $(document).ready(function(){
                                         </span>
                                     </label></td> <td>${data.id}</td> <td id='datos-nombre-Categoria-${data.id}'>${data.nombre}</td></tr>`
                     $("#table-body-Categoria").append(newRow);
+                    quitarNoExiste();
                 }else{
                     let mensaje = `<div id='alertAddCategoriaError' class='alert alert-danger fade'>${data.mensaje}</div>`;
-                    $("#modal-body-Categoria").append(mensaje);
+                    $("#modal-body-categoria").append(mensaje);
                     $("#alertAddCategoriaError").toggleClass("fade");
                     setTimeout(function(){
                         $("#alertAddCategoriaError").toggleClass("fade");
@@ -562,6 +593,7 @@ $(document).ready(function(){
         }
     });
 
+    //Editar categoria
     $("#editCategoria").submit(function(e){
         e.preventDefault();
         let datos = $(this).serialize();
@@ -669,6 +701,7 @@ $(document).ready(function(){
                                     <td id='datos-tienda-sucursal-${data.id}'>${data.tienda}</td>
                                     <td id='datos-ciudad-sucursal-${data.id}'>${data.ciudad}</td></tr>`
                     $("#table-body-sucursal").append(newRow);
+                    quitarNoExiste();
                 }else{
                     let mensaje = `<div id='alertAddSucursalError' class='alert alert-danger fade'>${data.mensaje}</div>`;
                     $("#modal-body-sucursal").append(mensaje);
@@ -823,6 +856,7 @@ $(document).ready(function(){
                                         </span>
                                     </label></td> <td>${data.id}</td> <td id='datos-nombre-subcategoria-${data.id}'>${data.nombre}</td> <td>${data.categoria}</td></tr>`
                     $("#table-body-subcategoria").append(newRow);
+                    quitarNoExiste();
                 }else{
                     let mensaje = `<div id='alertAddSubcategoriaError' class='alert alert-danger fade'>${data.mensaje}</div>`;
                     $("#modal-body-subcategoria").append(mensaje);
@@ -858,8 +892,10 @@ $(document).ready(function(){
             },2000);
         }else{
             let id = $(".checkboxSubcategoria:checked").attr("data-idRow");
-            let nombre = $("#datos-nombre-Subcategoria-"+id).text();
-            $("#editNombreSubcategoria").val(nombre);
+            let nombreSub = $("#datos-nombre-subcat-"+id).text();
+            let nombreCat = $("#datos-nombre-sCat-"+id).text();
+            $("#editNombreSubcategoria").val(nombreSub);
+            $(`#option-selectCat-${nombreCat}`).attr('selected','selected');
             $("#id-edit-Subcategoria").val(id);
             $("#modalEditarSubcategoria").modal("show");
             limpiarFormulario("#modalEditarSubcategoria","#editSubcategoria");
@@ -977,6 +1013,7 @@ $(document).ready(function(){
                                         </span>
                                     </label></td> <td>${data.id}</td> <td id='datos-nombre-producto-${data.id}'>${data.nombre}</td> <td>${data.desc}</td><td>${data.categorias}</td><td>${data.rutaImg}</td> </tr>`
                     $("#table-body-producto").append(newRow);
+                    quitarNoExiste();
                 }else{
                     let mensaje = `<div id='alertAddProductoError' class='alert alert-danger fade'>${data.mensaje}</div>`;
                     $("#modal-body-producto").append(mensaje);
@@ -1104,6 +1141,9 @@ $(document).ready(function(){
             }
         });
     });
+
+    // Llamamos a la funcion mostrar sucursal
+    $("#modalAgregarPxT").on('show.bs.modal', mostrarSucursal());
         
     // Agregar precioxTienda
     $("#addPxt").submit(function(e){
@@ -1129,6 +1169,7 @@ $(document).ready(function(){
                                         </span>
                                     </label></td> <td>${data.id}</td> <td id='datos-Precio-${data.id}'>${data.precio}</td> <td>${data.producto}</td> <td>${data.sucursal}</td></tr>`
                     $("#table-body-Precio").append(newRow);
+                    quitarNoExiste();
                 }else{
                     let mensaje = `<div id='alertAddPrecioError' class='alert alert-danger fade'>${data.mensaje}</div>`;
                     $("#modal-body-Precio").append(mensaje);

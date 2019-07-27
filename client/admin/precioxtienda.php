@@ -5,10 +5,7 @@
         header("location: ../index.php");
         exit;
     }else{
-        /**
-         * FIXME:
-         * Los usuarios normales pueden ver este directorio
-         */
+
         if($_SESSION['admin'] == false){
             header("location: ../index.php");
         }
@@ -71,9 +68,10 @@
                                         ?>
                                     </select>
                                 </div>
-                                    <div class="form-group">
-                                        <label for="addTienda">Tienda</label>
-                                        <select class="form-control" name="addTienda" id="addTienda">
+                                <div class="col form-group">
+                                    <label for="addTienda">Tienda</label>
+                                    <select class="form-control" name="addTienda" id="addTienda">
+                                        <option>Selecciona una tienda</option>
                                         <?php
                                             $optionTienda = "SELECT * FROM tienda";
                                             if($resOptionT = $con -> query($optionTienda)){
@@ -82,26 +80,17 @@
                                                 echo "<option id='option-Tienda-id{$filaOptionT['id_tienda']}' value='{$filaOptionT['id_tienda']}'>{$filaOptionT['nombre']}</option>";
                                                 }
                                             }
-                                         }
-                                        ?>
-                                        </select>
-                            </div>
-                            </div>
-                            <div class="col form-group">
-                                    <label for="addSucursal">Sucursal</label>
-                                    <select class="form-control" name="addSucursal" id="addSucursal">
-                                        <?php
-                                            $optionSucursal = "SELECT * FROM direccion";
-                                            if($resOptionS = $con -> query($optionSucursal)){
-                                                if( $resOptionS -> num_rows > 0 ){
-                                                    while($filaOptionS = $resOptionS -> fetch_assoc()){
-                                                        echo "<option id='option-Sucursal-id{$filaOptionS['id_direccion']}' value='{$filaOptionS['id_direccion']}'>{$filaOptionS['calle']}</option>";
-                                                    }
-                                                }
                                             }
                                         ?>
                                     </select>
-                                </div>                             
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="addSucursalPxT">Sucursal</label>
+                                <select class="form-control" name="addSucursalPxT" id="addSucursalPxT">
+                                    <option>Sucursales</option>
+                                </select>
+                            </div>                             
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -281,7 +270,7 @@
                                                         echo "</tr>";
                                                     }
                                                 }else{
-                                                    echo "<tr>";
+                                                    echo "<tr class='no_existe'>";
                                                         echo "<td colspan='7'>";
                                                             echo "<div class='container text-center'>";
                                                                 echo "<h5 class='display-5'> <i class='mdi mdi-cloud-outline-off'></i> </h5>";

@@ -1,17 +1,8 @@
 <?php
     include("../../conexion.php");
 
-    // function checarNombreDeImagen($nombre){
-    //     return (bool) ( (preg_match("`^[-0-9A-Z_\.]+$`i",$nombre)) ? true : false );
-    // }
-
-    // function checarTamañoDeLaImagen($nombre){
-    //     return (bool) ((mb_strlen($nombre,"UTF-8") > 225) ? true : false);
-    // }
-
-
     $precio = "";
-    $precio_err=$error="";
+    $precio_err = $error="";
 
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
         
@@ -32,7 +23,7 @@
 
                 $param_precio = $con -> real_escape_string(trim($_POST['addPrecio']));
                 $param_productoid = $_POST["addProducto"];
-                $param_direccion = $_POST["addSucursal"];
+                $param_direccion = $_POST["addSucursalPxT"];
                 
 
                 if( $stmt -> execute() ){
