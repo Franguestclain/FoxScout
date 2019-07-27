@@ -58,7 +58,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="addUser" action="#" method="POST">
+                        <form id="addUser" action="./actions/regUsuario.php" method="POST">
                             <div class="form-group">
                                 <label for="addNombre">Nombre</label>
                                 <input type="text" name="addNombre" id="addName" class="form-control">
@@ -80,15 +80,22 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="form-check">
-                                        <input type="checkbox" name="addCheck" id="addCheck" class="form-check-input">
-                                        <label for="addCheck" class="form-check-label">Administrador</label>
+                                        <input type="checkbox" name="addAdmin" id="addAdmin" class="form-check-input">
+                                        <label for="addAdmin" class="form-check-label">Administrador</label>
                                     </div>
                                 </div>
                                 <div class="col form-group">
                                     <select class="form-control" name="addCiudad" id="addCiudad">
-                                        <option value="cd1">Chihuahua</option>
-                                        <option value="cd2">Ciudad 2</option>
-                                        <option value="cd3">Ciudad 3</option>
+                                    <?php
+                                            $optionCiudad = "SELECT * FROM ciudad";
+                                            if($resOptionC = $con -> query($optionCiudad)){
+                                            if( $resOptionC -> num_rows > 0 ){
+                                            while($filaOptionC = $resOptionC -> fetch_assoc()){
+                                                echo "<option id='option-Ciudad-id{$filaOptionC['id_ciudad']}' value='{$filaOptionC['id_ciudad']}'>{$filaOptionC['nombre']}</option>";
+                                                }
+                                            }
+                                         }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -96,7 +103,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Registrar</button>
+                        <input form="addUser" id="registrarUsuario" name="registrarUsuario" type="submit" class="btn btn-primary" value="Registrar">
                     </div>
                 </div>
             </div>
@@ -155,6 +162,16 @@
                                 <table class="table v-middle">
                                     <thead>
                                         <tr class="bg-light">
+                                        <th class="border-top-0">
+                                                <input style="display: none;" class="inp-cbx" type="checkbox" name="checkAll-Usuario" id="checkAll-Usuario">
+                                                <label class="cbx" for="checkAll-Usuario">
+                                                    <span>
+                                                        <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                                            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                                        </svg>
+                                                    </span>
+                                                </label>
+                                            </th>
                                             <th class="border-top-0">#</th>
                                             <th class="border-top-0">Nombre</th>
                                             <th class="border-top-0">Apellido Paterno</th>
@@ -171,19 +188,31 @@
                                             if($res = $con -> query($listar)){
                                                 if($res -> num_rows > 0){
                                                     while($fila = $res -> fetch_assoc()) {
-                                                        echo "<tr>";
+                                                        echo "<tr id='row-usuario{$fila['id_usuario']}'>";
+                                                            echo "<td>";
+                                                                echo "<input style='display: none;' class='inp-cbx checkboxUsuario' type='checkbox' data-idRow='{$fila['id_usuario']}' name='check-Usuario{$fila['id_usuario']}' id='check-Usuario{$fila['id_usuario']}'>";
+                                                                echo "<label class='cbx' for='check-Usuario{$fila['id_usuario']}'>";
+                                                                    echo "<span>";
+                                                                        echo "<svg width='12px' height='10px' viewbox='0 0 12 10'>";
+                                                                            echo "<polyline points='1.5 6 4.5 9 10.5 1'></polyline>";
+                                                                        echo "</svg>";
+                                                                    echo "</span>";
+                                                                echo "</label>";
+                                                            echo "</td>";
                                                             echo "<td>{$fila['id_usuario']}</td>";
-                                                            echo "<td>{$fila['nombre']}</td>";
-                                                            echo "<td>{$fila['apellidoP']}</td>";
-                                                            echo "<td>{$fila['apellidoM']}</td>";
-                                                            echo "<td>{$fila['email']}</td>";
-                                                            if($fila['admin'] == 1){
-                                                                echo "<td><label class='label label-warning'>Admin</label></td>";
-                                                            }else{
-                                                                echo "<td><label class='label label-primary'>Usuario</label></td>";
-                                                            }
-                                                            echo "<td>{$fila['nombreC']}</td>";
-                                                        echo "</tr>";
+                                                                        echo "<td>{$fila['nombre']}</td>";
+                                                                        echo "<td>{$fila['apellidoP']}</td>";
+                                                                        echo "<td>{$fila['apellidoM']}</td>";
+                                                                        echo "<td>{$fila['email']}</td>";
+                                                                        if($fila['admin'] == 1){
+                                                                          echo "<td><label class='label label-warning'>Admin</label></td>";
+                                                                        }else{
+                                                                            echo "<td><label class='label label-primary'>Usuario</label></td>";
+                                                                        }
+                                                                        echo "<td>{$fila['nombreC']}</td>";
+                                                                        echo "</tr>";
+                                                                        echo "<tr id='row-usuario{$fila['id_usuario']}'>";
+                                                                        echo "<tr>";
                                                     }
                                                 }else{
                                                     echo "<tr>";
