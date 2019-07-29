@@ -228,14 +228,14 @@
                                                                 echo "</label>";
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_usuario']}</td>";
-                                                                        echo "<td>{$fila['nombre']}</td>";
-                                                                        echo "<td>{$fila['apellidoP']}</td>";
-                                                                        echo "<td>{$fila['apellidoM']}</td>";
-                                                                        echo "<td>{$fila['email']}</td>";
+                                                                        echo "<td id='datos-nombre-{$fila['id_usuario']}'>{$fila['nombre']}</td>";
+                                                                        echo "<td id='datos-ap-{$fila['id_usuario']}'>{$fila['apellidoP']}</td>";
+                                                                        echo "<td id='datos-am-{$fila['id_usuario']}'>{$fila['apellidoM']}</td>";
+                                                                        echo "<td id='datos-email-{$fila['id_usuario']}'>{$fila['email']}</td>";
                                                                         if($fila['admin'] == 1){
-                                                                          echo "<td><label class='label label-warning'>Admin</label></td>";
+                                                                          echo "<td id='datos-admin-{$fila['id_usuario']}' data-admin='{$fila['admin']}'><label class='label label-warning'>Admin</label></td>";
                                                                         }else{
-                                                                            echo "<td><label class='label label-primary'>Usuario</label></td>";
+                                                                            echo "<td id='datos-admin-{$fila['id_usuario']}' data-admin='{$fila['admin']}'><label class='label label-primary'>Usuario</label></td>";
                                                                         }
                                                                         echo "<td>{$fila['nombreC']}</td>";
                                                                         echo "</tr>";

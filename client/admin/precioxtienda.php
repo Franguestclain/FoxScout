@@ -133,35 +133,26 @@
                                         ?>
                                     </select>
                                 </div>
-                                    <div class="form-group">
-                                        <label for="editTienda">Tienda</label>
-                                        <select class="form-control" name="editTienda" id="editTienda">
+                                <div class="col form-group">
+                                    <label for="editTiendaPxT">Tienda</label>
+                                    <select class="form-control" name="editTiendaPxT" id="editTiendaPxT">
                                         <?php
                                             $optionTienda = "SELECT * FROM tienda";
                                             if($resOptionT = $con -> query($optionTienda)){
-                                            if( $resOptionT -> num_rows > 0 ){
-                                            while($filaOptionT = $resOptionT -> fetch_assoc()){
-                                                echo "<option id='option-Tienda-id{$filaOptionT['id_tienda']}' value='{$filaOptionT['id_tienda']}'>{$filaOptionT['nombre']}</option>";
-                                                }
-                                            }
-                                         }
-                                        ?>
-                                        </select>
-                            </div>
-                            </div>
-                            <div class="col form-group">
-                                    <label for="editSucursal">Sucursal</label>
-                                    <select class="form-control" name="editSucursal" id="editSucursal">
-                                        <?php
-                                            $optionSucursal = "SELECT * FROM direccion";
-                                            if($resOptionS = $con -> query($optionSucursal)){
-                                                if( $resOptionS -> num_rows > 0 ){
-                                                    while($filaOptionS = $resOptionS -> fetch_assoc()){
-                                                        echo "<option id='option-Sucursal-id{$filaOptionS['id_direccion']}' value='{$filaOptionS['id_direccion']}'>{$filaOptionS['calle']}</option>";
+                                                if( $resOptionT -> num_rows > 0 ){
+                                                    while($filaOptionT = $resOptionT -> fetch_assoc()){
+                                                        echo "<option id='option-tiendaPxt-id{$filaOptionT['id_tienda']}' value='{$filaOptionT['id_tienda']}'>{$filaOptionT['nombre']}</option>";
                                                     }
                                                 }
                                             }
                                         ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <label for="editSucursalPxT">Sucursal</label>
+                                    <select class="form-control" name="editSucursalPxT" id="editSucursalPxT">
+                                        
                                     </select>
                                 </div>
                                 <input type="hidden" id='id-edit-Precio' name="id" value="">                            
@@ -263,8 +254,8 @@
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_PxTienda']}</td>";
                                                             echo "<td id='datos-precio-{$fila['id_PxTienda']}'>{$fila['precio']}</td>";
-                                                            echo "<td id='datos-producto-{$fila['id_PxTienda']}'>{$fila['prod_id']}</td>";
-                                                            echo "<td id='datos-direccion-{$fila['id_PxTienda']}'>{$fila['direccion_id']}</td>";
+                                                            echo "<td id='datos-producto-{$fila['id_PxTienda']}' data-idprod='{$fila['prod_id']}'>{$fila['prod_id']}</td>";
+                                                            echo "<td id='datos-direccion-{$fila['id_PxTienda']}' data-iddir='{$fila['direccion_id']}'>{$fila['direccion_id']}</td>";
                                                             //echo "<td>{$fila['nombreT']}</td>";
                                                             //echo "<td>{$fila['nombreC']}</td>";
                                                         echo "</tr>";

@@ -110,7 +110,7 @@
                                             if( $res = $con -> query($listarSubcategorias) ){
                                                 if( $res -> num_rows > 0 ){
                                                     while( $fila = $res -> fetch_assoc() ){
-                                                        echo "<option id='option-editSubcat-{$fila['nombre']}' value='{$fila['id_subcat']}'>{$fila['nombre']}</option>";
+                                                        echo "<option id='option-editSubcat-{$fila['id_subcat']}' value='{$fila['id_subcat']}'>{$fila['nombre']}</option>";
                                                     }
                                                 }
                                             }
@@ -203,7 +203,7 @@
                                     </thead>
                                     <tbody id="table-body-producto">
                                         <?php
-                                            $listarProductos = "SELECT p.*, s.nombre nombreS, c.nombre nombreC FROM producto p INNER JOIN subcategoria s ON subcategoria_id = id_subcat INNER JOIN categoria c ON categoria_id = id_categoria ORDER BY id_prod";
+                                            $listarProductos = "SELECT p.*, s.nombre nombreS, s.id_subcat FROM producto p INNER JOIN subcategoria s ON subcategoria_id = id_subcat ORDER BY id_prod";
                                             
                                             if($res = $con -> query($listarProductos)){
                                                 if($res -> num_rows > 0){
@@ -222,7 +222,7 @@
                                                             echo "<td>{$fila['id_prod']}</td>";
                                                             echo "<td id='datos-nombre-producto-{$fila['id_prod']}' >{$fila['nombre']}</td>";
                                                             echo "<td id='datos-desc-producto-{$fila['id_prod']}'>{$fila['descripcion']}</td>";
-                                                            echo "<td id='datos-subcat-producto-{$fila['id_prod']}'>{$fila['nombreS']}</td>";
+                                                            echo "<td id='datos-subcat-producto-{$fila['id_prod']}' data-id='{$fila['id_subcat']}'>{$fila['nombreS']}</td>";
                                                             echo "<td>{$fila['codigoB']}</td>";
                                                         echo "</tr>";
                                                     }

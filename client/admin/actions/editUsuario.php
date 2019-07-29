@@ -6,9 +6,11 @@
 
     $nombre = $apellidoP = $apellidoM = $email = $privilegio = $ciudad ="";
     $nombre_err = $apellidoP_err = $apellidoM_err = $ciudad_err= $error = $email_err = "";
-
+    $admin = false;
 
     if( $_SERVER["REQUEST_METHOD"] == "POST" ){
+
+        
         
         // Validar si el nombre del usuario esta vacio
         if( empty(trim($_POST['editNombre'])) ){

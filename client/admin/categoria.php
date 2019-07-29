@@ -154,7 +154,7 @@
                                         if($resOptionE = $con -> query($optionSubcat)){
                                             if( $resOptionE -> num_rows > 0 ){
                                                 while($filaOptionE = $resOptionE -> fetch_assoc()){
-                                                    echo "<option id='option-selectCat-{$filaOptionE['nombre']}' value='{$filaOptionE['id_categoria']}'>{$filaOptionE['nombre']}</option>";
+                                                    echo "<option id='option-selectCat-{$filaOptionE['id_categoria']}' value='{$filaOptionE['id_categoria']}'>{$filaOptionE['nombre']}</option>";
                                                 }
                                             }
                                         }
@@ -272,7 +272,7 @@
                                                                 echo "</label>";
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_categoria']}</td>";
-                                                            echo "<td id='datos-nombre-Categoria-{$fila['id_categoria']}' >{$fila['nombre']}</td>";
+                                                            echo "<td id='datos-nombre-Categoria-{$fila['id_categoria']}'>{$fila['nombre']}</td>";
                                                             // echo "<td><img id='img-Categoria{$fila['id_categoria']}' class='img-Categoria' src='{$fila['img']}' /></td>";
                                                         echo "</tr>";
                                                     }
@@ -336,7 +336,7 @@
                                     </thead>
                                     <tbody id="table-body-subcategoria">
                                         <?php
-                                            $listarSubcategorias = "SELECT s.*, c.nombre nombreC FROM subcategoria s, categoria c WHERE categoria_id=id_categoria";
+                                            $listarSubcategorias = "SELECT s.*, c.nombre nombreC, c.id_categoria FROM subcategoria s, categoria c WHERE categoria_id=id_categoria";
                                             // $ciudad = "SELECT nombre from ciudad"
                                             if($res = $con -> query($listarSubcategorias)){
                                                 if($res -> num_rows > 0){
@@ -354,7 +354,7 @@
                                                             echo "</td>";
                                                             echo "<td>{$fila['id_subcat']}</td>";
                                                             echo "<td id='datos-nombre-subcat-{$fila['id_subcat']}' >{$fila['nombre']}</td>";
-                                                            echo "<td id='datos-nombre-sCat-{$fila['id_subcat']}'>{$fila['nombreC']}</td>";
+                                                            echo "<td id='datos-nombre-sCat-{$fila['id_subcat']}' data-id='{$fila['id_categoria']}'>{$fila['nombreC']}</td>";
                                                             
                                                         echo "</tr>";
                                                     }

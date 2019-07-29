@@ -20,20 +20,22 @@
             $colonia = $con -> real_escape_string($_POST['addColonia']);
         }
 
-        // Validar si el nombre de la tienda esta vacio
+        // Validar si el numero esta vacio
         if( empty(trim($_POST['addNumero'])) ){
             $numero_err = "Introduce el numero de la Sucursal";
         }else{
-            // Evaluamos si la tienda ya existe
-            $sql = "SELECT id_direccion FROM direccion WHERE numero = ? && calle = ?";
+            // Evaluamos si la direccion ya existe
+            $sql = "SELECT id_direccion FROM direccion WHERE numero = ? && calle = ? && ciudad_id = ?";
             // Creamos el prepare Statement
             if( $stmt = $con -> prepare($sql) ){
                 // Enlazamos una constante (incognita) con una variable
-                $stmt -> bind_param("ss", $param_nombre, $param_calle);
+                $stmt -> bind_param("sss", $param_numero, $param_calle, $param_ciudadid);
 
                 // Inicializamos la variable
-                $param_nombre = $con -> real_escape_string(trim($_POST['addNumero']));
+                $param_numero = $con -> real_escape_string(trim($_POST['addNumero']));
                 $param_calle = $calle;
+                // $param_colonia = $colonia;
+                $param_ciudadid = $_POST['selectCiudad'];
                 // Ejecutamos el query de la consulta
                 if( $stmt -> execute() ){
                     // Guardamos el resultado
@@ -69,9 +71,12 @@
                 if( $stmt -> execute() ){
                     // Obtenemos el ID maximo para actualizar la tabla en el frontend
                     $maxSql = "SELECT max(id_direccion) maximus, t.nombre nombreT, c.nombre nombreC FROM direccion d, tienda t, ciudad c WHERE id_tienda = {$param_tiendaid} && id_ciudad = {$param_ciudadid}";
-                    $resQuery = $con -> query($maxSql);
-                    $res = $resQuery -> fetch_assoc();
-                    echo json_encode(["status" => "1", "id" => $res['maximus'], "calle" => $calle, "colonia" => $colonia, "numero" => $numero, "tienda" => $res['nombreT'], "ciudad" => $res['nombreC']]);
+                    if( $resQuery = $con -> query($maxSql)  ){
+                        $res = $resQuery -> fetch_assoc();
+                        echo json_encode(["status" => "1", "id" => $res['maximus'], "calle" => $calle, "colonia" => $colonia, "numero" => $numero, "tienda" => $res['nombreT'], "ciudad" => $res['nombreC']]);
+                    }else{
+                        echo json_encode(["status" => "1", "mensaje" => "registrada exitosamente, pero hubo un error con la consulta {$con->error}"]);
+                    }
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro de la subcategoria"]);
                 }

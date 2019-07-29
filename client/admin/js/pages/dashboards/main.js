@@ -38,7 +38,7 @@ $(document).ready(function(){
 
     const reiniciarSelect = (select) => $(`#${select}`).empty(); 
 
-    const mostrarSucursal = () => {
+    const actualizarSucursalAdd = () => {
         $("#addTienda").on('change', function(e){
             reiniciarSelect("addSucursalPxT");
             let id = $(this).val();
@@ -65,6 +65,102 @@ $(document).ready(function(){
             });
         });
     }
+
+    const insertarSucursalOnEdit = (idTienda) => {
+        // Hacer una peticion GET dependiendo del ID de la tienda
+            // console.log("Entrando al callback");
+            $.ajax({
+                url: './actions/getSucursal.php',
+                method: 'GET',
+                data: {id:idTienda},
+                dataType: 'json',
+                success: function(data, status, jqXHR){
+                    if( data.status == 1 ){
+                        data.registros.forEach((reg)=> {
+                            $("#editSucursalPxT").append(`<option value='${reg.id_direccion}'>${reg.calle} ${reg.colonia} ${reg.numero}</option>`);
+                        });
+                        console.log("Success");
+                        console.log(jqXHR);
+                    }else{
+                        console.log(data.mensaje);
+                    }
+                },
+                error: function(data, status, error){
+                    console.log("error insertar sucursal");
+                    console.log(data);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+    };
+
+    // Funcion que se usara para poner valores en el modal editPxT
+    const editMostrarTiendaPxT = (idDireccion, callback) =>{
+        // Seleccionar el id de la tienda de esa sucursal
+        $.ajax({
+            url: './actions/getTienda.php',
+            method: "GET",
+            data: {id:idDireccion},
+            dataType: 'json',
+            success: function(data,status, jqXHR){
+                if( data.status == 1 ){
+                    // $("#editTiendaPxT").append(`<option value='${data.id}'>${data.nombre}</option>`)
+                    // editarChangeSucursal();
+                    $(`#option-tiendaPxt-id${data.id}`).attr('selected','selected');
+                    console.log("Llamando al callback");
+                    callback(data.id);
+                    // console.log(data.id);
+                }else{
+                    console.log("No jalo, en success getTienda");
+                    console.log(data);
+                }
+            },
+            error: function(data, status, error){
+                console.log("error");
+                console.log(data);
+                console.log(status);
+                console.log(error);
+            }
+        });
+    }
+
+    /**
+     * FIXME: No reinicia el select
+     * despues de cerrar el modal cuando cambias de tienda
+     */
+
+    const editarChangeSucursal = () => {
+        $("#editTiendaPxT").on('change', function(e){
+            reiniciarSelect("editSucursalPxT");
+            let id = $(this).val();
+            $.ajax({
+                url: "./actions/getSucursal.php",
+                method: "GET",
+                data: {id: id},
+                dataType: 'json',
+                success: function(data, status, jqXHR){
+                    if( data.status == 1){
+                        data.registros.forEach((reg)=> {
+                            $("#editSucursalPxT").append(`<option id='option-sucursalPxT-id${reg.id_direccion}' value='${reg.id_direccion}'>${reg.calle} ${reg.colonia} ${reg.numero} ${reg.ciudad_id}</option>`);
+                        });
+                    }else{
+                        $("#editSucursalPxT").append(`<option>${data.mensaje}</option>`);
+                    }
+                },
+                error: function(data, status, error){
+                    console.log("error");
+                    console.log(data);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+
+        });
+    }
+
+    $("#modalEditarPxT").on('hidden.bs.modal', function(e){
+        reiniciarSelect("editSucursalPxT");
+    });
 
     /**
      * ==============================
@@ -741,8 +837,10 @@ $(document).ready(function(){
             let calle = $("#datos-calle-sucursal-"+id).text();
             let colonia = $("#datos-colonia-sucursal-"+id).text();
             let numero = $("#datos-numero-sucursal-"+id).text();
-            let tienda = $("#datos-tienda-sucursal-"+id).text();
-            let ciudad = $("#datos-ciudad-sucursal-"+id).text();
+            let tienda = $("#datos-tienda-sucursal-"+id).data("idtienda");
+            let ciudad = $("#datos-ciudad-sucursal-"+id).data("idciudad");
+            console.log(tienda);
+            console.log(ciudad);
             $("#editCalle").val(calle);
             $("#editColonia").val(colonia);
             $("#editNumero").val(numero);
@@ -893,9 +991,9 @@ $(document).ready(function(){
         }else{
             let id = $(".checkboxSubcategoria:checked").attr("data-idRow");
             let nombreSub = $("#datos-nombre-subcat-"+id).text();
-            let nombreCat = $("#datos-nombre-sCat-"+id).text();
+            let idCat = $("#datos-nombre-sCat-"+id).data("id");
             $("#editNombreSubcategoria").val(nombreSub);
-            $(`#option-selectCat-${nombreCat}`).attr('selected','selected');
+            $(`#option-selectCat-${idCat}`).attr('selected','selected');
             $("#id-edit-Subcategoria").val(id);
             $("#modalEditarSubcategoria").modal("show");
             limpiarFormulario("#modalEditarSubcategoria","#editSubcategoria");
@@ -1052,7 +1150,7 @@ $(document).ready(function(){
             let id = $(".checkboxProducto:checked").attr("data-idRow");
             let nombre = $("#datos-nombre-producto-"+id).text();
             let desc = $("#datos-desc-producto-"+id).text();
-            let subcat = $("#datos-subcat-producto-"+id).text();
+            let subcat = $("#datos-subcat-producto-"+id).data("id");
             $("#editNombreProd").val(nombre);
             $(`#option-editSubcat-${subcat}`).attr('selected', 'selected');
             $("#editDescripcion").val(desc);
@@ -1143,7 +1241,7 @@ $(document).ready(function(){
     });
 
     // Llamamos a la funcion mostrar sucursal
-    $("#modalAgregarPxT").on('show.bs.modal', mostrarSucursal());
+    $("#modalAgregarPxT").on('show.bs.modal', actualizarSucursalAdd());
         
     // Agregar precioxTienda
     $("#addPxt").submit(function(e){
@@ -1212,10 +1310,12 @@ $(document).ready(function(){
             let id = $(".checkboxPrecio:checked").attr("data-idRow");
             let precio = $("#datos-precio-"+id).text();
             let producto = $("#datos-producto-"+id).text();
-            let direccion = $("#datos-direccion-"+id).text();
+            let direccion = $("#datos-direccion-"+id).data("iddir");
+            // console.log("Id de la tienda",idTienda);
             $("#editPrecio").val(precio);
             $("#id-edit-Precio").val(id);
-            $(`#option-Sucursal-id${id}`).attr('selected','selected');
+            editMostrarTiendaPxT(direccion, insertarSucursalOnEdit);
+            editarChangeSucursal();
             $("#modalEditarPxT").modal("show");
             limpiarFormulario("#modalEditarPxT","#editPxt");
         }
