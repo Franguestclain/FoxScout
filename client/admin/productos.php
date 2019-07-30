@@ -68,8 +68,8 @@
                                     </select>
                                 </div>
                                 <div class="col form-group">
-                                    <label for="codigoB">Codigo de barras</label>
-                                    <input class="form-control" accept="image/png, image/jpeg, image/jpg" type="file" name="codigoB" id="codigoB">
+                                    <label for="imagen">Codigo de barras</label>
+                                    <input class="form-control" accept="image/png, image/jpeg, image/jpg" multiple type="file" name="imagen[]" id="imagen">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -118,8 +118,8 @@
                                     </select>
                                 </div>
                                 <div class="col form-group">
-                                    <label for="editCodigoB">Codigo de barras</label>
-                                    <input class="form-control" accept="image/png, image/jpeg, image/jpg" type="file" name="editCodigoB" id="editCodigoB">
+                                    <label for="editImagenes">Codigo de barras</label>
+                                    <input class="form-control" accept="image/png, image/jpeg, image/jpg" multiple type="file" name="editImagenes[]" id="editImagenes">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -198,7 +198,7 @@
                                             <th class="border-top-0">Nombre</th>
                                             <th class="border-top-0">Descripcion</th>
                                             <th class="border-top-0">Categorias</th>
-                                            <th class="border-top-0">CodigoBarras</th>
+                                            <!-- <th class="border-top-0">CodigoBarras</th> -->
                                         </tr>
                                     </thead>
                                     <tbody id="table-body-producto">
@@ -223,7 +223,7 @@
                                                             echo "<td id='datos-nombre-producto-{$fila['id_prod']}' >{$fila['nombre']}</td>";
                                                             echo "<td id='datos-desc-producto-{$fila['id_prod']}'>{$fila['descripcion']}</td>";
                                                             echo "<td id='datos-subcat-producto-{$fila['id_prod']}' data-id='{$fila['id_subcat']}'>{$fila['nombreS']}</td>";
-                                                            echo "<td>{$fila['codigoB']}</td>";
+                                                            // echo "<td>{$fila['codigoB']}</td>";
                                                         echo "</tr>";
                                                     }
                                                 }else{

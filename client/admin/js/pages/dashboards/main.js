@@ -1109,7 +1109,7 @@ $(document).ready(function(){
                                                 <polyline points='1.5 6 4.5 9 10.5 1'></polyline>
                                             </svg>
                                         </span>
-                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-producto-${data.id}'>${data.nombre}</td> <td>${data.desc}</td><td>${data.categorias}</td><td>${data.rutaImg}</td> </tr>`
+                                    </label></td> <td>${data.id}</td> <td id='datos-nombre-producto-${data.id}'>${data.nombre}</td> <td>${data.desc}</td><td>${data.categorias}</td></tr>`
                     $("#table-body-producto").append(newRow);
                     quitarNoExiste();
                 }else{

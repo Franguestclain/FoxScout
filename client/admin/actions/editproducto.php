@@ -3,17 +3,27 @@
     include("../../conexion.php");
 
     function checarNombreDeImagen($nombre){
-        return (bool) ( (preg_match("`^[-0-9A-Z_\.]+$`i",$nombre)) ? true : false );
+        $bandera = false;
+        foreach($nombre as $item){
+            $bandera = (preg_match("`^[-0-9A-Z_\.]+$`i",$item)) ? true : false;
+        }
+
+        return (bool) $bandera;
     }
 
     function checarTamañoNombreImagen($nombre){
-        return (bool) ((mb_strlen($nombre,"UTF-8") > 225) ? true : false);
+        $bandera = false;
+        foreach($nombre as $item){
+            $bandera = (mb_strlen($item,"UTF-8") > 225) ? true : false;
+        }
+        return (bool)$bandera;
     }
 
     $extensionesValidas = ['jpeg', 'jpg', 'png'];
     $producto = $descripcion = $nombreImagen = "";
     $producto_err = $imagen_err = $descripcion_err = $error = "";
     $carpetaDestino = "../imagenes/productos/";
+    $carpetasDestino = [];
 
     if( $_SERVER['REQUEST_METHOD'] == "POST" ){
 
@@ -52,37 +62,51 @@
         }
 
         // Agregar evaluaciones de imagen de codigo de barras
-        $img = $_FILES['editCodigoB']['name'];
-        $tmp = $_FILES['editCodigoB']['tmp_name'];
-
+        $arrImg = $arrImgTmp = [];
+        $img = $_FILES['editImagenes']['name'];
+        $tmp = $_FILES['editImagenes']['tmp_name'];
+        foreach($img as $item){
+            array_push($arrImg, $item); //Almacenando los nombres
+        }
+        foreach($tmp as $item){
+            array_push($arrImgTmp, $item);
+        }
         // Validar si el archivo subido no esta vacio
-        if( empty($img) || !$_FILES['editCodigoB'] ){
+        if( empty($img) || !$_FILES['editImagenes'] ){
             $imagen_err = "Selecciona la imagen de el producto";
         }else{
             // Evaluamos si no tiene caracteres especiales
-            if( checarNombreDeImagen($img) ){
+            if( checarNombreDeImagen($arrImg) ){
                 // Evaluamos si el nombre es muy grande
-                if( checarTamañoNombreImagen($img) ){
-                    $imagen_err = "Nombre de la imagen muy largo";
+                if( checarTamañoNombreImagen($arrImg) ){
+                    $imagen_err = "Nombre de la(s) imagen(es) muy largo";
                 }else{
                     // Evaluamos la extension
-                    $extensionImagen = strtolower(pathinfo($img, PATHINFO_EXTENSION));
-                    if( in_array($extensionImagen, $extensionesValidas) ){
-                        $carpetaDestino = $carpetaDestino.$img;                
-                        // Intentamos mover la imagen a la carpeta de destino
-                        if( !file_exists($carpetaDestino) ){ // No existe el fichero
-                            if( move_uploaded_file($tmp, "../".$carpetaDestino) ){
-                                // No tengo nada que hacer aqui :v
-                            }else{
-                                $imagen_err = "No se pudo subir la imagen. Intentelo de nuevo mas tarde.";
+                    $extensionImagen = [];
+                    foreach($arrImg as $item){
+                        array_push($extensionImagen, strtolower(pathinfo($item, PATHINFO_EXTENSION)));
+                    }
+                    $existen = array_diff($extensionImagen, $extensionesValidas); //Obtenemos la diferencia, es decir si el array con las extensiones contiene algo diferente al de las permitidas
+                    if( count($existen) == 0 ){
+                        // $carpetaDestino = $carpetaDestino.$img;
+                        $contador = 0;  
+                        foreach($arrImg as $item){
+                            if(!file_exists($carpetaDestino.$item)){
+                                array_push($carpetasDestino, $carpetaDestino.$item);
+                                if(move_uploaded_file($arrImgTmp[$contador], "../".$carpetaDestino.$item)){
+
+                                }else{
+                                    $imagen_err = "No se pudo subir la(s) imagen(es).";
+                                }
                             }
+                            $contador++;
                         }
                     }else{
                         $imagen_err = "Tipo de extension no permitida";
                     }
                 }
             }else{
-                $imagen_err = "Nombre del archivo no permitido";
+                $imagen_err = "Nombre del o los archivos no permitidos";
             }
         }
 
@@ -96,22 +120,31 @@
 
         // Evaluamos si no tenemos errores
         if( empty($producto_err) && empty($error) && empty($imagen_err) && empty($descripcion_err)){
-            $actualizar = "UPDATE producto SET nombre = ?, descripcion = ?, subcategoria_id = ?, codigoB = ? WHERE id_prod = ?";
+            $actualizar = "UPDATE producto SET nombre = ?, descripcion = ?, subcategoria_id = ? WHERE id_prod = ?";
             // Preparamos la consulta
             if( $stmt = $con -> prepare($actualizar) ){
                 // Enlazamos las variables
-                $stmt -> bind_param("ssssi", $param_nombre, $param_descripcion, $param_subCatId, $param_codigoB, $param_id);
+                $stmt -> bind_param("sssi", $param_nombre, $param_descripcion, $param_subCatId, $param_id);
 
                 $param_nombre = $producto;
                 $param_descripcion = $descripcion;
                 $param_subCatId = $_POST['selecteditSubCat'];
                 // Agregar el codigo de barras
-                $param_codigoB = $carpetaDestino;
+                // $param_codigoB = $carpetaDestino;
                 $param_id = $_POST['id'];
 
                 if( $stmt -> execute() ){
                     // Obtenemos el ID maximo para actualizar la tabla en el frontend
-                    echo json_encode(["status" => "1", "mensaje" => "exito"]);
+                    $mensajeImg = "";
+                    foreach($arrImg as $item){
+                        $insertImg = "UPDATE imagenesprod SET ruta = '../{$carpetaDestino}{$item}' , prod_id =  {$param_id}";
+                        if( $con -> query($insertImg) ){
+
+                        }else{
+                            $mensajeImg = $mensajeImg." | ".$con->error;
+                        }
+                    }
+                    echo json_encode(["status" => "1", "mensaje" => "exito", "carpetas" => $carpetasDestino]);
                 }else{
                     echo json_encode(["status" => "0", "mensaje" => "Hubo un error en el registro de la tienda"]);
                 }
