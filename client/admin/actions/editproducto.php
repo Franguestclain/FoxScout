@@ -4,7 +4,9 @@
 
     function checarNombreDeImagen($nombre){
         $bandera = false;
+        // Usamos el array 1ue contiene las cadenas de texto (proveninente de el index  name)
         foreach($nombre as $item){
+            // Le pasamos verdadero o falso, a la bandera, que sera lo que determina nuestra sentencia if
             $bandera = (preg_match("`^[-0-9A-Z_\.]+$`i",$item)) ? true : false;
         }
 
@@ -16,13 +18,14 @@
         foreach($nombre as $item){
             $bandera = (mb_strlen($item,"UTF-8") > 225) ? true : false;
         }
-        return (bool)$bandera;
+        return (bool) $bandera;
     }
 
     $extensionesValidas = ['jpeg', 'jpg', 'png'];
     $producto = $descripcion = $nombreImagen = "";
     $producto_err = $imagen_err = $descripcion_err = $error = "";
-    $carpetaDestino = "../imagenes/productos/";
+    // Agregar "../../" en admin para que salgan las imagenes
+    $carpetaDestino = "imagenes/productos/";
     $carpetasDestino = [];
 
     if( $_SERVER['REQUEST_METHOD'] == "POST" ){
@@ -65,6 +68,7 @@
         $arrImg = $arrImgTmp = [];
         $img = $_FILES['editImagenes']['name'];
         $tmp = $_FILES['editImagenes']['tmp_name'];
+        // var_dump($_FILES['editImagenes']);
         foreach($img as $item){
             array_push($arrImg, $item); //Almacenando los nombres
         }
@@ -87,14 +91,15 @@
                         array_push($extensionImagen, strtolower(pathinfo($item, PATHINFO_EXTENSION)));
                     }
                     $existen = array_diff($extensionImagen, $extensionesValidas); //Obtenemos la diferencia, es decir si el array con las extensiones contiene algo diferente al de las permitidas
+                    // var_dump($existen);
                     if( count($existen) == 0 ){
                         // $carpetaDestino = $carpetaDestino.$img;
                         $contador = 0;  
                         foreach($arrImg as $item){
                             if(!file_exists($carpetaDestino.$item)){
                                 array_push($carpetasDestino, $carpetaDestino.$item);
-                                if(move_uploaded_file($arrImgTmp[$contador], "../".$carpetaDestino.$item)){
-
+                                if(move_uploaded_file($arrImgTmp[$contador], "../../".$carpetaDestino.$item)){
+                                    // var_dump($arrImgTmp[$contador]);
                                 }else{
                                     $imagen_err = "No se pudo subir la(s) imagen(es).";
                                 }
@@ -119,7 +124,7 @@
 
 
         // Evaluamos si no tenemos errores
-        if( empty($producto_err) && empty($error) && empty($imagen_err) && empty($descripcion_err)){
+        if( empty($producto_err) && empty($error) && empty($imagen_err) && empty($descripcion_err) ){
             $actualizar = "UPDATE producto SET nombre = ?, descripcion = ?, subcategoria_id = ? WHERE id_prod = ?";
             // Preparamos la consulta
             if( $stmt = $con -> prepare($actualizar) ){
@@ -136,13 +141,31 @@
                 if( $stmt -> execute() ){
                     // Obtenemos el ID maximo para actualizar la tabla en el frontend
                     $mensajeImg = "";
-                    foreach($arrImg as $item){
-                        $insertImg = "UPDATE imagenesprod SET ruta = '../{$carpetaDestino}{$item}' , prod_id =  {$param_id}";
-                        if( $con -> query($insertImg) ){
+                    // Obtenemos los ID de imagenesProd
+                    $allIds = [];
+                    $selectRegImg = "SELECT id_img FROM imagenesprod WHERE prod_id = {$_POST['id']}";
+                    if( $res = $con -> query($selectRegImg) ){
+                        if($res -> num_rows > 0){
+                            while($registros = $res -> fetch_assoc()){
+                                array_push($allIds, $registros['id_img']);
+                            }
+                        }else{
+                            echo "Nel no hay registros del ID {$_POST['id']}";
+                        }
+                    }else{
+                        echo "Nel no se ejecuto";
+                    }
 
+                    $contador = 0;
+
+                    foreach($carpetasDestino as $item){
+                        $insertImg = "UPDATE imagenesprod SET ruta = '{$item}' WHERE prod_id =  {$param_id} && id_img = {$allIds[$contador]}";
+                        // var_dump($insertImg);
+                        if( $con -> query($insertImg) ){
                         }else{
                             $mensajeImg = $mensajeImg." | ".$con->error;
                         }
+                        $contador++;
                     }
                     echo json_encode(["status" => "1", "mensaje" => "exito", "carpetas" => $carpetasDestino]);
                 }else{

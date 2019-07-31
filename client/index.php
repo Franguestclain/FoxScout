@@ -114,222 +114,50 @@
         <div class="row">
           <div class="col-12  block-13">
             <div class="owl-carousel nonloop-block-13">
-              
-              <div class="d-block d-md-flex listing vertical">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_1.jpg')"></a>
-                <div class="lh-content">
-                  <span class="category">Real Estate</span>
-                  <!-- aqui es el cocoro -->
+              <?php 
+                $listarProd = "SELECT p.nombre nombreP, img.*, c.nombre nombreC FROM producto p LEFT JOIN imagenesprod img ON id_prod = prod_id JOIN subcategoria s ON subcategoria_id = id_subcat JOIN categoria c ON categoria_id = id_categoria WHERE img.indice IS NOT NULL";
 
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <?php } ?>
+                if( $resProd = $con -> query($listarProd) ){
+                  if( $resProd -> num_rows > 0 ){
+                    while( $filaProd = $resProd -> fetch_assoc() ){
+              ?>
+                <div id='container-productopop-<?php echo $filaProd['id_prod']; ?>' class="d-block d-md-flex listing vertical">
+                  <a href="listings-single.php" class="img d-block" style="background-image: url('<?php echo $filaProd['ruta'] ?>')"></a>
+                  <div class="lh-content">
+                    <span class="category"><?php echo $filaProd['nombreC']; ?></span>
+                    <!-- aqui es el cocoro -->
 
-                  <h3><a href="listings-single.html">Own New House</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
+                    <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                      <a href="#" class="bookmark"><span class="icon-heart"></span></a>
+                    <?php } ?>
 
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                  <p class="mb-0">
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-secondary"></span>
-                    <span class="review">(3 Reviews)</span>
-                  </p>                  
-                  <?php } ?>
+                    <h3><a href="listings-single.html"><?php echo $filaProd['nombreP']; ?></a></h3>
+                    <address>Don St, Brooklyn, New York</address>
 
+                    <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
+                    <p class="mb-0">
+                      <span class="icon-star text-warning"></span>
+                      <span class="icon-star text-warning"></span>
+                      <span class="icon-star text-warning"></span>
+                      <span class="icon-star text-warning"></span>
+                      <span class="icon-star text-secondary"></span>
+                      <span class="review">(3 Reviews)</span>
+                    </p>                  
+                    <?php } ?>
+
+                  </div>
                 </div>
-              </div>
-
-              <div class="d-block d-md-flex listing vertical">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_2.jpg')"></a>
-                <div class="lh-content">
-                  <span class="category">Real Estate</span>
-                  <!-- aqui es el cocoro -->
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <?php } ?>
-
-                  <h3><a href="listings-single.html">Own New House</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                  <p class="mb-0">
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-secondary"></span>
-                    <span class="review">(3 Reviews)</span>
-                  </p>                  
-                  <?php } ?>
-
-                </div>
-              </div>
-
-              <div class="d-block d-md-flex listing vertical">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_3.jpg')"></a>
-                <div class="lh-content">
-                  <span class="category">Real Estate</span>
-                  <!-- aqui es el cocoro -->
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <?php } ?>
-
-                  <h3><a href="listings-single.html">Own New House</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                  <p class="mb-0">
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-secondary"></span>
-                    <span class="review">(3 Reviews)</span>
-                  </p>                  
-                  <?php } ?>
-
-                </div>
-              </div>
-
-              <div class="d-block d-md-flex listing vertical">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_4.jpg')"></a>
-                <div class="lh-content">
-                  <span class="category">Real Estate</span>
-                  <!-- aqui es el cocoro -->
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <?php } ?>
-
-                  <h3><a href="listings-single.html">Own New House</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                  <p class="mb-0">
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-secondary"></span>
-                    <span class="review">(3 Reviews)</span>
-                  </p>                  
-                  <?php } ?>
-
-                </div>
-              </div>
-
-              <div class="d-block d-md-flex listing vertical">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_1.jpg')"></a>
-                <div class="lh-content">
-                  <span class="category">Real Estate</span>
-                  <!-- aqui es el cocoro -->
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <?php } ?>
-
-                  <h3><a href="listings-single.html">Own New House</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                  <p class="mb-0">
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-secondary"></span>
-                    <span class="review">(3 Reviews)</span>
-                  </p>                  
-                  <?php } ?>
-
-                </div>
-              </div>
-
-              <div class="d-block d-md-flex listing vertical">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_2.jpg')"></a>
-                <div class="lh-content">
-                  <span class="category">Real Estate</span>
-                  <!-- aqui es el cocoro -->
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <?php } ?>
-
-                  <h3><a href="listings-single.html">Own New House</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                  <p class="mb-0">
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-secondary"></span>
-                    <span class="review">(3 Reviews)</span>
-                  </p>                  
-                  <?php } ?>
-
-                </div>
-              </div>
-
-              <div class="d-block d-md-flex listing vertical">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_3.jpg')"></a>
-                <div class="lh-content">
-                  <span class="category">Real Estate</span>
-                  <!-- aqui es el cocoro -->
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <?php } ?>
-
-                  <h3><a href="listings-single.html">Own New House</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                  <p class="mb-0">
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-secondary"></span>
-                    <span class="review">(3 Reviews)</span>
-                  </p>                  
-                  <?php } ?>
-
-                </div>
-              </div>
-
-              <div class="d-block d-md-flex listing vertical">
-                <a href="listings-single.html" class="img d-block" style="background-image: url('images/img_4.jpg')"></a>
-                <div class="lh-content">
-                  <span class="category">Real Estate</span>
-                  <!-- aqui es el cocoro -->
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                    <a href="#" class="bookmark"><span class="icon-heart"></span></a>
-                  <?php } ?>
-
-                  <h3><a href="listings-single.html">Own New House</a></h3>
-                  <address>Don St, Brooklyn, New York</address>
-
-                  <?php if(isset($_SESSION['log']) && $_SESSION['log'] === true){ ?>
-                  <p class="mb-0">
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-warning"></span>
-                    <span class="icon-star text-secondary"></span>
-                    <span class="review">(3 Reviews)</span>
-                  </p>                  
-                  <?php } ?>
-
-                </div>
-              </div>
+              <?php
+                    }
+                  }else{
+                    // No hay registros
+                    echo "No hay nada";
+                  }
+                }else{
+                  // No se pudo ejecutar el query de productos
+                  echo "No se pudo ejecutar el query";
+                }
+              ?>
 
             </div>
           </div>

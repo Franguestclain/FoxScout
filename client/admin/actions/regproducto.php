@@ -22,7 +22,7 @@
     $extensionesValidas = ['jpeg', 'jpg', 'png'];
     $producto = $descripcion = $nombreImagen = "";
     $producto_err = $imagen_err = $descripcion_err = $error = "";
-    $carpetaDestino = "../imagenes/productos/";
+    $carpetaDestino = "imagenes/productos/";
     $carpetasDestino = [];
 
     if( $_SERVER['REQUEST_METHOD'] == "POST" ){
@@ -93,7 +93,7 @@
                         foreach($arrImg as $item){
                             if(!file_exists($carpetaDestino.$item)){
                                 array_push($carpetasDestino, $carpetaDestino.$item);
-                                if(move_uploaded_file($arrImgTmp[$contador], "../".$carpetaDestino.$item)){
+                                if(move_uploaded_file($arrImgTmp[$contador], "../../".$carpetaDestino.$item)){
 
                                 }else{
                                     $imagen_err = "No se pudo subir la(s) imagen(es).";
@@ -138,8 +138,13 @@
                     $resQuery = $con -> query($maxSql);
                     $res = $resQuery -> fetch_assoc();
                     $mensajeImg = "";
+                    $insertImg = "";
                     foreach($arrImg as $item){
-                        $insertImg = "INSERT INTO imagenesprod (ruta, prod_id) VALUES('../{$carpetaDestino}{$item}',{$res['maximus']})";
+                        if( $item === $arrImg[0] ){
+                            $insertImg = "INSERT INTO imagenesprod (ruta,indice, prod_id) VALUES('{$carpetaDestino}{$item}',1,{$res['maximus']})";
+                        }else{
+                            $insertImg = "INSERT INTO imagenesprod (ruta, prod_id) VALUES('{$carpetaDestino}{$item}',{$res['maximus']})";
+                        }
                         if( $con -> query($insertImg) ){
 
                         }else{
